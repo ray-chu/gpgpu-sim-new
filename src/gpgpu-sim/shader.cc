@@ -2422,7 +2422,17 @@ unsigned int shader_core_config::max_cta( const kernel_info_t &k ) const
 
 void shader_core_ctx::cycle()
 {
-	m_stats->shader_cycles[m_sid]++;
+	m_stats->shader_cycles[m_sid]++;	
+	if(m_sid==0){
+		FILE *pFile=fopen("threads_next_pc.txt","a");
+		if(pFile!=NULL){
+			fprintf(pFile,"Current global cycle is %llu \n",gpu_sim_cycle+gpu_tot_sim_cycle);
+			for(int i=0; i<m_config->max_warps_per_shader;i++){
+				fprintf(pFile,"warp %d's next instruction's address is %x \n",i,m_warp[i].get_pc());
+			}
+			fclose(pFile);
+		}
+	}
     writeback();
     execute();
     read_operands();
