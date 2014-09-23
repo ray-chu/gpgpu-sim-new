@@ -270,18 +270,18 @@ shader_core_ctx::shader_core_ctx( class gpgpu_sim *gpu,
     //m_fu = new simd_function_unit*[m_num_function_units];
     
     for (int k = 0; k < m_config->gpgpu_num_sp_units; k++) {
-        m_fu.push_back(new sp_unit( &m_pipeline_reg[EX_WB], m_config, this ));
+        m_fu.push_back(new sp_unit( &m_pipeline_reg[EX_WB], m_config, this,1,stats));
         m_dispatch_port.push_back(ID_OC_SP);
         m_issue_port.push_back(OC_EX_SP);
     }
     
     for (int k = 0; k < m_config->gpgpu_num_sfu_units; k++) {
-        m_fu.push_back(new sfu( &m_pipeline_reg[EX_WB], m_config, this ));
+        m_fu.push_back(new sfu( &m_pipeline_reg[EX_WB], m_config, this,2,stats));
         m_dispatch_port.push_back(ID_OC_SFU);
         m_issue_port.push_back(OC_EX_SFU);
     }
     
-    m_ldst_unit = new ldst_unit( m_icnt, m_mem_fetch_allocator, this, &m_operand_collector, m_scoreboard, config, mem_config, stats, shader_id, tpc_id );
+    m_ldst_unit = new ldst_unit( m_icnt, m_mem_fetch_allocator, this, &m_operand_collector, m_scoreboard, config, mem_config, stats, shader_id, tpc_id, 3);
     m_fu.push_back(m_ldst_unit);
     m_dispatch_port.push_back(ID_OC_MEM);
     m_issue_port.push_back(OC_EX_MEM);
@@ -465,6 +465,27 @@ void shader_core_stats::event_warp_issued( unsigned s_id, unsigned warp_id, unsi
         }
         ++m_shader_warp_slot_issue_distro[ s_id ][ warp_id ];
     }
+}
+
+void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
+
+	fprintf(manual_dump_file,"%-20u",sp_inst_completed_per_sm[0] - sp_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%-20u",sfu_inst_completed_per_sm[0] - sfu_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%-20u",data_cache_inst_completed_per_sm[0] - data_cache_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%-20u",shared_mem_inst_completed_per_sm[0] - shared_mem_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%-20u",constant_cache_inst_completed_per_sm[0] - constant_cache_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%-20u",texture_cache_inst_completed_per_sm[0] - texture_cache_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%-20u",local_mem_inst_completed_per_sm[0] - local_mem_inst_completed_last_cycle_per_sm[0]);
+
+	sp_inst_completed_last_cycle_per_sm[0] = sp_inst_completed_per_sm[0];
+	sfu_inst_completed_last_cycle_per_sm[0] = sfu_inst_completed_per_sm[0];
+	data_cache_inst_completed_last_cycle_per_sm[0] = data_cache_inst_completed_per_sm[0];
+	shared_mem_inst_completed_last_cycle_per_sm[0] = 	shared_mem_inst_completed_per_sm[0];
+	constant_cache_inst_completed_last_cycle_per_sm[0] = constant_cache_inst_completed_per_sm[0];
+	texture_cache_inst_completed_last_cycle_per_sm[0] = texture_cache_inst_completed_per_sm[0];
+	local_mem_inst_completed_last_cycle_per_sm[0] = local_mem_inst_completed_per_sm[0];
+
+
 }
 
 void shader_core_stats::visualizer_print( gzFile visualizer_file )
@@ -1155,7 +1176,7 @@ void shader_core_ctx::execute()
         register_set& issue_inst = m_pipeline_reg[ issue_port ];
 	warp_inst_t** ready_reg = issue_inst.get_ready();
         if( issue_inst.has_ready() && m_fu[n]->can_issue( **ready_reg ) ) {
-            bool schedule_wb_now = !m_fu[n]->stallable();
+            bool schedule_wb_now = !m_fu[n]->stallable(); // result bus has to be reserved if it is math
             int resbus = -1;
             if( schedule_wb_now && (resbus=test_res_bus( (*ready_reg)->latency ))!=-1 ) {
                 assert( (*ready_reg)->latency < MAX_ALU_LATENCY );
@@ -1450,8 +1471,8 @@ simd_function_unit::simd_function_unit( const shader_core_config *config )
 }
 
 
-sfu:: sfu(  register_set* result_port, const shader_core_config *config,shader_core_ctx *core  )
-    : pipelined_simd_unit(result_port,config,config->max_sfu_latency,core)
+sfu:: sfu(  register_set* result_port, const shader_core_config *config,shader_core_ctx *core, int functional_unit_type, shader_core_stats *shader_stats)
+    : pipelined_simd_unit(result_port,config,config->max_sfu_latency,core,functional_unit_type,shader_stats)
 { 
     m_name = "SFU"; 
 }
@@ -1487,8 +1508,8 @@ void sfu::active_lanes_in_pipeline(){
 	m_core->incfumemactivelanes_stat(active_count);
 }
 
-sp_unit::sp_unit( register_set* result_port, const shader_core_config *config,shader_core_ctx *core)
-    : pipelined_simd_unit(result_port,config,config->max_sp_latency,core)
+sp_unit::sp_unit( register_set* result_port, const shader_core_config *config,shader_core_ctx *core, int functional_unit_type, shader_core_stats  *shader_stats)
+    : pipelined_simd_unit(result_port,config,config->max_sp_latency,core, functional_unit_type, shader_stats)
 { 
     m_name = "SP "; 
 }
@@ -1503,7 +1524,7 @@ void sp_unit :: issue(register_set& source_reg)
 }
 
 
-pipelined_simd_unit::pipelined_simd_unit( register_set* result_port, const shader_core_config *config, unsigned max_latency,shader_core_ctx *core )
+pipelined_simd_unit::pipelined_simd_unit( register_set* result_port, const shader_core_config *config, unsigned max_latency,shader_core_ctx *core , int unit_type, shader_core_stats *shader_stats)
     : simd_function_unit(config) 
 {
     m_result_port = result_port;
@@ -1512,6 +1533,8 @@ pipelined_simd_unit::pipelined_simd_unit( register_set* result_port, const shade
     for( unsigned i=0; i < m_pipeline_depth; i++ ) 
 	m_pipeline_reg[i] = new warp_inst_t( config );
     m_core=core;
+	m_stats = shader_stats;
+	m_type = unit_type;
 }
 
 
@@ -1523,6 +1546,32 @@ void pipelined_simd_unit::issue( register_set& source_reg )
 	//source_reg.move_out_to(m_dispatch_reg);
 	simd_function_unit::issue(source_reg);
 }
+
+void pipelined_simd_unit::cycle() 
+{
+        if( !m_pipeline_reg[0]->empty() ){
+            m_result_port->move_in(m_pipeline_reg[0]);
+			if(m_type == 1){
+				m_stats->increment_sp_inst_completed(m_core->get_sid());
+			}else if(m_type == 2){
+				m_stats->increment_sfu_inst_completed(m_core->get_sid());
+			}else{
+				printf("Function unit type should be 1 or 2. It is %d\n",m_type);
+				fflush(stdout);
+				abort();
+			}
+		}
+        for( unsigned stage=0; (stage+1)<m_pipeline_depth; stage++ ) 
+            move_warp(m_pipeline_reg[stage], m_pipeline_reg[stage+1]);
+        if( !m_dispatch_reg->empty() ) {
+            if( !m_dispatch_reg->dispatch_delay()) {
+                int start_stage = m_dispatch_reg->latency - m_dispatch_reg->initiation_interval;
+                move_warp(m_pipeline_reg[start_stage],m_dispatch_reg);
+            }
+        }
+        occupied >>=1;
+}
+
 
 /*
     virtual void issue( register_set& source_reg )
@@ -1579,7 +1628,8 @@ ldst_unit::ldst_unit( mem_fetch_interface *icnt,
                       const memory_config *mem_config,  
                       shader_core_stats *stats,
                       unsigned sid,
-                      unsigned tpc ) : pipelined_simd_unit(NULL,config,3,core), m_next_wb(config)
+                      unsigned tpc,
+					  int functional_unit_type ) : pipelined_simd_unit(NULL,config,3,core,functional_unit_type,stats), m_next_wb(config)
 {
     init( icnt,
           mf_allocator,
@@ -1614,8 +1664,9 @@ ldst_unit::ldst_unit( mem_fetch_interface *icnt,
                       shader_core_stats *stats,
                       unsigned sid,
                       unsigned tpc,
-                      l1_cache* new_l1d_cache )
-    : pipelined_simd_unit(NULL,config,3,core), m_L1D(new_l1d_cache), m_next_wb(config)
+                      l1_cache* new_l1d_cache,
+					  int functional_unit_type)
+    : pipelined_simd_unit(NULL,config,3,core,functional_unit_type,stats), m_L1D(new_l1d_cache), m_next_wb(config)
 {
     init( icnt,
           mf_allocator,
@@ -1691,7 +1742,8 @@ void ldst_unit::writeback()
         switch( next_client ) {
         case 0: // shared memory 
             if( !m_pipeline_reg[0]->empty() ) {
-                m_next_wb = *m_pipeline_reg[0];
+				m_stats->increment_shared_mem_inst_completed(m_sid);
+				m_next_wb = *m_pipeline_reg[0];
                 if(m_next_wb.isatomic()) {
                     m_next_wb.do_atomic();
                     m_core->decrement_atomic_count(m_next_wb.warp_id(), m_next_wb.active_count());
@@ -1703,6 +1755,7 @@ void ldst_unit::writeback()
             break;
         case 1: // texture response
             if( m_L1T->access_ready() ) {
+				m_stats->increment_texture_cache_inst_completed(m_sid);
                 mem_fetch *mf = m_L1T->next_access();
                 m_next_wb = mf->get_inst();
                 delete mf;
@@ -1711,6 +1764,7 @@ void ldst_unit::writeback()
             break;
         case 2: // const cache response
             if( m_L1C->access_ready() ) {
+				m_stats->increment_constant_cache_inst_completed(m_sid);
                 mem_fetch *mf = m_L1C->next_access();
                 m_next_wb = mf->get_inst();
                 delete mf;
@@ -1719,6 +1773,7 @@ void ldst_unit::writeback()
             break;
         case 3: // global/local
             if( m_next_global ) {
+				m_stats->increment_local_mem_inst_completed(m_sid);
                 m_next_wb = m_next_global->get_inst();
                 if( m_next_global->isatomic() ) 
                     m_core->decrement_atomic_count(m_next_global->get_wid(),m_next_global->get_access_warp_mask().count());
@@ -1729,12 +1784,13 @@ void ldst_unit::writeback()
             break;
         case 4: 
             if( m_L1D && m_L1D->access_ready() ) {
+				m_stats->increment_data_cache_inst_completed(m_sid);
                 mem_fetch *mf = m_L1D->next_access();
                 m_next_wb = mf->get_inst();
                 delete mf;
                 serviced_client = next_client; 
             }
-            break;
+			break;
         default: abort();
         }
     }

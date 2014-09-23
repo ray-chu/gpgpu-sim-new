@@ -72,6 +72,7 @@
 
 //Set a hard limit of 32 CTAs per shader [cuda only has 8]
 #define MAX_CTA_PER_SHADER 32
+extern unsigned long long  gpu_sim_cycle;
 
 class thread_ctx_t {
 public:
@@ -966,24 +967,10 @@ protected:
 
 class pipelined_simd_unit : public simd_function_unit {
 public:
-    pipelined_simd_unit( register_set* result_port, const shader_core_config *config, unsigned max_latency, shader_core_ctx *core );
+    pipelined_simd_unit( register_set* result_port, const shader_core_config *config, unsigned max_latency, shader_core_ctx *core , int unit_type, shader_core_stats *m_shader_stats);
 
     //modifiers
-    virtual void cycle() 
-    {
-        if( !m_pipeline_reg[0]->empty() ){
-            m_result_port->move_in(m_pipeline_reg[0]);
-        }
-        for( unsigned stage=0; (stage+1)<m_pipeline_depth; stage++ ) 
-            move_warp(m_pipeline_reg[stage], m_pipeline_reg[stage+1]);
-        if( !m_dispatch_reg->empty() ) {
-            if( !m_dispatch_reg->dispatch_delay()) {
-                int start_stage = m_dispatch_reg->latency - m_dispatch_reg->initiation_interval;
-                move_warp(m_pipeline_reg[start_stage],m_dispatch_reg);
-            }
-        }
-        occupied >>=1;
-    }
+    virtual void cycle();
     virtual void issue( register_set& source_reg );
     virtual unsigned get_active_lanes_in_pipeline()
     {
@@ -1025,12 +1012,14 @@ protected:
     warp_inst_t **m_pipeline_reg;
     register_set *m_result_port;
     class shader_core_ctx *m_core;
+	class shader_core_stats *m_stats;
+	int m_type;
 };
 
 class sfu : public pipelined_simd_unit
 {
 public:
-    sfu( register_set* result_port, const shader_core_config *config, shader_core_ctx *core );
+    sfu( register_set* result_port, const shader_core_config *config, shader_core_ctx *core, int functional_unit_type, class shader_core_stats *shader_stats);
     virtual bool can_issue( const warp_inst_t &inst ) const
     {
         switch(inst.op) {
@@ -1047,7 +1036,7 @@ public:
 class sp_unit : public pipelined_simd_unit
 {
 public:
-    sp_unit( register_set* result_port, const shader_core_config *config, shader_core_ctx *core );
+    sp_unit( register_set* result_port, const shader_core_config *config, shader_core_ctx *core, int functional_unit_type, class shader_core_stats *shader_stats);
     virtual bool can_issue( const warp_inst_t &inst ) const
     {
         switch(inst.op) {
@@ -1078,7 +1067,8 @@ public:
                const shader_core_config *config, 
                const memory_config *mem_config,  
                class shader_core_stats *stats, 
-               unsigned sid, unsigned tpc );
+               unsigned sid, unsigned tpc,
+			   int functional_unit_type);
 
     // modifiers
     virtual void issue( register_set &inst );
@@ -1125,7 +1115,8 @@ protected:
                shader_core_stats *stats,
                unsigned sid,
                unsigned tpc,
-               l1_cache* new_l1d_cache );
+               l1_cache* new_l1d_cache, 
+			   int functional_unit_type);
     void init( mem_fetch_interface *icnt,
                shader_core_mem_fetch_allocator *mf_allocator,
                shader_core_ctx *core, 
@@ -1459,7 +1450,23 @@ public:
 
         m_shader_dynamic_warp_issue_distro.resize( config->num_shader() );
         m_shader_warp_slot_issue_distro.resize( config->num_shader() );
-    }
+    
+	    sp_inst_completed_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		sp_inst_completed_last_cycle_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		sfu_inst_completed_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		sfu_inst_completed_last_cycle_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		data_cache_inst_completed_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		data_cache_inst_completed_last_cycle_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		shared_mem_inst_completed_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		shared_mem_inst_completed_last_cycle_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		constant_cache_inst_completed_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		constant_cache_inst_completed_last_cycle_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		texture_cache_inst_completed_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		texture_cache_inst_completed_last_cycle_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		local_mem_inst_completed_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+		local_mem_inst_completed_last_cycle_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
+
+	}
 
     ~shader_core_stats()
     {
@@ -1470,7 +1477,21 @@ public:
         free(m_n_diverge); 
         free(shader_cycle_distro);
         free(last_shader_cycle_distro);
-    }
+	    free(sp_inst_completed_per_sm);
+		free(sp_inst_completed_last_cycle_per_sm);
+		free(sfu_inst_completed_per_sm);
+		free(sfu_inst_completed_last_cycle_per_sm);
+		free(data_cache_inst_completed_per_sm);
+		free(data_cache_inst_completed_last_cycle_per_sm);
+		free(shared_mem_inst_completed_per_sm);
+		free(shared_mem_inst_completed_last_cycle_per_sm);
+		free(constant_cache_inst_completed_per_sm);
+		free(constant_cache_inst_completed_last_cycle_per_sm);
+		free(texture_cache_inst_completed_per_sm);
+		free(texture_cache_inst_completed_last_cycle_per_sm);
+		free(local_mem_inst_completed_per_sm);
+		free(local_mem_inst_completed_last_cycle_per_sm);
+	}
 
     void new_grid()
     {
@@ -1479,6 +1500,7 @@ public:
     void event_warp_issued( unsigned s_id, unsigned warp_id, unsigned num_issued, unsigned dynamic_warp_id );
 
     void visualizer_print( gzFile visualizer_file );
+	void manual_stats_print (FILE *manual_dump_file); 
 
     void print( FILE *fout ) const;
 
@@ -1492,6 +1514,14 @@ public:
         return m_shader_warp_slot_issue_distro;
     }
 
+	void increment_sp_inst_completed(unsigned sm_id){ sp_inst_completed_per_sm[sm_id]++;}
+	void increment_sfu_inst_completed(unsigned sm_id){ sfu_inst_completed_per_sm[sm_id]++;}
+	void increment_data_cache_inst_completed(unsigned sm_id){ data_cache_inst_completed_per_sm[sm_id]++;}
+	void increment_shared_mem_inst_completed(unsigned sm_id){ shared_mem_inst_completed_per_sm[sm_id]++;}
+	void increment_constant_cache_inst_completed(unsigned sm_id){ constant_cache_inst_completed_per_sm[sm_id]++;}
+	void increment_texture_cache_inst_completed(unsigned sm_id){ texture_cache_inst_completed_per_sm[sm_id]++;}
+	void increment_local_mem_inst_completed(unsigned sm_id){ local_mem_inst_completed_per_sm[sm_id]++;}
+
 private:
     const shader_core_config *m_config;
 
@@ -1503,6 +1533,23 @@ private:
     std::vector<unsigned> m_last_shader_dynamic_warp_issue_distro;
     std::vector< std::vector<unsigned> > m_shader_warp_slot_issue_distro;
     std::vector<unsigned> m_last_shader_warp_slot_issue_distro;
+
+	// Add additional SM related stats here
+	
+	unsigned *sp_inst_completed_per_sm;
+	unsigned *sp_inst_completed_last_cycle_per_sm;
+	unsigned *sfu_inst_completed_per_sm;
+	unsigned *sfu_inst_completed_last_cycle_per_sm;
+	unsigned *data_cache_inst_completed_per_sm;
+	unsigned *data_cache_inst_completed_last_cycle_per_sm;
+	unsigned *shared_mem_inst_completed_per_sm;
+	unsigned *shared_mem_inst_completed_last_cycle_per_sm;
+	unsigned *constant_cache_inst_completed_per_sm;
+	unsigned *constant_cache_inst_completed_last_cycle_per_sm;
+	unsigned *texture_cache_inst_completed_per_sm;
+	unsigned *texture_cache_inst_completed_last_cycle_per_sm;
+	unsigned *local_mem_inst_completed_per_sm;
+	unsigned *local_mem_inst_completed_last_cycle_per_sm;
 
     friend class power_stat_t;
     friend class shader_core_ctx;

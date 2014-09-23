@@ -371,6 +371,19 @@ void gpgpu_sim_config::reg_options(option_parser_t opp)
     m_shader_config.reg_options(opp);
     m_memory_config.reg_options(opp);
     power_config::reg_options(opp);
+
+	option_parser_register(opp, "-manual_dump_filename", OPT_CSTR, &manual_dump_filename, 
+               "Specifies the output file for dump of stats other then the ones provided by gpgpu-sim",
+               NULL);
+	
+	option_parser_register(opp, "-enable_manual_stat_dump", OPT_BOOL, &enable_manual_stat_dump, 
+               "Enables a dump of stats ohter than the ones provided by gpgpu-sim (0 = Disabled)",
+               "0");
+
+	option_parser_register(opp, "-manual_stat_sample_freq", OPT_INT32, &manual_stat_sample_freq, 
+               "Sets the sample freq for dump of stats other than the ones provided by gpgpusim",
+               "1");
+
    option_parser_register(opp, "-gpgpu_max_cycle", OPT_INT32, &gpu_max_cycle_opt, 
                "terminates gpu simulation early (0 = no limit)",
                "0");
@@ -1282,6 +1295,14 @@ void gpgpu_sim::cycle()
             }
          }
       }
+
+	  // keep the sample freq that we want for our stats separate
+	  if(m_config.enable_manual_stat_dump && !(gpu_sim_cycle % m_config.manual_stat_sample_freq)){
+		
+		
+	    dump_manual_stats();	
+
+	  }
 
       if (!(gpu_sim_cycle % m_config.gpu_stat_sample_freq)) {
          time_t days, hrs, minutes, sec;
