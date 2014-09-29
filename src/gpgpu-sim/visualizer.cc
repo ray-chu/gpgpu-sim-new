@@ -57,19 +57,19 @@ void gpgpu_sim::dump_manual_stats(){
       	exit(1);
    	}
 	if(manual_dump_first_print){
-		fprintf(manual_dump_file,"%-20s","Cycle");
-		fprintf(manual_dump_file,"%-20s","sp_inst_completed");
-		fprintf(manual_dump_file,"%-20s","sfu_inst_completed");
-		fprintf(manual_dump_file,"%-20s","data_cache_inst_completed");
-		fprintf(manual_dump_file,"%-20s","shared_mem_inst_completed");
-		fprintf(manual_dump_file,"%-20s","constant_cache_inst_completed");
-		fprintf(manual_dump_file,"%-20s","texture_cache_inst_completed");
-		fprintf(manual_dump_file,"%-20s\n","local_mem_inst_completed");
+		fprintf(manual_dump_file,"Cycle,");
+		fprintf(manual_dump_file,"sp_inst_completed,");
+		fprintf(manual_dump_file,"sfu_inst_completed,");
+		fprintf(manual_dump_file,"data_cache_inst_completed,");
+		fprintf(manual_dump_file,"shared_mem_inst_completed,");
+		fprintf(manual_dump_file,"constant_cache_inst_completed,");
+		fprintf(manual_dump_file,"texture_cache_inst_completed,");
+		fprintf(manual_dump_file,"local_mem_inst_completed\n");
 	}
    	manual_dump_first_print = false;
 
 	// Put all the chip related stats first
-	fprintf(manual_dump_file,"%-20llu",gpu_sim_cycle);
+	fprintf(manual_dump_file,"%llu,",gpu_sim_cycle);
 
 	// Put all the SM related extra stats in here
 	m_shader_stats->manual_stats_print(manual_dump_file);

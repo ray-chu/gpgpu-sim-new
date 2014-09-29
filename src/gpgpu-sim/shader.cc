@@ -469,13 +469,13 @@ void shader_core_stats::event_warp_issued( unsigned s_id, unsigned warp_id, unsi
 
 void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 
-	fprintf(manual_dump_file,"%-20u",sp_inst_completed_per_sm[0] - sp_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%-20u",sfu_inst_completed_per_sm[0] - sfu_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%-20u",data_cache_inst_completed_per_sm[0] - data_cache_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%-20u",shared_mem_inst_completed_per_sm[0] - shared_mem_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%-20u",constant_cache_inst_completed_per_sm[0] - constant_cache_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%-20u",texture_cache_inst_completed_per_sm[0] - texture_cache_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%-20u",local_mem_inst_completed_per_sm[0] - local_mem_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%u,",sp_inst_completed_per_sm[0] - sp_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%u,",sfu_inst_completed_per_sm[0] - sfu_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%u,",data_cache_inst_completed_per_sm[0] - data_cache_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%u,",shared_mem_inst_completed_per_sm[0] - shared_mem_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%u,",constant_cache_inst_completed_per_sm[0] - constant_cache_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%u,",texture_cache_inst_completed_per_sm[0] - texture_cache_inst_completed_last_cycle_per_sm[0]);
+	fprintf(manual_dump_file,"%u,",local_mem_inst_completed_per_sm[0] - local_mem_inst_completed_last_cycle_per_sm[0]);
 
 	sp_inst_completed_last_cycle_per_sm[0] = sp_inst_completed_per_sm[0];
 	sfu_inst_completed_last_cycle_per_sm[0] = sfu_inst_completed_per_sm[0];
