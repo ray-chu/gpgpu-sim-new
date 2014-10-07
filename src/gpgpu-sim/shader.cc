@@ -129,6 +129,14 @@ shader_core_ctx::shader_core_ctx( class gpgpu_sim *gpu,
                                          CONCRETE_SCHEDULER_LRR :
                                          sched_config.find("two_level_active") != std::string::npos ?
                                          CONCRETE_SCHEDULER_TWO_LEVEL_ACTIVE :
+	                                 sched_config.find("gto_i_gto_o") !=std::string::npos ?	      
+	                                 CONCRETE_SCHEDULER_GTO_INNER_GTO_OUTER :
+	                                 sched_config.find("greedy_i_gto_o") !=std::string::npos ?	      
+	                                 CONCRETE_SCHEDULER_GREEDY_INNER_GTO_OUTER :
+	                                 sched_config.find("rr_i_gto_o") !=std::string::npos ?	      
+	                                 CONCRETE_SCHEDULER_RR_INNER_GTO_OUTER :
+	                                 sched_config.find("rr_i_greedy_o") !=std::string::npos ?	      
+	                                 CONCRETE_SCHEDULER_RR_INNER_GREEDY_OUTER :
                                          sched_config.find("gto") != std::string::npos ?
                                          CONCRETE_SCHEDULER_GTO :
                                          sched_config.find("warp_limiting") != std::string::npos ?
@@ -180,6 +188,66 @@ shader_core_ctx::shader_core_ctx( class gpgpu_sim *gpu,
                                        &m_pipeline_reg[ID_OC_MEM],
                                        i
                                      )
+                );
+                break;
+	    case CONCRETE_SCHEDULER_GTO_INNER_GTO_OUTER:
+                schedulers.push_back(
+                    new gto_inner_gto_outer_scheduler( m_stats,
+                                                    this,
+                                                    m_scoreboard,
+                                                    m_simt_stack,
+                                                    &m_warp,
+                                                    &m_pipeline_reg[ID_OC_SP],
+                                                    &m_pipeline_reg[ID_OC_SFU],
+                                                    &m_pipeline_reg[ID_OC_MEM],
+                                                    i,
+                                                    config->gpgpu_scheduler_string
+                                                  )
+                );
+                break;
+	    case CONCRETE_SCHEDULER_GREEDY_INNER_GTO_OUTER :
+		schedulers.push_back(
+                    new greedy_inner_gto_outer_scheduler( m_stats,
+                                                    this,
+                                                    m_scoreboard,
+                                                    m_simt_stack,
+                                                    &m_warp,
+                                                    &m_pipeline_reg[ID_OC_SP],
+                                                    &m_pipeline_reg[ID_OC_SFU],
+                                                    &m_pipeline_reg[ID_OC_MEM],
+                                                    i,
+                                                    config->gpgpu_scheduler_string
+                                                  )
+                );
+                break;
+	    case CONCRETE_SCHEDULER_RR_INNER_GTO_OUTER :
+		schedulers.push_back(
+                    new rr_inner_gto_outer_scheduler( m_stats,
+                                                    this,
+                                                    m_scoreboard,
+                                                    m_simt_stack,
+                                                    &m_warp,
+                                                    &m_pipeline_reg[ID_OC_SP],
+                                                    &m_pipeline_reg[ID_OC_SFU],
+                                                    &m_pipeline_reg[ID_OC_MEM],
+                                                    i,
+                                                    config->gpgpu_scheduler_string
+                                                  )
+                );
+                break;
+	    case CONCRETE_SCHEDULER_RR_INNER_GREEDY_OUTER :
+		schedulers.push_back(
+                    new rr_inner_greedy_outer_scheduler( m_stats,
+                                                    this,
+                                                    m_scoreboard,
+                                                    m_simt_stack,
+                                                    &m_warp,
+                                                    &m_pipeline_reg[ID_OC_SP],
+                                                    &m_pipeline_reg[ID_OC_SFU],
+                                                    &m_pipeline_reg[ID_OC_MEM],
+                                                    i,
+                                                    config->gpgpu_scheduler_string
+                                                  )
                 );
                 break;
             case CONCRETE_SCHEDULER_WARP_LIMITING:
@@ -884,9 +952,11 @@ void scheduler_unit::cycle()
                                (*iter)->get_warp_id(),
                                (*iter)->get_dynamic_warp_id(),
                                issued );
+		if(get_sid()==1)
+			fprintf(issue_status_file,"%llu,%u\n",gpu_sim_cycle+gpu_tot_sim_cycle,warp_id);
                 do_on_warp_issued( warp_id, issued, iter );
             }
-            checked++;
+	    checked++;
         }
         if ( issued ) {
             // This might be a bit inefficient, but we need to maintain
@@ -905,6 +975,11 @@ void scheduler_unit::cycle()
         } 
     }
 
+    // if(!issued_inst){
+    // 	if(get_sid()==1)
+    // 		fprintf(issue_status_file,"%llu\n",gpu_sim_cycle+gpu_tot_sim_cycle);
+    // }
+    
     // issue stall statistics:
     if( !valid_inst ) 
         m_stats->shader_cycle_distro[0]++; // idle or control hazard
@@ -1026,6 +1101,89 @@ void two_level_active_scheduler::order_warps()
     assert( num_promoted == num_demoted );
 }
 
+
+void gto_inner_gto_outer_scheduler::order_warps(){
+//FILE *checking_dump=fopen("checking_warp_status.txt","a");
+    m_next_cycle_prioritized_warps.clear();
+
+    unsigned group_iter_counter=0;
+    
+    for(std::vector<issue_group_queue>::iterator group_iter=m_issue_warps_matrix.begin();
+    	(group_iter!= m_issue_warps_matrix.end())&&(m_next_cycle_prioritized_warps.size()<m_max_active_warps)&&(group_iter_counter<m_num_of_issue_groups);){
+    	    if(group_iter->group_all_stall_det==true){  
+		    //move pending queue into active queue and then push new group queue into end of whole matrix
+		    issue_group_queue cache_queue;
+		    cache_queue.group_id=group_iter->group_id;
+		    cache_queue.group_all_stall_det=false;
+		    //cache_queue.dep=true;
+		    cache_queue.warps_queue=group_iter->warps_queue;
+		    //cache_queue.pending_warps_queue.clear();
+		    
+		    group_iter=m_issue_warps_matrix.erase(group_iter);
+		    m_issue_warps_matrix.push_back(cache_queue);
+		    group_iter_counter++;
+    	    }
+    	    else{
+		    unsigned long_op_count=0;
+		    unsigned in_group_count=0;
+    	    	    for(std::vector<shd_warp_t*>::iterator iter=(group_iter->warps_queue).begin();
+    	    		(in_group_count<m_issue_group_size)&&(m_next_cycle_prioritized_warps.size()<m_max_active_warps);){
+			    // if(m_shader->get_sid()==1){
+			    // 	    fprintf(checking_dump,"%llu, %u, %u\n",gpu_tot_sim_cycle+gpu_sim_cycle, (*iter)->get_warp_id(),group_iter->group_id);
+			    // }
+			    
+    	    		    //bool waiting =false;
+			    bool waiting = (*iter)->waiting();			    
+			    const warp_inst_t* inst = (*iter)->ibuffer_next_inst();
+// 			    if((*iter)->get_warp_id()<48&&m_shader->get_sid()==1&&!(*iter)->ibuffer_empty()){
+// 			    // 	    printf("Hello!\n");
+// //				    valid = (*iter)->ibuffer_next_valid();
+// 				     ptx_print_insn(inst->pc,checking_dump);
+// //				    inst->print(checking_dump);
+// 			    }
+			    //bool mem_wait=false;
+    	    		    for (int i=0; i<4; i++){    	    			    
+    	    			    //Is the instruction waiting on a long operation?
+    	    			    if ( inst && inst->in[i] > 0 && this->m_scoreboard->islongop((*iter)->get_warp_id(), inst->in[i])){        
+					    //mem_wait = true;
+					    waiting=true;
+					    //break;
+    	    			    }
+    	    		    }
+			    
+    	    		    if( waiting ) {
+				    // if(m_shader->get_sid()==1){
+				    // 	    fprintf(checking_dump,"warp%u detect long stalls\n",(*iter)->get_warp_id());
+				    // }
+				    long_op_count++;
+				    shd_warp_t*tmp=(*iter);
+    	    			    iter = (group_iter->warps_queue).erase(iter);
+    	    			    (group_iter->warps_queue).push_back(tmp);
+    	    		    } 
+			    else {
+    	    			    m_next_cycle_prioritized_warps.push_back(*iter);
+    	    			    ++iter;
+    	    		    }
+			    in_group_count++;
+    	    	    }
+
+		    if(long_op_count==m_issue_group_size){
+			    group_iter->group_all_stall_det=true;
+			    // if(m_shader->get_sid()==1){
+			    // 	    fprintf(checking_dump,"group%u long stall detect. Group priority will switch next cycle\n",group_iter->group_id);
+			    // }
+		    }
+		    else
+			    group_iter->group_all_stall_det=false;
+
+    	    	    ++group_iter;
+		    ++group_iter_counter;
+    	    }
+    }
+
+    //fclose(checking_dump);
+}
+
 swl_scheduler::swl_scheduler ( shader_core_stats* stats, shader_core_ctx* shader,
                                Scoreboard* scoreboard, simt_stack** simt,
                                std::vector<shd_warp_t>* warp,
@@ -1047,6 +1205,270 @@ swl_scheduler::swl_scheduler ( shader_core_stats* stats, shader_core_ctx* shader
     // Currently only GTO is implemented
     assert( m_prioritization == SCHEDULER_PRIORITIZATION_GTO );
     assert( m_num_warps_to_limit <= shader->get_config()->max_warps_per_shader );
+}
+
+void greedy_inner_gto_outer_scheduler::order_warps(){
+    m_next_cycle_prioritized_warps.clear();
+
+    unsigned group_iter_counter=0;
+
+    for(std::vector<issue_group_queue>::iterator group_iter=m_issue_warps_matrix.begin();
+    	(group_iter!= m_issue_warps_matrix.end())&&(m_next_cycle_prioritized_warps.size()<m_max_active_warps)&&(group_iter_counter<m_num_of_issue_groups);){
+    	    if(group_iter->group_all_stall_det==true){  
+		    //move pending queue into active queue and then push new group queue into end of whole matrix
+		    issue_group_queue cache_queue;
+		    cache_queue.group_id=group_iter->group_id;
+		    cache_queue.group_all_stall_det=false;
+		    //cache_queue.dep=true;
+		    cache_queue.warps_queue=group_iter->warps_queue;
+		    //cache_queue.pending_warps_queue.clear();
+		    
+		    group_iter=m_issue_warps_matrix.erase(group_iter);
+		    m_issue_warps_matrix.push_back(cache_queue);
+		    group_iter_counter++;
+    	    }
+    	    else{
+		    unsigned long_op_count=0;
+		    unsigned in_group_count=0;
+    	    	    for(std::vector<shd_warp_t*>::iterator iter=(group_iter->warps_queue).begin();
+    	    		(in_group_count<m_issue_group_size)&&(m_next_cycle_prioritized_warps.size()<m_max_active_warps);){
+			    
+    	    		    //bool waiting =false;
+			    bool waiting = (*iter)->waiting();			    
+			    const warp_inst_t* inst = (*iter)->ibuffer_next_inst();
+			    //bool mem_wait=false;
+    	    		    for (int i=0; i<4; i++){    	    			    
+    	    			    //Is the instruction waiting on a long operation?
+    	    			    if ( inst && inst->in[i] > 0 && this->m_scoreboard->islongop((*iter)->get_warp_id(), inst->in[i])){        
+					    //mem_wait = true;
+					    waiting=true;
+					    //break;
+    	    			    }
+    	    		    }
+			    
+    	    		    if( waiting ) {
+				    long_op_count++;
+				    // shd_warp_t*tmp=(*iter);
+    	    			    // iter = (group_iter->warps_queue).erase(iter);
+    	    			    // (group_iter->warps_queue).push_back(tmp);
+    	    		    } 
+			    else {
+    	    			    m_next_cycle_prioritized_warps.push_back(*iter);
+    	    		    }
+			    ++iter;
+			    in_group_count++;
+    	    	    }
+
+		    if(long_op_count==m_issue_group_size)
+			    group_iter->group_all_stall_det=true;
+		    else
+			    group_iter->group_all_stall_det=false;
+
+    	    	    ++group_iter;
+		    ++group_iter_counter;
+    	    }
+    }
+}
+
+void rr_inner_gto_outer_scheduler::order_warps(){
+
+    m_next_cycle_prioritized_warps.clear();
+
+    unsigned group_iter_counter=0;
+
+    for(std::vector<issue_group_queue>::iterator group_iter=m_issue_warps_matrix.begin();
+    	(group_iter!= m_issue_warps_matrix.end())&&(m_next_cycle_prioritized_warps.size()<m_max_active_warps)&&(group_iter_counter<m_num_of_issue_groups);){
+    	    if(group_iter->group_all_stall_det==true){  
+		    //move pending queue into active queue and then push new group queue into end of whole matrix
+		    issue_group_queue cache_queue;
+		    cache_queue.group_id=group_iter->group_id;
+		    cache_queue.group_all_stall_det=false;
+		    //cache_queue.dep=true;
+		    cache_queue.warps_queue=group_iter->warps_queue;
+		    //cache_queue.pending_warps_queue.clear();
+		    
+		    group_iter=m_issue_warps_matrix.erase(group_iter);
+		    m_issue_warps_matrix.push_back(cache_queue);
+		    group_iter_counter++;
+    	    }
+    	    else{
+		    unsigned long_op_count=0;
+		    unsigned in_group_count=0;
+    	    	    for(std::vector<shd_warp_t*>::iterator iter=(group_iter->warps_queue).begin();
+    	    		(in_group_count<m_issue_group_size)&&(m_next_cycle_prioritized_warps.size()<m_max_active_warps);){
+			    
+    	    		    //bool waiting =false;
+			    bool waiting = (*iter)->waiting();			    
+			    const warp_inst_t* inst = (*iter)->ibuffer_next_inst();
+			    //bool mem_wait=false;
+    	    		    for (int i=0; i<4; i++){    	    			    
+    	    			    //Is the instruction waiting on a long operation?
+    	    			    if ( inst && inst->in[i] > 0 && this->m_scoreboard->islongop((*iter)->get_warp_id(), inst->in[i])){        
+					    //mem_wait = true;
+					    waiting=true;
+					    //break;
+    	    			    }
+    	    		    }
+			    
+    	    		    if( waiting ) {
+				    long_op_count++;
+    	    		    } 
+			    else {
+    	    			    m_next_cycle_prioritized_warps.push_back(*iter);
+    	    		    }
+			    ++iter;
+			    in_group_count++;
+    	    	    }
+
+		    if(long_op_count==m_issue_group_size)
+			    group_iter->group_all_stall_det=true;
+		    else
+			    group_iter->group_all_stall_det=false;
+
+    	    	    ++group_iter;
+		    ++group_iter_counter;
+    	    }
+    }
+
+}
+
+void
+rr_inner_gto_outer_scheduler::do_on_warp_issued( unsigned warp_id,
+                                               unsigned num_issued,
+                                               const std::vector< shd_warp_t* >::const_iterator& prioritized_iter )
+{
+    scheduler_unit::do_on_warp_issued( warp_id, num_issued, prioritized_iter );
+    unsigned issue_group_id=warp(warp_id).get_issue_group_id();
+    unsigned tmp_group_id=0;
+
+    //It's not efficient. But Truely can find the issue group in issue_warps_matrix;
+    for(std::vector<issue_group_queue>::iterator tmp_iter=m_issue_warps_matrix.begin();
+	(tmp_iter!= m_issue_warps_matrix.end())&&(issue_group_id!=tmp_iter->group_id);tmp_iter++)
+	    tmp_group_id++;
+   
+    if ( SCHEDULER_PRIORITIZATION_LRR == m_inner_level_prioritization ) {
+	    std::vector< shd_warp_t* > new_warps_queue;
+	std::vector< shd_warp_t* >::const_iterator iter_finder;
+
+	//scheduler::cycle use prioritized queue to check. It's different from the supervised matrix we used. And the prioritized_iter is point to the elements of prioritized queue, not the elements of supervised matrix. So we need to find corresponding iter in supervised matrix.
+	for ( std::vector< shd_warp_t* >::const_iterator issue_iter = m_issue_warps_matrix[tmp_group_id].warps_queue.begin();
+	      issue_iter != m_issue_warps_matrix[tmp_group_id].warps_queue.end();
+	      ++issue_iter ) {
+                if ( *prioritized_iter == *issue_iter ) {
+			iter_finder = issue_iter;
+                }
+	}
+        order_lrr( new_warps_queue,
+                   m_issue_warps_matrix[tmp_group_id].warps_queue,
+                   iter_finder,
+                   m_issue_warps_matrix[tmp_group_id].warps_queue.size() );
+	m_issue_warps_matrix[tmp_group_id].warps_queue=new_warps_queue;
+    } else {
+        fprintf( stderr,
+                 "Unimplemented m_inner_level_prioritization: %d\n",
+                 m_inner_level_prioritization );
+        abort();
+    }
+}
+
+void rr_inner_greedy_outer_scheduler::order_warps(){
+
+	m_next_cycle_prioritized_warps.clear();
+
+	unsigned group_iter_counter=0;
+
+	for(std::vector<issue_group_queue>::iterator group_iter=m_issue_warps_matrix.begin();
+	    (group_iter!= m_issue_warps_matrix.end())&&(m_next_cycle_prioritized_warps.size()<m_max_active_warps)&&(group_iter_counter<m_num_of_issue_groups);){
+		// if(group_iter->group_all_stall_det==true){  
+		// 	    //move pending queue into active queue and then push new group queue into end of whole matrix
+		// 	    issue_group_queue cache_queue;
+		// 	    cache_queue.group_id=group_iter->group_id;
+		// 	    cache_queue.group_all_stall_det=false;
+		// 	    //cache_queue.dep=true;
+		// 	    cache_queue.warps_queue=group_iter->warps_queue;
+		// 	    //cache_queue.pending_warps_queue.clear();
+		    
+		// 	    group_iter=m_issue_warps_matrix.erase(group_iter);
+		// 	    m_issue_warps_matrix.push_back(cache_queue);
+		// 	    group_iter_counter++;
+		// }
+		// else{
+		//   unsigned long_op_count=0;
+		unsigned in_group_count=0;
+		for(std::vector<shd_warp_t*>::iterator iter=(group_iter->warps_queue).begin();
+		    (in_group_count<m_issue_group_size)&&(m_next_cycle_prioritized_warps.size()<m_max_active_warps);){
+			    
+			//bool waiting =false;
+			bool waiting = (*iter)->waiting();			    
+			const warp_inst_t* inst = (*iter)->ibuffer_next_inst();
+			//bool mem_wait=false;
+			for (int i=0; i<4; i++){    	    			    
+				//Is the instruction waiting on a long operation?
+				if ( inst && inst->in[i] > 0 && this->m_scoreboard->islongop((*iter)->get_warp_id(), inst->in[i])){        
+					//mem_wait = true;
+					waiting=true;
+					//break;
+				}
+			}
+			    
+			if( !waiting ) {
+				// 	    long_op_count++;
+				// } 
+				// else {
+				m_next_cycle_prioritized_warps.push_back(*iter);
+			}
+			++iter;
+			in_group_count++;
+		}
+
+		// if(long_op_count==m_issue_group_size)
+		// 	    group_iter->group_all_stall_det=true;
+		// else
+		// 	    group_iter->group_all_stall_det=false;
+
+		++group_iter;
+		++group_iter_counter;
+	}
+}
+
+
+void
+rr_inner_greedy_outer_scheduler::do_on_warp_issued( unsigned warp_id,
+                                               unsigned num_issued,
+                                               const std::vector< shd_warp_t* >::const_iterator& prioritized_iter )
+{
+    scheduler_unit::do_on_warp_issued( warp_id, num_issued, prioritized_iter );
+    unsigned issue_group_id=warp(warp_id).get_issue_group_id();
+    unsigned tmp_group_id=0;
+
+    //It's not efficient. But Truely can find the issue group in issue_warps_matrix;
+    for(std::vector<issue_group_queue>::iterator tmp_iter=m_issue_warps_matrix.begin();
+	(tmp_iter!= m_issue_warps_matrix.end())&&(issue_group_id!=tmp_iter->group_id);tmp_iter++)
+	    tmp_group_id++;
+   
+    if ( SCHEDULER_PRIORITIZATION_LRR == m_inner_level_prioritization ) {
+	    std::vector< shd_warp_t* > new_warps_queue;
+	std::vector< shd_warp_t* >::const_iterator iter_finder;
+
+	//scheduler::cycle use prioritized queue to check. It's different from the supervised matrix we used. And the prioritized_iter is point to the elements of prioritized queue, not the elements of supervised matrix. So we need to find corresponding iter in supervised matrix.
+	for ( std::vector< shd_warp_t* >::const_iterator issue_iter = m_issue_warps_matrix[tmp_group_id].warps_queue.begin();
+	      issue_iter != m_issue_warps_matrix[tmp_group_id].warps_queue.end();
+	      ++issue_iter ) {
+                if ( *prioritized_iter == *issue_iter ) {
+			iter_finder = issue_iter;
+                }
+	}
+        order_lrr( new_warps_queue,
+                   m_issue_warps_matrix[tmp_group_id].warps_queue,
+                   iter_finder,
+                   m_issue_warps_matrix[tmp_group_id].warps_queue.size() );
+	m_issue_warps_matrix[tmp_group_id].warps_queue=new_warps_queue;
+    } else {
+        fprintf( stderr,
+                 "Unimplemented m_inner_level_prioritization: %d\n",
+                 m_inner_level_prioritization );
+        abort();
+    }
 }
 
 void swl_scheduler::order_warps()
@@ -2132,10 +2554,10 @@ void gpgpu_sim::shader_print_l1_miss_stat( FILE *fout ) const
 
 void warp_inst_t::print( FILE *fout ) const
 {
-    if (empty() ) {
-        fprintf(fout,"bubble\n" );
-        return;
-    } else 
+    // if (empty() ) {
+    //     fprintf(fout,"bubble\n" );
+    //     return;
+    // } else 
         fprintf(fout,"0x%04x ", pc );
     fprintf(fout, "w%02d[", m_warp_id);
     for (unsigned j=0; j<m_config->warp_size; j++)

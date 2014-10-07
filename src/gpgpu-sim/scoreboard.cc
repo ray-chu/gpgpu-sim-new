@@ -74,6 +74,7 @@ void Scoreboard::releaseRegister(unsigned wid, unsigned regnum)
     SHADER_DPRINTF( SCOREBOARD,
                     "Release register - warp:%d, reg: %d\n", wid, regnum );
 	reg_table[wid].erase(regnum);
+	longopregs[wid].erase(regnum);
 }
 
 const bool Scoreboard::islongop (unsigned warp_id,unsigned regnum) {
