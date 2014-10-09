@@ -358,8 +358,9 @@ void shader_core_config::reg_options(class OptionParser * opp)
                             "Number if ldst units (default=1) WARNING: not hooked up to anything",
                              "1");
     option_parser_register(opp, "-gpgpu_scheduler", OPT_CSTR, &gpgpu_scheduler_string,
-                                "Scheduler configuration: < lrr | gto | two_level_active > "
+                                "Scheduler configuration: < lrr | gto | two_level_active | rr_i_gto_o| rr_i_greedy_o|gto_i_gto_o|greedy_i_gto_o> "
                                 "If two_level_active:<num_active_warps>:<inner_prioritization>:<outer_prioritization>"
+			        "If xx_i_yy_i:<num_active_warps_for_issue>:<number_of_warps_in_Group>:0:1"
                                 "For complete list of prioritization values see shader.h enum scheduler_prioritization_type"
                                 "Default: gto",
                                  "gto");
