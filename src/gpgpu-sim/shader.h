@@ -73,7 +73,7 @@
 //Set a hard limit of 32 CTAs per shader [cuda only has 8]
 #define MAX_CTA_PER_SHADER 32
 extern unsigned long long  gpu_sim_cycle;
-
+extern unsigned total_program_phases;
 class thread_ctx_t {
 public:
    unsigned m_cta_id; // hardware CTA this thread belongs
@@ -436,6 +436,7 @@ public:
 	virtual ~two_level_active_scheduler () {}
     virtual void order_warps();
 	void add_supervised_warp_id(int i) {
+		m_supervised_warps.push_back(&warp(i));
         if ( m_next_cycle_prioritized_warps.size() < m_max_active_warps ) {
             m_next_cycle_prioritized_warps.push_back( &warp(i) );
         } else {
@@ -1465,7 +1466,9 @@ public:
 		texture_cache_inst_completed_last_cycle_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
 		local_mem_inst_completed_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
 		local_mem_inst_completed_last_cycle_per_sm = (unsigned*) calloc(config->num_shader(),sizeof(unsigned));
-
+		phases_per_sm.resize(config->num_shader());
+		phases_per_sm_last_cycle.resize(config->num_shader());
+		phases_created=false;
 	}
 
     ~shader_core_stats()
@@ -1521,10 +1524,25 @@ public:
 	void increment_constant_cache_inst_completed(unsigned sm_id){ constant_cache_inst_completed_per_sm[sm_id]++;}
 	void increment_texture_cache_inst_completed(unsigned sm_id){ texture_cache_inst_completed_per_sm[sm_id]++;}
 	void increment_local_mem_inst_completed(unsigned sm_id){ local_mem_inst_completed_per_sm[sm_id]++;}
+	void populate_phase_stats(unsigned sm_id,unsigned phase){
+			static bool first_access = true;
+			if(first_access){
+				for(unsigned i=0;i<m_config->num_shader();i++){
+					printf("DEBUG XX: Initializing phase stats for shader %d to %d\n",i,total_program_phases);
+					fflush(stdout);
+					phases_per_sm[i].resize(total_program_phases,0);
+					phases_per_sm_last_cycle[i].resize(total_program_phases,0);
+				}
+				first_access = false;
+			}
+			phases_per_sm[sm_id][phase]++;
+	}
 
+	void set_phases_created(){phases_created=true;}
+	bool get_phases_created(){return phases_created;}
 private:
     const shader_core_config *m_config;
-
+    bool phases_created;
     traffic_breakdown *m_outgoing_traffic_stats; // core to memory partitions
     traffic_breakdown *m_incoming_traffic_stats; // memory partition to core 
 
@@ -1550,7 +1568,8 @@ private:
 	unsigned *texture_cache_inst_completed_last_cycle_per_sm;
 	unsigned *local_mem_inst_completed_per_sm;
 	unsigned *local_mem_inst_completed_last_cycle_per_sm;
-
+	std::vector< std::vector<unsigned> > phases_per_sm;
+	std::vector< std::vector<unsigned> > phases_per_sm_last_cycle;
     friend class power_stat_t;
     friend class shader_core_ctx;
     friend class ldst_unit;

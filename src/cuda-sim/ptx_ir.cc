@@ -1198,6 +1198,9 @@ ptx_instruction::ptx_instruction( int opcode,
        }
 
    }
+
+   m_phase = 0;
+   m_distance = 0;
 }
 
 void ptx_instruction::print_insn() const

@@ -46,11 +46,14 @@
 #include <limits.h>
 #include "traffic_breakdown.h"
 #include "shader_trace.h"
+#include "../cuda-sim/ptx_ir.h"
 
 #define PRIORITIZE_MSHR_OVER_WB 1
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #define MIN(a,b) (((a)<(b))?(a):(b))
-    
+
+
+std::vector<ptx_instruction*> pc_to_ptx_instruction;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -469,6 +472,7 @@ void shader_core_stats::event_warp_issued( unsigned s_id, unsigned warp_id, unsi
 
 void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 
+
 	fprintf(manual_dump_file,"%u,",sp_inst_completed_per_sm[0] - sp_inst_completed_last_cycle_per_sm[0]);
 	fprintf(manual_dump_file,"%u,",sfu_inst_completed_per_sm[0] - sfu_inst_completed_last_cycle_per_sm[0]);
 	fprintf(manual_dump_file,"%u,",data_cache_inst_completed_per_sm[0] - data_cache_inst_completed_last_cycle_per_sm[0]);
@@ -476,6 +480,16 @@ void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 	fprintf(manual_dump_file,"%u,",constant_cache_inst_completed_per_sm[0] - constant_cache_inst_completed_last_cycle_per_sm[0]);
 	fprintf(manual_dump_file,"%u,",texture_cache_inst_completed_per_sm[0] - texture_cache_inst_completed_last_cycle_per_sm[0]);
 	fprintf(manual_dump_file,"%u,",local_mem_inst_completed_per_sm[0] - local_mem_inst_completed_last_cycle_per_sm[0]);
+	if(get_phases_created()){
+	for(unsigned i=0;i<total_program_phases;i++){
+			fprintf(manual_dump_file,"%u,",phases_per_sm[0][i]-phases_per_sm_last_cycle[0][i]);
+			phases_per_sm_last_cycle[0][i] = phases_per_sm[0][i];
+	}
+	}else{
+		for(unsigned i=0;i<total_program_phases;i++)
+			fprintf(manual_dump_file,"N/A,");
+
+	}
 
 	sp_inst_completed_last_cycle_per_sm[0] = sp_inst_completed_per_sm[0];
 	sfu_inst_completed_last_cycle_per_sm[0] = sfu_inst_completed_per_sm[0];
@@ -581,7 +595,7 @@ void shader_core_stats::visualizer_print( gzFile visualizer_file )
 }
 
 #define PROGRAM_MEM_START 0xF0000000 /* should be distinct from other memory spaces... 
-                                        check ptx_ir.h to verify this does not overlap 
+                                        check abstract_hardware_model.h to verify this does not overlap 
                                         other memory spaces */
 void shader_core_ctx::decode()
 {
@@ -643,7 +657,7 @@ void shader_core_ctx::fetch()
 
             // this code fetches instructions from the i-cache or generates memory requests
             if( !m_warp[warp_id].functional_done() && !m_warp[warp_id].imiss_pending() && m_warp[warp_id].ibuffer_empty() ) {
-                address_type pc  = m_warp[warp_id].get_pc();
+                address_type pc  = m_warp[warp_id].get_pc(); // this pc is incremented in the issue_warp
                 address_type ppc = pc + PROGRAM_MEM_START;
                 unsigned nbytes=16; 
                 unsigned offset_in_block = pc & (m_config->m_L1I_config.get_line_sz()-1);
@@ -824,7 +838,7 @@ void scheduler_unit::cycle()
     bool ready_inst = false;  // of the valid instructions, there was one not waiting for pending register writes
     bool issued_inst = false; // of these we issued one
 
-    order_warps();
+	order_warps();
     for ( std::vector< shd_warp_t* >::const_iterator iter = m_next_cycle_prioritized_warps.begin();
           iter != m_next_cycle_prioritized_warps.end();
           iter++ ) {
@@ -840,13 +854,13 @@ void scheduler_unit::cycle()
         unsigned max_issue = m_shader->m_config->gpgpu_max_insn_issue_per_warp;
         while( !warp(warp_id).waiting() && !warp(warp_id).ibuffer_empty() && (checked < max_issue) && (checked <= issued) && (issued < max_issue) ) {
             const warp_inst_t *pI = warp(warp_id).ibuffer_next_inst();
-            bool valid = warp(warp_id).ibuffer_next_valid();
+            bool valid = warp(warp_id).ibuffer_next_valid();// Gets the first / second decoded instruction on instruction buffer
             bool warp_inst_issued = false;
             unsigned pc,rpc;
             m_simt_stack[warp_id]->get_pdom_stack_top_info(&pc,&rpc);
-            SCHED_DPRINTF( "Warp (warp_id %u, dynamic_warp_id %u) has valid instruction (%s)\n",
-                           (*iter)->get_warp_id(), (*iter)->get_dynamic_warp_id(),
-                           ptx_get_insn_str( pc).c_str() );
+            //printf("Warp (warp_id %u, dynamic_warp_id %u) has valid instruction (%s)\n",
+            //               (*iter)->get_warp_id(), (*iter)->get_dynamic_warp_id(),
+            //               ptx_get_insn_str( pc).c_str() );
             if( pI ) {
                 assert(valid);
                 if( pc != pI->pc ) {
@@ -858,8 +872,7 @@ void scheduler_unit::cycle()
                 } else {
                     valid_inst = true;
                     if ( !m_scoreboard->checkCollision(warp_id, pI) ) {
-                        SCHED_DPRINTF( "Warp (warp_id %u, dynamic_warp_id %u) passes scoreboard\n",
-                                       (*iter)->get_warp_id(), (*iter)->get_dynamic_warp_id() );
+                        //printf( "Warp (warp_id %u, dynamic_warp_id %u) passes scoreboard\n",(*iter)->get_warp_id(), (*iter)->get_dynamic_warp_id() );
                         ready_inst = true;
                         const active_mask_t &active_mask = m_simt_stack[warp_id]->get_active_mask();
                         assert( warp(warp_id).inst_in_pipeline() );
@@ -888,10 +901,9 @@ void scheduler_unit::cycle()
                                 }
                             } 
                         }
-                    } else {
-                        SCHED_DPRINTF( "Warp (warp_id %u, dynamic_warp_id %u) fails scoreboard\n",
-                                       (*iter)->get_warp_id(), (*iter)->get_dynamic_warp_id() );
-                    }
+                    } //else {
+                      // 		printf( "Warp (warp_id %u, dynamic_warp_id %u) fails scoreboard\n",(*iter)->get_warp_id(), (*iter)->get_dynamic_warp_id() );
+                   // }
                 }
             } else if( valid ) {
                // this case can happen after a return instruction in diverged warp
@@ -901,10 +913,10 @@ void scheduler_unit::cycle()
                warp(warp_id).ibuffer_flush();
             }
             if(warp_inst_issued) {
-                SCHED_DPRINTF( "Warp (warp_id %u, dynamic_warp_id %u) issued %u instructions\n",
-                               (*iter)->get_warp_id(),
-                               (*iter)->get_dynamic_warp_id(),
-                               issued );
+               // printf( "Warp (warp_id %u, dynamic_warp_id %u) issued %u instructions\n",
+               //                (*iter)->get_warp_id(),
+               //                (*iter)->get_dynamic_warp_id(),
+               //                issued );
                 do_on_warp_issued( warp_id, issued, iter );
             }
             checked++;
@@ -913,7 +925,7 @@ void scheduler_unit::cycle()
             // This might be a bit inefficient, but we need to maintain
             // two ordered list for proper scheduler execution.
             // We could remove the need for this loop by associating a
-            // supervised_is index with each entry in the m_next_cycle_prioritized_warps
+            // supervised_id index with each entry in the m_next_cycle_prioritized_warps
             // vector. For now, just run through until you find the right warp_id
             for ( std::vector< shd_warp_t* >::const_iterator supervised_iter = m_supervised_warps.begin();
                   supervised_iter != m_supervised_warps.end();
@@ -926,6 +938,27 @@ void scheduler_unit::cycle()
         } 
     }
 
+	for( std::vector<shd_warp_t*>::iterator i=m_supervised_warps.begin();i!=m_supervised_warps.end();i++){
+		unsigned warp_id = (*i)->get_warp_id();
+		const warp_inst_t *pI = warp(warp_id).ibuffer_next_inst();
+		
+		if ( (*i) == NULL || (*i)->done_exit() ) 
+            continue;
+        
+		unsigned pc,rpc;
+		if(!warp(warp_id).ibuffer_empty()){
+        	m_simt_stack[warp_id]->get_pdom_stack_top_info(&pc,&rpc);
+
+		unsigned phase = 0;
+		ptx_instruction *ptx_PI = pc_to_ptx_instruction[pc];
+		phase = ptx_PI->get_phase();
+		printf("Cycle:%llu SM:%d W:%d PC:%04x phase:%d\n", gpu_sim_cycle,get_sid(),warp_id,pI->pc,phase);
+		m_stats->populate_phase_stats(get_sid(),phase);
+		m_stats->set_phases_created();
+		}else{
+			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
+		}
+	}
     // issue stall statistics:
     if( !valid_inst ) 
         m_stats->shader_cycle_distro[0]++; // idle or control hazard

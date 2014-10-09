@@ -42,6 +42,7 @@
 #include <zlib.h>
 
 extern unsigned long long gpu_sim_cycle;
+extern unsigned total_program_phases;
 
 static void time_vector_print_interval2gzfile(gzFile outfile);
 
@@ -64,7 +65,13 @@ void gpgpu_sim::dump_manual_stats(){
 		fprintf(manual_dump_file,"shared_mem_inst_completed,");
 		fprintf(manual_dump_file,"constant_cache_inst_completed,");
 		fprintf(manual_dump_file,"texture_cache_inst_completed,");
-		fprintf(manual_dump_file,"local_mem_inst_completed\n");
+		fprintf(manual_dump_file,"local_mem_inst_completed");
+		for(unsigned i=0;i<total_program_phases;i++)
+			fprintf(manual_dump_file,"Warps in phase %d",i);
+		
+		
+		fprintf(manual_dump_file,"\n");
+	
 	}
    	manual_dump_first_print = false;
 
