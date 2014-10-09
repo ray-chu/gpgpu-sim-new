@@ -548,12 +548,15 @@ void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 	fprintf(manual_dump_file,"%u,",constant_cache_inst_completed_per_sm[0] - constant_cache_inst_completed_last_cycle_per_sm[0]);
 	fprintf(manual_dump_file,"%u,",texture_cache_inst_completed_per_sm[0] - texture_cache_inst_completed_last_cycle_per_sm[0]);
 	fprintf(manual_dump_file,"%u,",local_mem_inst_completed_per_sm[0] - local_mem_inst_completed_last_cycle_per_sm[0]);
+	
 	if(get_phases_created()){
-	for(unsigned i=0;i<total_program_phases;i++){
+		
+		for(unsigned i=0;i<total_program_phases;i++){
 			fprintf(manual_dump_file,"%u,",phases_per_sm[0][i]-phases_per_sm_last_cycle[0][i]);
 			phases_per_sm_last_cycle[0][i] = phases_per_sm[0][i];
-	}
+		}
 	}else{
+		
 		for(unsigned i=0;i<total_program_phases;i++)
 			fprintf(manual_dump_file,"N/A,");
 
