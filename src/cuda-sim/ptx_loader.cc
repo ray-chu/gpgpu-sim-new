@@ -144,8 +144,8 @@ char* gpgpu_ptx_sim_convert_ptx_and_sass_to_ptxplus(const std::string ptxfilenam
 			exit(1);
 		}
 	}
-	printf("GPGPU-Sim PTX: DONE converting EMBEDDED .ptx file to ptxplus \n");
-
+	printf("From src/cuda-sim/ptx_loader.cc --------> GPGPU-Sim PTX: DONE converting EMBEDDED .ptx file to ptxplus \n");
+	
 	return ptxplus_str;
 }
 
@@ -178,7 +178,7 @@ symbol_table *gpgpu_ptx_sim_load_ptx_from_string( const char *p, unsigned source
     if ( g_debug_execution >= 100 ) 
        print_ptx_file(p,source_num,buf);
 
-    printf("GPGPU-Sim PTX: finished parsing EMBEDDED .ptx file %s\n",buf);
+    printf("From src/cuda-sim/ptx_loader.cc --------> GPGPU-Sim PTX: finished parsing EMBEDDED .ptx file %s\n",buf);
     return symtab;
 }
 

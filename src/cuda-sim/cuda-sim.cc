@@ -60,6 +60,8 @@ addr_t g_debug_pc = 0xBEEF1518;
 
 unsigned g_ptx_sim_num_insn = 0;
 unsigned gpgpu_param_num_shaders = 0;
+unsigned total_program_phases = 0;
+extern std::vector<ptx_instruction*> pc_to_ptx_instruction;
 
 char *opcode_latency_int, *opcode_latency_fp, *opcode_latency_dp;
 char *opcode_initiation_int, *opcode_initiation_fp, *opcode_initiation_dp;
@@ -191,19 +193,22 @@ void function_info::ptx_assemble()
    m_instr_mem_size = MAX_INST_SIZE*(num_inst+1);
    m_instr_mem = new ptx_instruction*[ m_instr_mem_size ];
 
-   printf("GPGPU-Sim PTX: instruction assembly for function \'%s\'... ", m_name.c_str() );
+   printf("GPGPU-Sim PTX: Assembling instructions for function \'%s\'... \n", m_name.c_str() );
    fflush(stdout);
    std::list<ptx_instruction*>::iterator i;
 
    addr_t PC = g_assemble_code_next_pc; // globally unique address (across functions)
    // start function on an aligned address
-   for( unsigned i=0; i < (PC%MAX_INST_SIZE); i++ ) 
+   for( unsigned i=0; i < (PC%MAX_INST_SIZE); i++ ){ 
       s_g_pc_to_insn.push_back((ptx_instruction*)NULL);
+      pc_to_ptx_instruction.push_back((ptx_instruction*)NULL);
+   }
    PC += PC%MAX_INST_SIZE; 
    m_start_PC = PC;
 
    addr_t n=0; // offset in m_instr_mem
    s_g_pc_to_insn.reserve(s_g_pc_to_insn.size() + MAX_INST_SIZE*m_instructions.size());
+   pc_to_ptx_instruction.reserve(pc_to_ptx_instruction.size() + MAX_INST_SIZE*m_instructions.size());
    for ( i=m_instructions.begin(); i != m_instructions.end(); i++ ) {
       ptx_instruction *pI = *i;
       if ( pI->is_label() ) {
@@ -213,12 +218,15 @@ void function_info::ptx_assemble()
          g_pc_to_finfo[PC] = this;
          m_instr_mem[n] = pI;
          s_g_pc_to_insn.push_back(pI);
+		 pc_to_ptx_instruction.push_back(pI);
          assert(pI == s_g_pc_to_insn[PC]);
+		 assert(pI == pc_to_ptx_instruction[PC]);
          pI->set_m_instr_mem_index(n);
          pI->set_PC(PC);
          assert( pI->inst_size() <= MAX_INST_SIZE );
          for( unsigned i=1; i < pI->inst_size(); i++ ) {
             s_g_pc_to_insn.push_back((ptx_instruction*)NULL);
+			pc_to_ptx_instruction.push_back((ptx_instruction*)NULL);
             m_instr_mem[n+i]=NULL;
          }
          n  += pI->inst_size();
@@ -226,6 +234,8 @@ void function_info::ptx_assemble()
       }
    }
    g_assemble_code_next_pc=PC;
+
+   // This next loop assigns target address for each branch label
    for ( unsigned ii=0; ii < n; ii += m_instr_mem[ii]->inst_size() ) { // handle branch instructions
       ptx_instruction *pI = m_instr_mem[ii];
       if ( pI->get_opcode() == BRA_OP || pI->get_opcode() == BREAKADDR_OP  || pI->get_opcode() == CALLP_OP) {
@@ -242,7 +252,7 @@ void function_info::ptx_assemble()
       }
    }
 
-   printf("  done.\n");
+   printf(" Assembling done.\n");
    fflush(stdout);
    printf("GPGPU-Sim PTX: finding reconvergence points for \'%s\'...\n", m_name.c_str() );
 
@@ -273,13 +283,101 @@ void function_info::ptx_assemble()
    printf("GPGPU-Sim PTX: pre-decoding instructions for \'%s\'...\n", m_name.c_str() );
    for ( unsigned ii=0; ii < n; ii += m_instr_mem[ii]->inst_size() ) { // handle branch instructions
       ptx_instruction *pI = m_instr_mem[ii];
-      pI->pre_decode();
+	  pI->pre_decode();
    }
    printf("GPGPU-Sim PTX: ... done pre-decoding instructions for \'%s\'.\n", m_name.c_str() );
+   
+   create_phases();
    fflush(stdout);
 
    m_assembled = true;
 }
+
+void function_info::create_phases()
+{
+	printf("Creating phases for function \'%s\':\n", m_name.c_str() );
+    std::list<ptx_instruction*>::iterator ptx_itr, first_inst_in_current_phase;
+    unsigned last_bb=0;                       // current basic block. We mark start of each basic block as a phase
+    unsigned phase=0;                         // current phase
+    std::set<unsigned> register_dependencies; // register set to hold register dependencies for current phase
+    first_inst_in_current_phase = m_instructions.begin();
+	for ( ptx_itr = first_inst_in_current_phase; ptx_itr != m_instructions.end(); ptx_itr++ ) { 
+	 
+		std::set<unsigned> inst_regs; // local register set to hold instructions of current instruction
+		bool is_dependent = false;
+	    unsigned current_distance = 0;
+		
+		
+		if ((*ptx_itr)->is_load() &&
+    	(	(*ptx_itr)->space.get_type() == global_space ||
+    		(*ptx_itr)->space.get_type() == local_space ||
+            (*ptx_itr)->space.get_type() == param_space_kernel ||
+            (*ptx_itr)->space.get_type() == param_space_local ||
+            (*ptx_itr)->space.get_type() == param_space_unclassified ||
+    		(*ptx_itr)->space.get_type() == tex_space)){
+    		
+			for ( unsigned r=0; r<4; r++) {
+    			if((*ptx_itr)->out[r] > 0) {
+					//printf("Reg:%d is dependent on a long operation\n",(*ptx_itr)->out[r] );
+					register_dependencies.insert((*ptx_itr)->out[r]);
+            	}
+    		}
+		//printf("Updated dependent registers:");
+		//for(std::set<unsigned>::iterator i=register_dependencies.begin(); i != register_dependencies.end();i++)
+		//		printf("%d,",*i);
+		//printf("\n");
+		continue;
+		}
+
+		if((*ptx_itr)->out[0] > 0) inst_regs.insert((*ptx_itr)->out[0]);
+		if((*ptx_itr)->out[1] > 0) inst_regs.insert((*ptx_itr)->out[1]);
+		if((*ptx_itr)->out[2] > 0) inst_regs.insert((*ptx_itr)->out[2]);
+		if((*ptx_itr)->out[3] > 0) inst_regs.insert((*ptx_itr)->out[3]);
+		if((*ptx_itr)->in[0] > 0) inst_regs.insert((*ptx_itr)->in[0]);
+		if((*ptx_itr)->in[1] > 0) inst_regs.insert((*ptx_itr)->in[1]);
+		if((*ptx_itr)->in[2] > 0) inst_regs.insert((*ptx_itr)->in[2]);
+		if((*ptx_itr)->in[3] > 0) inst_regs.insert((*ptx_itr)->in[3]);
+		if((*ptx_itr)->pred > 0) inst_regs.insert((*ptx_itr)->pred);
+		if((*ptx_itr)->ar1 > 0) inst_regs.insert((*ptx_itr)->ar1);
+		if((*ptx_itr)->ar2 > 0) inst_regs.insert((*ptx_itr)->ar2);
+
+		
+		for ( std::set<unsigned>::iterator it2=inst_regs.begin() ; it2 != inst_regs.end(); it2++ ){
+			if(register_dependencies.find(*it2) != register_dependencies.end()){
+				is_dependent = true;
+				break;
+			}
+		}
+
+		if(is_dependent || (strcmp((*ptx_itr)->get_opcode_cstr(),"exit")==0)){
+				//printf("Found first dependent instruction. Dependence on register %d....... Changing phase\n",*it2);
+				std::list<ptx_instruction*>::iterator last_instruction_in_current_phase = ptx_itr;
+				if(!(strcmp((*ptx_itr)->get_opcode_cstr(),"exit")==0)) // if phase is not created bec of exit, this instructions goes into the next phase
+					last_instruction_in_current_phase--;
+				
+				for(std::list<ptx_instruction*>::iterator x = last_instruction_in_current_phase; x!=first_inst_in_current_phase; x--){
+					(*x)->assign_distance(current_distance + (*x)->get_latency());
+					current_distance += (*x)->get_latency();			
+					(*x)->assign_phase(phase);
+				}
+				(*first_inst_in_current_phase)->assign_distance(current_distance + (*first_inst_in_current_phase)->get_latency());
+				(*first_inst_in_current_phase)->assign_phase(phase);
+				phase++;
+				register_dependencies.clear();
+				first_inst_in_current_phase = ptx_itr;
+		}
+	
+	}		
+
+	for(std::list<ptx_instruction*>::iterator i=m_instructions.begin(); i!= m_instructions.end(); i++ )
+		printf("PC=0x%03x %50sOpcode:%5s\tLatency:%u\tPhase:%u\tDistance:%d\n",(*i)->get_PC(),(*i)->get_source(),
+				(*i)->get_opcode_cstr(),(*i)->get_latency(),(*i)->get_phase(),(*i)->get_distance());
+
+	total_program_phases = phase;
+	printf("Done creating phases for function \'%s\':. Total phases:%d\n", m_name.c_str(),total_program_phases);
+
+}
+
 
 addr_t shared_to_generic( unsigned smid, addr_t addr )
 {

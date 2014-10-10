@@ -81,6 +81,7 @@ const bool Scoreboard::islongop (unsigned warp_id,unsigned regnum) {
 	return longopregs[warp_id].find(regnum) != longopregs[warp_id].end();
 }
 
+
 void Scoreboard::reserveRegisters(const class warp_inst_t* inst) 
 {
     for( unsigned r=0; r < 4; r++) {

@@ -355,7 +355,10 @@ private:
     int gpu_stat_sample_freq;
     int gpu_runtime_stat_flag;
 
-
+	//Additional stats
+	bool enable_manual_stat_dump;
+	unsigned long long manual_stat_sample_freq;
+	char *manual_dump_filename;
 
     unsigned long long liveness_message_freq; 
 
@@ -481,6 +484,8 @@ private:
    std::vector<unsigned> m_executed_kernel_uids; //< uids of kernel launches for stat printout
    std::string executed_kernel_info_string(); //< format the kernel information into a string for stat printout
    void clear_executed_kernel_info(); //< clear the kernel information after stat printout
+
+   void dump_manual_stats();
 
 public:
    unsigned long long  gpu_sim_insn;

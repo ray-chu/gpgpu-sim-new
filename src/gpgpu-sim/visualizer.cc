@@ -41,7 +41,50 @@
 #include <string.h>
 #include <zlib.h>
 
+extern unsigned long long gpu_sim_cycle;
+extern unsigned total_program_phases;
+
 static void time_vector_print_interval2gzfile(gzFile outfile);
+
+void gpgpu_sim::dump_manual_stats(){
+
+	FILE *manual_dump_file = NULL;	
+
+	static bool manual_dump_first_print = true;
+
+	manual_dump_file = fopen(m_config.manual_dump_filename, (manual_dump_first_print)? "w" : "a");
+   	if (manual_dump_file == NULL) {
+    	printf("Error - could not open file for manual stat collection.\n");
+      	exit(1);
+   	}
+	if(manual_dump_first_print){
+		fprintf(manual_dump_file,"Cycle,");
+		fprintf(manual_dump_file,"sp_inst_completed,");
+		fprintf(manual_dump_file,"sfu_inst_completed,");
+		fprintf(manual_dump_file,"data_cache_inst_completed,");
+		fprintf(manual_dump_file,"shared_mem_inst_completed,");
+		fprintf(manual_dump_file,"constant_cache_inst_completed,");
+		fprintf(manual_dump_file,"texture_cache_inst_completed,");
+		fprintf(manual_dump_file,"local_mem_inst_completed");
+		for(unsigned i=0;i<total_program_phases;i++)
+			fprintf(manual_dump_file,"Warps in phase %d",i);
+		
+		
+		fprintf(manual_dump_file,"\n");
+	
+	}
+   	manual_dump_first_print = false;
+
+	// Put all the chip related stats first
+	fprintf(manual_dump_file,"%llu,",gpu_sim_cycle);
+
+	// Put all the SM related extra stats in here
+	m_shader_stats->manual_stats_print(manual_dump_file);
+
+	// CR before the next time we print stats
+	fprintf(manual_dump_file,"\n");
+	fclose(manual_dump_file);
+}
 
 void gpgpu_sim::visualizer_printstat()
 {

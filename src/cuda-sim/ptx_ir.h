@@ -1020,7 +1020,11 @@ public:
       }
       return false;
    }
-
+   unsigned get_latency(){ return latency;} 
+   void assign_phase(unsigned phase){ m_phase = phase;}
+   unsigned get_phase(){ return m_phase;}
+   void assign_distance(unsigned distance){ m_distance = distance;}
+   unsigned get_distance(){ return m_distance;}
 private:
    void set_opcode_and_latency();
    void set_fp_or_int_archop();
@@ -1068,6 +1072,8 @@ private:
    virtual void pre_decode();
    friend class function_info;
    static unsigned g_num_ptx_inst_uid;
+   unsigned m_phase;
+   unsigned m_distance;
 };
 
 class param_info {
@@ -1256,7 +1262,7 @@ public:
       m_local_mem_framesize = sz;
    }
    bool is_entry_point() const { return m_entry_point; }
-
+   void create_phases();
 private:
    unsigned m_uid;
    unsigned m_local_mem_framesize;

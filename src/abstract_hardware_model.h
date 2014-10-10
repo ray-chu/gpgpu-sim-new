@@ -873,6 +873,8 @@ public:
     void set_not_active( unsigned lane_id );
 
     // accessors
+	virtual addr_t get_PC() const {}
+	virtual unsigned get_phase() const{}
     virtual void print_insn(FILE *fp) const 
     {
         fprintf(fp," [inst @ pc=0x%04x] ", pc );
