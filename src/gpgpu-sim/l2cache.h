@@ -91,6 +91,8 @@ public:
    int global_sub_partition_id_to_local_id(int global_sub_partition_id) const; 
 
    unsigned get_mpid() const { return m_id; }
+//   unsigned get_bw() {return bw_counter;}
+//   void set_bw(unsigned bw_v) {bw_counter=bw_v;}
 
 private: 
 
@@ -99,6 +101,7 @@ private:
    class memory_stats_t *m_stats;
    class memory_sub_partition **m_sub_partition; 
    class dram_t *m_dram;
+//   static unsigned bw_counter;
 
    class arbitration_metadata
    {

@@ -1,4 +1,4 @@
-cscope 15 /Downloads/gpgpu-sim/v3.x/src/gpgpu-sim               0000972600
+cscope 15 /Downloads/gpgpu-sim/v3.x/src/gpgpu-sim               0000972972
 	@addrdec.cc
 
 29 
@@ -19761,11 +19761,11 @@ OPT_CSTR
 gpgpu_scheduËr_¡ršg
 ,
 
-366 
+367 
 	}
 }
 
-368 
+369 
 	ggpgpu_sim_cÚfig
 ::
 	$»g_İtiÚs
@@ -19775,7 +19775,7 @@ gpgpu_scheduËr_¡ršg
 İp
 )
 
-370 
+371 
 gpgpu_funùiÚ®_sim_cÚfig
 ::
 	`»g_İtiÚs
@@ -19783,7 +19783,7 @@ gpgpu_funùiÚ®_sim_cÚfig
 İp
 );
 
-371 
+372 
 m_shad”_cÚfig
 .
 	`»g_İtiÚs
@@ -19791,7 +19791,7 @@ m_shad”_cÚfig
 İp
 );
 
-372 
+373 
 m_memÜy_cÚfig
 .
 	`»g_İtiÚs
@@ -19799,7 +19799,7 @@ m_memÜy_cÚfig
 İp
 );
 
-373 
+374 
 pow”_cÚfig
 ::
 	`»g_İtiÚs
@@ -19807,7 +19807,7 @@ pow”_cÚfig
 İp
 );
 
-374 
+375 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19817,7 +19817,7 @@ OPT_INT32
 gpu_max_cyşe_İt
 ,
 
-377 
+378 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19827,7 +19827,7 @@ OPT_INT32
 gpu_max_š¢_İt
 ,
 
-380 
+381 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19837,7 +19837,7 @@ OPT_INT32
 gpu_max_ùa_İt
 ,
 
-383 
+384 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19847,7 +19847,7 @@ OPT_CSTR
 gpgpu_ruÁime_¡©
 ,
 
-386 
+387 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19857,7 +19857,7 @@ OPT_INT64
 liv’ess_mes§ge_äeq
 ,
 
-389 
+390 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19867,7 +19867,7 @@ OPT_BOOL
 gpgpu_æush_l1_ÿche
 ,
 
-392 
+393 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19877,7 +19877,7 @@ OPT_BOOL
 gpgpu_æush_l2_ÿche
 ,
 
-396 
+397 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19887,7 +19887,7 @@ OPT_BOOL
 gpu_d—dlock_d‘eù
 ,
 
-399 
+400 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19895,11 +19895,11 @@ gpu_d—dlock_d‘eù
 OPT_INT32
 ,
 
-400 &
+401 &
 gpgpu_±x_š¡ruùiÚ_şassifiÿtiÚ
 ,
 
-403 
+404 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19909,7 +19909,7 @@ OPT_INT32
 g_±x_sim_mode
 ,
 
-406 
+407 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19919,7 +19919,7 @@ OPT_CSTR
 gpgpu_şock_domašs
 ,
 
-409 
+410 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19929,7 +19929,7 @@ OPT_INT32
 max_cÚcu¼’t_k”Ãl
 ,
 
-411 
+412 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19939,7 +19939,7 @@ OPT_INT32
 gpgpu_cæog_š‹rv®
 ,
 
-414 
+415 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19947,11 +19947,11 @@ gpgpu_cæog_š‹rv®
 OPT_BOOL
 ,
 
-415 &
+416 &
 g_visu®iz”_’abËd
 , "Turn on visualizer output (1=On, 0=Off)",
 
-417 
+418 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19959,15 +19959,15 @@ g_visu®iz”_’abËd
 OPT_CSTR
 ,
 
-418 &
+419 &
 g_visu®iz”_f’ame
 , "Specifieshe output†og file for visualizer",
 
-419 
+420 
 NULL
 );
 
-420 
+421 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19975,11 +19975,11 @@ NULL
 OPT_INT32
 ,
 
-421 &
+422 &
 g_visu®iz”_zËv–
 , "Compression†evel ofhe visualizer output†og (0=no comp, 9=highest)",
 
-423 
+424 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -19987,13 +19987,13 @@ g_visu®iz”_zËv–
 OPT_BOOL
 ,
 
-424 &
+425 &
 T¿û
 ::
 ’abËd
 , "Turn onraces",
 
-426 
+427 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -20001,13 +20001,13 @@ T¿û
 OPT_CSTR
 ,
 
-427 &
+428 &
 T¿û
 ::
 cÚfig_¡r
 , "comma seperated†ist ofracesoƒnable. "
 
-431 
+432 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -20015,13 +20015,13 @@ cÚfig_¡r
 OPT_INT32
 ,
 
-432 &
+433 &
 T¿û
 ::
 §m¶šg_cÜe
 , "The core which is…rinted using CORE_DPRINTF. Default 0",
 
-434 
+435 
 	`İtiÚ_·r£r_»gi¡”
 (
 İp
@@ -20029,23 +20029,23 @@ T¿û
 OPT_INT32
 ,
 
-435 &
+436 &
 T¿û
 ::
 §m¶šg_memÜy_·¹™iÚ
 , "The memory…artition which is…rinted using MEMPART_DPRINTF. Default -1 (i.e.‡ll)",
 
-437 
+438 
 	`±x_fe_lše_¡©s_İtiÚs
 (
 İp
 );
 
-438 
+439 
 	}
 }
 
-442 
+443 
 	$šüem’t_x_th’_y_th’_z
 Ğ
 dim3
@@ -20055,13 +20055,13 @@ i
 bound
 )
 
-444 
+445 
 i
 .
 x
 ++;
 
-445 iàĞ
+446 iàĞ
 i
 .
 x
@@ -20069,19 +20069,19 @@ x
 bound
 .x ) {
 
-446 
+447 
 i
 .
 x
  = 0;
 
-447 
+448 
 i
 .
 y
 ++;
 
-448 iàĞ
+449 iàĞ
 i
 .
 y
@@ -20089,13 +20089,13 @@ y
 bound
 .y ) {
 
-449 
+450 
 i
 .
 y
  = 0;
 
-450 ifĞ
+451 ifĞ
 i
 .
 z
@@ -20103,17 +20103,17 @@ z
 bound
 .z )
 
-451 
+452 
 i
 .
 z
 ++;
 
-454 
+455 
 	}
 }
 
-456 
+457 
 	ggpgpu_sim
 ::
 	$Ïunch
@@ -20123,7 +20123,7 @@ k”Ãl_šfo_t
 kšfo
  )
 
-458 
+459 
 ùa_size
  = 
 kšfo
@@ -20131,7 +20131,7 @@ kšfo
 	`th»ads_³r_ùa
 ();
 
-459 iàĞ
+460 iàĞ
 ùa_size
  > 
 m_shad”_cÚfig
@@ -20139,39 +20139,39 @@ m_shad”_cÚfig
 n_th»ad_³r_shad”
  ) {
 
-460 
+461 
 	`´štf
 ("Executionƒrror: Shader kernel CTA (block) size isoo†arge for microarch config.\n");
 
-461 
+462 
 	`´štf
 (" CTA siz(x*y*zèğ%u, max suµÜ‹d = %u\n", 
 ùa_size
 ,
 
-462 
+463 
 m_shad”_cÚfig
 ->
 n_th»ad_³r_shad”
  );
 
-463 
+464 
 	`´štf
 (" =>ƒither change -gpgpu_shader‡rgument in gpgpusim.config file or\n");
 
-464 
+465 
 	`´štf
 (" modifyhe CUDA sourceo decreasehe kernel block size.\n");
 
-465 
+466 
 	`abÜt
 ();
 
-467 
+468 
 n
 =0;
 
-468 
+469 
 n
 =0;‚ < 
 m_ruÂšg_k”Ãls
@@ -20179,7 +20179,7 @@ m_ruÂšg_k”Ãls
 	`size
 ();‚++ ) {
 
-469 ifĞ(
+470 ifĞ(
 NULL
 ==
 m_ruÂšg_k”Ãls
@@ -20189,7 +20189,7 @@ n
 	`dÚe
 () ) {
 
-470 
+471 
 m_ruÂšg_k”Ãls
 [
 n
@@ -20197,7 +20197,7 @@ n
 kšfo
 ;
 
-474 
+475 
 	`as£¹
 (
 n
@@ -20207,11 +20207,11 @@ m_ruÂšg_k”Ãls
 	`size
 ());
 
-475 
+476 
 	}
 }
 
-477 
+478 
 boŞ
  
 	ggpgpu_sim
@@ -20219,7 +20219,7 @@ boŞ
 	$ÿn_¡¬t_k”Ãl
 ()
 
-479 
+480 
 n
 =0;‚ < 
 m_ruÂšg_k”Ãls
@@ -20227,7 +20227,7 @@ m_ruÂšg_k”Ãls
 	`size
 ();‚++ ) {
 
-480 ifĞ(
+481 ifĞ(
 NULL
 ==
 m_ruÂšg_k”Ãls
@@ -20237,19 +20237,19 @@ n
 	`dÚe
 () )
 
-481  
+482  
 Œue
 ;
 
-483  
+484  
 çl£
 ;
 
-484 
+485 
 	}
 }
 
-486 
+487 
 boŞ
  
 	ggpgpu_sim
@@ -20257,13 +20257,13 @@ boŞ
 	$g‘_mÜe_ùa_Ëá
 () const
 
-488 ià(
+489 ià(
 m_cÚfig
 .
 gpu_max_ùa_İt
  != 0) {
 
-489 ifĞ
+490 ifĞ
 m_tÙ®_ùa_Ïunched
  >ğ
 m_cÚfig
@@ -20271,11 +20271,11 @@ m_cÚfig
 gpu_max_ùa_İt
  )
 
-490  
+491  
 çl£
 ;
 
-492 
+493 
 n
 =0;‚ < 
 m_ruÂšg_k”Ãls
@@ -20283,7 +20283,7 @@ m_ruÂšg_k”Ãls
 	`size
 ();‚++ ) {
 
-493 ifĞ
+494 ifĞ
 m_ruÂšg_k”Ãls
 [
 n
@@ -20291,19 +20291,19 @@ n
 	`no_mÜe_ùas_to_run
 () )
 
-494  
+495  
 Œue
 ;
 
-496  
+497  
 çl£
 ;
 
-497 
+498 
 	}
 }
 
-499 
+500 
 k”Ãl_šfo_t
  *
 	ggpgpu_sim
@@ -20311,7 +20311,7 @@ k”Ãl_šfo_t
 	$£Ëù_k”Ãl
 ()
 
-501 
+502 
 n
 =0;‚ < 
 m_ruÂšg_k”Ãls
@@ -20319,7 +20319,7 @@ m_ruÂšg_k”Ãls
 	`size
 ();‚++ ) {
 
-502 
+503 
 idx
  = (
 n
@@ -20331,7 +20331,7 @@ m_cÚfig
 max_cÚcu¼’t_k”Ãl
 ;
 
-503 ifĞ
+504 ifĞ
 m_ruÂšg_k”Ãls
 [
 idx
@@ -20339,13 +20339,13 @@ idx
 	`no_mÜe_ùas_to_run
 () ) {
 
-504 
+505 
 m_Ï¡_issued_k”Ãl
 =
 idx
 ;
 
-506 
+507 
 Ïunch_uid
  = 
 m_ruÂšg_k”Ãls
@@ -20355,7 +20355,7 @@ idx
 	`g‘_uid
 ();
 
-507 ià(
+508 ià(
 ¡d
 ::
 	`fšd
@@ -20369,7 +20369,7 @@ m_execu‹d_k”Ãl_uids
 Ïunch_uid
 ) == m_executed_kernel_uids.end()) {
 
-508 
+509 
 m_execu‹d_k”Ãl_uids
 .
 	`push_back
@@ -20377,7 +20377,7 @@ m_execu‹d_k”Ãl_uids
 Ïunch_uid
 );
 
-509 
+510 
 m_execu‹d_k”Ãl_Çmes
 .
 	`push_back
@@ -20389,33 +20389,33 @@ idx
 	`Çme
 ());
 
-512  
+513  
 m_ruÂšg_k”Ãls
 [
 idx
 ];
 
-515  
+516  
 NULL
 ;
 
-516 
+517 
 	}
 }
 
-518 
+519 
 	ggpgpu_sim
 ::
 	$fšished_k”Ãl
 ()
 
-520 ifĞ
+521 ifĞ
 m_fšished_k”Ãl
 .
 	`em±y
 () )
 
-522 
+523 
 »suÉ
  = 
 m_fšished_k”Ãl
@@ -20423,21 +20423,21 @@ m_fšished_k”Ãl
 	`äÚt
 ();
 
-523 
+524 
 m_fšished_k”Ãl
 .
 	`pİ_äÚt
 ();
 
-524  
+525  
 »suÉ
 ;
 
-525 
+526 
 	}
 }
 
-527 
+528 
 	ggpgpu_sim
 ::
 	$£t_k”Ãl_dÚe
@@ -20447,7 +20447,7 @@ k”Ãl_šfo_t
 k”Ãl
  )
 
-529 
+530 
 uid
  = 
 k”Ãl
@@ -20455,7 +20455,7 @@ k”Ãl
 	`g‘_uid
 ();
 
-530 
+531 
 m_fšished_k”Ãl
 .
 	`push_back
@@ -20463,7 +20463,7 @@ m_fšished_k”Ãl
 uid
 );
 
-531 
+532 
 ¡d
 ::
 veùÜ
@@ -20475,7 +20475,7 @@ k”Ãl_šfo_t
 k
 ;
 
-532  
+533  
 k
 =
 m_ruÂšg_k”Ãls
@@ -20485,19 +20485,19 @@ m_ruÂšg_k”Ãls
 	`’d
 (); k++ ) {
 
-533 ifĞ*
+534 ifĞ*
 k
  =ğ
 k”Ãl
  ) {
 
-534 *
+535 *
 k
  = 
 NULL
 ;
 
-538 
+539 
 	`as£¹
 Ğ
 k
@@ -20507,11 +20507,11 @@ m_ruÂšg_k”Ãls
 	`’d
 () );
 
-539 
+540 
 	}
 }
 
-541 
+542 
 £t_±x_w¬p_size
 (cÚ¡ 
 cÜe_cÚfig
@@ -20519,7 +20519,7 @@ cÜe_cÚfig
 w¬p_size
 );
 
-543 
+544 
 	ggpgpu_sim
 ::
 	$gpgpu_sim
@@ -20529,7 +20529,7 @@ gpgpu_sim_cÚfig
 cÚfig
  )
 
-544 : 
+545 : 
 	`gpgpu_t
 (
 cÚfig
@@ -20539,25 +20539,25 @@ cÚfig
 cÚfig
 )
 
-546 
+547 
 m_shad”_cÚfig
  = &
 m_cÚfig
 .m_shader_config;
 
-547 
+548 
 m_memÜy_cÚfig
  = &
 m_cÚfig
 .m_memory_config;
 
-548 
+549 
 	`£t_±x_w¬p_size
 (
 m_shad”_cÚfig
 );
 
-549 
+550 
 	`±x_fe_lše_¡©s_ü—‹_expo£d_Ï‹ncy_Œack”
 (
 m_cÚfig
@@ -20565,11 +20565,11 @@ m_cÚfig
 	`num_shad”
 ());
 
-551 #ifdeà
+552 #ifdeà
 GPGPUSIM_POWER_MODEL
 
 
-552 
+553 
 m_gpgpusim_w¿µ”
  = 
 Ãw
@@ -20583,7 +20583,7 @@ g_pow”_simuÏtiÚ_’abËd
 g_pow”_cÚfig_Çme
 );
 
-555 
+556 
 m_shad”_¡©s
  = 
 Ãw
@@ -20593,7 +20593,7 @@ m_shad”_¡©s
 m_shad”_cÚfig
 );
 
-556 
+557 
 m_memÜy_¡©s
  = 
 Ãw
@@ -20609,19 +20609,19 @@ m_shad”_cÚfig
 m_memÜy_cÚfig
 );
 
-557 
+558 
 av”age_p–še_duty_cyşe
  = (*)
 	`m®loc
 (());
 
-558 
+559 
 aùive_sms
 =(*)
 	`m®loc
 (());
 
-559 
+560 
 m_pow”_¡©s
  = 
 Ãw
@@ -20641,25 +20641,25 @@ m_memÜy_cÚfig
 m_memÜy_¡©s
 );
 
-561 
+562 
 gpu_sim_š¢
  = 0;
 
-562 
+563 
 gpu_tÙ_sim_š¢
  = 0;
 
-563 
+564 
 gpu_tÙ_issued_ùa
  = 0;
 
-564 
+565 
 gpu_d—dlock
  = 
 çl£
 ;
 
-567 
+568 
 m_şu¡”
  = 
 Ãw
@@ -20671,7 +20671,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ];
 
-568 
+569 
 i
 =0;i<
 m_shad”_cÚfig
@@ -20679,7 +20679,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++)
 
-569 
+570 
 m_şu¡”
 [
 i
@@ -20699,7 +20699,7 @@ m_shad”_¡©s
 m_memÜy_¡©s
 );
 
-571 
+572 
 m_memÜy_·¹™iÚ_un™
  = 
 Ãw
@@ -20711,7 +20711,7 @@ m_memÜy_cÚfig
 m_n_mem
 ];
 
-572 
+573 
 m_memÜy_sub_·¹™iÚ
  = 
 Ãw
@@ -20723,7 +20723,7 @@ m_memÜy_cÚfig
 m_n_mem_sub_·¹™iÚ
 ];
 
-573 
+574 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -20731,7 +20731,7 @@ m_memÜy_cÚfig
 m_n_mem
 ;i++) {
 
-574 
+575 
 m_memÜy_·¹™iÚ_un™
 [
 i
@@ -20745,7 +20745,7 @@ m_memÜy_cÚfig
 m_memÜy_¡©s
 );
 
-575 
+576 
 p
  = 0;… < 
 m_memÜy_cÚfig
@@ -20753,7 +20753,7 @@ m_memÜy_cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 ;…++) {
 
-576 
+577 
 submpid
  = 
 i
@@ -20765,7 +20765,7 @@ m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 p
 ;
 
-577 
+578 
 m_memÜy_sub_·¹™iÚ
 [
 submpid
@@ -20779,11 +20779,11 @@ i
 p
 );
 
-581 
+582 
 	`iút_w¿µ”_š™
 ();
 
-582 
+583 
 	`iút_ü—‹
 (
 m_shad”_cÚfig
@@ -20795,19 +20795,19 @@ m_memÜy_cÚfig
 m_n_mem_sub_·¹™iÚ
 );
 
-584 
+585 
 	`time_veùÜ_ü—‹
 (
 NUM_MEM_REQ_STAT
 );
 
-585 
+586 
 	`årštf
 (
 ¡dout
 , "GPGPU-Sim uArch:…erformance model initialization complete.\n");
 
-587 
+588 
 m_ruÂšg_k”Ãls
 .
 	`»size
@@ -20819,95 +20819,95 @@ max_cÚcu¼’t_k”Ãl
 NULL
  );
 
-588 
+589 
 m_Ï¡_issued_k”Ãl
  = 0;
 
-589 
+590 
 m_Ï¡_şu¡”_issue
  = 0;
 
-590 *
+591 *
 av”age_p–še_duty_cyşe
 =0;
 
-591 *
+592 *
 aùive_sms
 =0;
 
-593 
+594 
 Ï¡_liv’ess_mes§ge_time
  = 0;
 
-594 
+595 
 	}
 }
 
-596 
+597 
 	ggpgpu_sim
 ::
 	$sh¬ed_mem_size
 () const
 
-598  
+599  
 m_shad”_cÚfig
 ->
 gpgpu_shmem_size
 ;
 
-599 
+600 
 	}
 }
 
-601 
+602 
 	ggpgpu_sim
 ::
 	$num_»gi¡”s_³r_cÜe
 () const
 
-603  
+604  
 m_shad”_cÚfig
 ->
 gpgpu_shad”_»gi¡”s
 ;
 
-604 
+605 
 	}
 }
 
-606 
+607 
 	ggpgpu_sim
 ::
 	$w½_size
 () const
 
-608  
+609  
 m_shad”_cÚfig
 ->
 w¬p_size
 ;
 
-609 
+610 
 	}
 }
 
-611 
+612 
 	ggpgpu_sim
 ::
 	$shad”_şock
 () const
 
-613  
+614  
 m_cÚfig
 .
 cÜe_äeq
 /1000;
 
-614 
+615 
 	}
 }
 
-616 
+617 
 	ggpgpu_sim
 ::
 	$£t_´İ
@@ -20917,17 +20917,17 @@ cudaDeviûPrİ
 ´İ
  )
 
-618 
+619 
 m_cuda_´İ”t›s
  = 
 ´İ
 ;
 
-619 
+620 
 	}
 }
 
-621 cÚ¡ 
+622 cÚ¡ 
 cudaDeviûPrİ
  *
 	ggpgpu_sim
@@ -20935,15 +20935,15 @@ cudaDeviûPrİ
 	$g‘_´İ
 () const
 
-623  
+624  
 m_cuda_´İ”t›s
 ;
 
-624 
+625 
 	}
 }
 
-626 
+627 
 div”g’û_suµÜt_t
  
 	ggpgpu_sim
@@ -20951,29 +20951,29 @@ div”g’û_suµÜt_t
 	$simd_mod–
 () const
 
-628  
+629  
 m_shad”_cÚfig
 ->
 mod–
 ;
 
-629 
+630 
 	}
 }
 
-631 
+632 
 	ggpgpu_sim_cÚfig
 ::
 	$š™_şock_domašs
 ()
 
-633 
+634 
 	`ssÿnf
 (
 gpgpu_şock_domašs
 ,"%lf:%lf:%lf:%lf",
 
-634 &
+635 &
 cÜe_äeq
 , &
 iút_äeq
@@ -20983,55 +20983,55 @@ l2_äeq
 d¿m_äeq
 );
 
-635 
+636 
 cÜe_äeq
  = cÜe_äeq 
 MhZ
 ;
 
-636 
+637 
 iút_äeq
  = iút_äeq 
 MhZ
 ;
 
-637 
+638 
 l2_äeq
  =†2_äeq 
 MhZ
 ;
 
-638 
+639 
 d¿m_äeq
  = d¿m_äeq 
 MhZ
 ;
 
-639 
+640 
 cÜe_³riod
  = 1/
 cÜe_äeq
 ;
 
-640 
+641 
 iút_³riod
  = 1/
 iút_äeq
 ;
 
-641 
+642 
 d¿m_³riod
  = 1/
 d¿m_äeq
 ;
 
-642 
+643 
 l2_³riod
  = 1/
 l2_äeq
 ;
 
-643 
+644 
 	`´štf
 ("GPGPU-Sim uArch: clock f»qs: %lf:%lf:%lf:%lf\n",
 cÜe_äeq
@@ -21043,7 +21043,7 @@ l2_äeq
 d¿m_äeq
 );
 
-644 
+645 
 	`´štf
 ("GPGPU-Sim uArch: clock…”iods: %.20lf:%.20lf:%.20lf:%.20lf\n",
 cÜe_³riod
@@ -21055,37 +21055,37 @@ l2_³riod
 d¿m_³riod
 );
 
-645 
+646 
 	}
 }
 
-647 
+648 
 	ggpgpu_sim
 ::
 	$»š™_şock_domašs
 ()
 
-649 
+650 
 cÜe_time
  = 0;
 
-650 
+651 
 d¿m_time
  = 0;
 
-651 
+652 
 iút_time
  = 0;
 
-652 
+653 
 l2_time
  = 0;
 
-653 
+654 
 	}
 }
 
-655 
+656 
 boŞ
  
 	ggpgpu_sim
@@ -21093,7 +21093,7 @@ boŞ
 	$aùive
 ()
 
-657 ià(
+658 ià(
 m_cÚfig
 .
 gpu_max_cyşe_İt
@@ -21103,11 +21103,11 @@ gpu_tÙ_sim_cyşe
 gpu_sim_cyşe
 ) >= m_config.gpu_max_cycle_opt)
 
-658  
+659  
 çl£
 ;
 
-659 ià(
+660 ià(
 m_cÚfig
 .
 gpu_max_š¢_İt
@@ -21117,11 +21117,11 @@ gpu_tÙ_sim_š¢
 gpu_sim_š¢
 ) >= m_config.gpu_max_insn_opt)
 
-660  
+661  
 çl£
 ;
 
-661 ià(
+662 ià(
 m_cÚfig
 .
 gpu_max_ùa_İt
@@ -21129,11 +21129,11 @@ gpu_max_ùa_İt
 gpu_tÙ_issued_ùa
  >= m_config.gpu_max_cta_opt) )
 
-662  
+663  
 çl£
 ;
 
-663 ià(
+664 ià(
 m_cÚfig
 .
 gpu_d—dlock_d‘eù
@@ -21141,11 +21141,11 @@ gpu_d—dlock_d‘eù
 gpu_d—dlock
 )
 
-664  
+665  
 çl£
 ;
 
-665 
+666 
 i
 =0;i<
 m_shad”_cÚfig
@@ -21153,7 +21153,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++)
 
-666 ifĞ
+667 ifĞ
 m_şu¡”
 [
 i
@@ -21161,11 +21161,11 @@ i
 	`g‘_nÙ_com¶‘ed
 ()>0 )
 
-667  
+668  
 Œue
 ;;
 
-668 
+669 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -21173,7 +21173,7 @@ m_memÜy_cÚfig
 m_n_mem
 ;i++)
 
-669 ifĞ
+670 ifĞ
 m_memÜy_·¹™iÚ_un™
 [
 i
@@ -21181,61 +21181,61 @@ i
 	`busy
 ()>0 )
 
-670  
+671  
 Œue
 ;;
 
-671 ifĞ
+672 ifĞ
 	`iút_busy
 () )
 
-672  
+673  
 Œue
 ;
 
-673 ifĞ
+674 ifĞ
 	`g‘_mÜe_ùa_Ëá
 () )
 
-674  
+675  
 Œue
 ;
 
-675  
+676  
 çl£
 ;
 
-676 
+677 
 	}
 }
 
-678 
+679 
 	ggpgpu_sim
 ::
 	$š™
 ()
 
-681 
+682 
 gpu_sim_cyşe
  = 0;
 
-682 
+683 
 gpu_sim_š¢
  = 0;
 
-683 
+684 
 Ï¡_gpu_sim_š¢
  = 0;
 
-684 
+685 
 m_tÙ®_ùa_Ïunched
 =0;
 
-686 
+687 
 	`»š™_şock_domašs
 ();
 
-687 
+688 
 	`£t_·¿m_gpgpu_num_shad”s
 (
 m_cÚfig
@@ -21243,7 +21243,7 @@ m_cÚfig
 	`num_shad”
 ());
 
-688 
+689 
 i
 =0;i<
 m_shad”_cÚfig
@@ -21251,7 +21251,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++)
 
-689 
+690 
 m_şu¡”
 [
 i
@@ -21259,19 +21259,19 @@ i
 	`»š™
 ();
 
-690 
+691 
 m_shad”_¡©s
 ->
 	`Ãw_grid
 ();
 
-692 ià(
+693 ià(
 m_cÚfig
 .
 g_visu®iz”_’abËd
 ) {
 
-693 
+694 
 	`ü—‹_th»ad_CFlogg”
 Ğ
 m_cÚfig
@@ -21285,7 +21285,7 @@ n_th»ad_³r_shad”
 gpgpu_cæog_š‹rv®
  );
 
-695 
+696 
 	`shad”_CTA_couÁ_ü—‹
 Ğ
 m_cÚfig
@@ -21295,13 +21295,13 @@ m_cÚfig
 gpgpu_cæog_š‹rv®
 );
 
-696 ià(
+697 ià(
 m_cÚfig
 .
 gpgpu_cæog_š‹rv®
  != 0) {
 
-697 
+698 
 	`š¢_w¬p_occ_ü—‹
 Ğ
 m_cÚfig
@@ -21313,7 +21313,7 @@ m_shad”_cÚfig
 w¬p_size
  );
 
-698 
+699 
 	`shad”_w¬p_occ_ü—‹
 Ğ
 m_cÚfig
@@ -21327,7 +21327,7 @@ w¬p_size
 gpgpu_cæog_š‹rv®
 );
 
-699 
+700 
 	`shad”_mem_acc_ü—‹
 Ğ
 m_cÚfig
@@ -21341,7 +21341,7 @@ m_n_mem
 gpgpu_cæog_š‹rv®
 );
 
-700 
+701 
 	`shad”_mem_Ït_ü—‹
 Ğ
 m_cÚfig
@@ -21351,7 +21351,7 @@ m_cÚfig
 gpgpu_cæog_š‹rv®
 );
 
-701 
+702 
 	`shad”_ÿche_acûss_ü—‹
 Ğ
 m_cÚfig
@@ -21361,7 +21361,7 @@ m_cÚfig
 gpgpu_cæog_š‹rv®
 );
 
-702 
+703 
 	`£t_¥l_š‹rv®
  (
 m_cÚfig
@@ -21369,25 +21369,25 @@ m_cÚfig
 gpgpu_cæog_š‹rv®
  * 40);
 
-705 ià(
+706 ià(
 g_ÃtwÜk_mode
 )
 
-706 
+707 
 	`iút_š™
 ();
 
-709 #ifdeà
+710 #ifdeà
 GPGPUSIM_POWER_MODEL
 
 
-710 if(
+711 if(
 m_cÚfig
 .
 g_pow”_simuÏtiÚ_’abËd
 ){
 
-711 
+712 
 	`š™_mı©
 (
 m_cÚfig
@@ -21401,83 +21401,83 @@ gpu_tÙ_sim_š¢
 gpu_sim_š¢
 );
 
-714 
+715 
 	}
 }
 
-716 
+717 
 	ggpgpu_sim
 ::
 	$upd©e_¡©s
 () {
 
-717 
+718 
 m_memÜy_¡©s
 ->
 	`memÏt¡©_Ït_pw
 ();
 
-718 
+719 
 gpu_tÙ_sim_cyşe
  +ğ
 gpu_sim_cyşe
 ;
 
-719 
+720 
 gpu_tÙ_sim_š¢
  +ğ
 gpu_sim_š¢
 ;
 
-720 
+721 
 	}
 }
 
-722 
+723 
 	ggpgpu_sim
 ::
 	$´št_¡©s
 ()
 
-724 
+725 
 	`±x_fe_lše_¡©s_wr™e_fe
 ();
 
-725 
+726 
 	`gpu_´št_¡©
 ();
 
-727 ià(
+728 ià(
 g_ÃtwÜk_mode
 ) {
 
-728 
+729 
 	`´štf
 ("----------------------------Interconnect-DETAILS--------------------------------\n" );
 
-729 
+730 
 	`iút_di¥Ïy_¡©s
 ();
 
-730 
+731 
 	`iút_di¥Ïy_ov”®l_¡©s
 ();
 
-731 
+732 
 	`´štf
 ("----------------------------END-of-Interconnect-DETAILS-------------------------\n" );
 
-733 
+734 
 	}
 }
 
-735 
+736 
 	ggpgpu_sim
 ::
 	$d—dlock_check
 ()
 
-737 ià(
+738 ià(
 m_cÚfig
 .
 gpu_d—dlock_d‘eù
@@ -21485,21 +21485,21 @@ gpu_d—dlock_d‘eù
 gpu_d—dlock
 ) {
 
-738 
+739 
 	`fæush
 (
 ¡dout
 );
 
-739 
+740 
 	`´štf
 ("\n\nGPGPU-Sim uArch: ERROR ** deadlock detected:†ast writeback core %u @ gpu_sim_cycle %u (+ gpu_tot_sim_cycle %u) (%u cycles‡go)\n",
 
-740 
+741 
 gpu_sim_š¢_Ï¡_upd©e_sid
 ,
 
-741 (è
+742 (è
 gpu_sim_š¢_Ï¡_upd©e
 , (è(
 gpu_tÙ_sim_cyşe
@@ -21507,17 +21507,17 @@ gpu_tÙ_sim_cyşe
 gpu_sim_cyşe
 ),
 
-742 (è(
+743 (è(
 gpu_sim_cyşe
  - 
 gpu_sim_š¢_Ï¡_upd©e
  ));
 
-743 
+744 
 num_cÜes
 =0;
 
-744 
+745 
 i
 =0;i<
 m_shad”_cÚfig
@@ -21525,7 +21525,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++) {
 
-745 
+746 
 nÙ_com¶‘ed
  = 
 m_şu¡”
@@ -21535,23 +21535,23 @@ i
 	`g‘_nÙ_com¶‘ed
 ();
 
-746 ifĞ
+747 ifĞ
 nÙ_com¶‘ed
  ) {
 
-747 iàĞ!
+748 iàĞ!
 num_cÜes
  ) {
 
-748 
+749 
 	`´štf
 ("GPGPU-Sim uArch: DEADLOCK shader cores‚o†onger committing instructions [core(#hreads)]:\n" );
 
-749 
+750 
 	`´štf
 ("GPGPU-Sim uArch: DEADLOCK ");
 
-750 
+751 
 m_şu¡”
 [
 i
@@ -21561,11 +21561,11 @@ i
 ¡dout
 );
 
-751 } ià(
+752 } ià(
 num_cÜes
  < 8 ) {
 
-752 
+753 
 m_şu¡”
 [
 i
@@ -21575,15 +21575,15 @@ i
 ¡dout
 );
 
-753 } ià(
+754 } ià(
 num_cÜes
  >= 8 ) {
 
-754 
+755 
 	`´štf
 (" + others ... ");
 
-756 
+757 
 num_cÜes
 +=
 m_shad”_cÚfig
@@ -21591,11 +21591,11 @@ m_shad”_cÚfig
 n_simt_cÜes_³r_şu¡”
 ;
 
-759 
+760 
 	`´štf
 ("\n");
 
-760 
+761 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -21603,7 +21603,7 @@ m_memÜy_cÚfig
 m_n_mem
 ;i++) {
 
-761 
+762 
 boŞ
  
 busy
@@ -21615,49 +21615,49 @@ i
 	`busy
 ();
 
-762 ifĞ
+763 ifĞ
 busy
  )
 
-763 
+764 
 	`´štf
 ("GPGPU-Sim uArch DEADLOCK: memÜy…¬t™iÚ %u busy\n", 
 i
  );
 
-765 ifĞ
+766 ifĞ
 	`iút_busy
 () ) {
 
-766 
+767 
 	`´štf
 ("GPGPU-Sim uArch DEADLOCK: iterconnect containsraffic\n");
 
-767 
+768 
 	`iút_di¥Ïy_¡©e
 Ğ
 ¡dout
  );
 
-769 
+770 
 	`´štf
 ("\nRe-runhe simulator in gdb‡nd use debug„outines in .gdbinito debughis\n");
 
-770 
+771 
 	`fæush
 (
 ¡dout
 );
 
-771 
+772 
 	`abÜt
 ();
 
-773 
+774 
 	}
 }
 
-776 
+777 
 	g¡d
 ::
 ¡ršg
@@ -21667,7 +21667,7 @@ gpgpu_sim
 	$execu‹d_k”Ãl_šfo_¡ršg
 ()
 
-778 
+779 
 ¡d
 ::
 ¡ršg¡»am
@@ -21675,11 +21675,11 @@ gpgpu_sim
 ¡©out
 ;
 
-780 
+781 
 ¡©out
  << "kernel_name = ";
 
-781 
+782 
 k
  = 0; k < 
 m_execu‹d_k”Ãl_Çmes
@@ -21687,27 +21687,27 @@ m_execu‹d_k”Ãl_Çmes
 	`size
 (); k++) {
 
-782 
+783 
 ¡©out
  << 
 m_execu‹d_k”Ãl_Çmes
 [
 k
 ] << " ";
-
-784 
-¡©out
- << 
-¡d
-::
-’dl
-;
 
 785 
 ¡©out
+ << 
+¡d
+::
+’dl
+;
+
+786 
+¡©out
  << "kernel_launch_uid = ";
 
-786 
+787 
 k
  = 0; k < 
 m_execu‹d_k”Ãl_uids
@@ -21715,7 +21715,7 @@ m_execu‹d_k”Ãl_uids
 	`size
 (); k++) {
 
-787 
+788 
 ¡©out
  << 
 m_execu‹d_k”Ãl_uids
@@ -21723,7 +21723,7 @@ m_execu‹d_k”Ãl_uids
 k
 ] << " ";
 
-789 
+790 
 ¡©out
  << 
 ¡d
@@ -21731,17 +21731,17 @@ k
 ’dl
 ;
 
-791  
+792  
 ¡©out
 .
 	`¡r
 ();
 
-792 
+793 
 	}
 }
 
-793 
+794 
 	ggpgpu_sim
 ::
 £t_ÿche_cÚfig
@@ -21757,7 +21757,7 @@ FuncCache
 ÿcheCÚfig
  )
 
-795 
+796 
 	gm_¥ecŸl_ÿche_cÚfig
 [
 k”Ãl_Çme
@@ -21765,7 +21765,7 @@ k”Ãl_Çme
 ÿcheCÚfig
  ;
 
-798 
+799 
 FuncCache
  
 	ggpgpu_sim
@@ -21779,7 +21779,7 @@ g‘_ÿche_cÚfig
 k”Ãl_Çme
 )
 
-800  
+801  
 ¡d
 ::
 m­
@@ -21801,7 +21801,7 @@ begš
 ’d
 (); iter++){
 
-801 
+802 
 	g¡d
 ::
 ¡ršg
@@ -21813,7 +21813,7 @@ k”Ãl
 fœ¡
 ;
 
-802 ià(
+803 ià(
 	gk”Ãl_Çme
 .
 com·»
@@ -21821,17 +21821,17 @@ com·»
 k”Ãl
 ) == 0){
 
-803  
+804  
 ™”
 ->
 £cÚd
 ;
 
-806  (
+807  (
 	gFuncCache
 )0;
 
-809 
+810 
 boŞ
  
 	ggpgpu_sim
@@ -21845,7 +21845,7 @@ has_¥ecŸl_ÿche_cÚfig
 k”Ãl_Çme
 )
 
-811  
+812  
 ¡d
 ::
 m­
@@ -21867,7 +21867,7 @@ begš
 ’d
 (); iter++){
 
-812 
+813 
 	g¡d
 ::
 ¡ršg
@@ -21879,7 +21879,7 @@ k”Ãl
 fœ¡
 ;
 
-813 ià(
+814 ià(
 	gk”Ãl_Çme
 .
 com·»
@@ -21887,15 +21887,15 @@ com·»
 k”Ãl
 ) == 0){
 
-814  
+815  
 Œue
 ;
 
-817  
+818  
 	gçl£
 ;
 
-821 
+822 
 	ggpgpu_sim
 ::
 £t_ÿche_cÚfig
@@ -21907,13 +21907,13 @@ k”Ãl
 k”Ãl_Çme
 )
 
-823 if(
+824 if(
 has_¥ecŸl_ÿche_cÚfig
 (
 k”Ãl_Çme
 )){
 
-824 
+825 
 chªge_ÿche_cÚfig
 (
 g‘_ÿche_cÚfig
@@ -21921,13 +21921,13 @@ g‘_ÿche_cÚfig
 k”Ãl_Çme
 ));
 
-826 
+827 
 chªge_ÿche_cÚfig
 (
 FuncCacheP»ãrNÚe
 );
 
-831 
+832 
 	ggpgpu_sim
 ::
 	$chªge_ÿche_cÚfig
@@ -21937,7 +21937,7 @@ FuncCache
 ÿche_cÚfig
 )
 
-833 if(
+834 if(
 ÿche_cÚfig
  !ğ
 m_shad”_cÚfig
@@ -21947,11 +21947,11 @@ m_L1D_cÚfig
 	`g‘_ÿche_¡©us
 ()){
 
-834 
+835 
 	`´štf
 ("FLUSH L1 Cache‡t configuration change between kernels\n");
 
-835 
+836 
 i
 =0;i<
 m_shad”_cÚfig
@@ -21959,7 +21959,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++) {
 
-836 
+837 
 m_şu¡”
 [
 i
@@ -21967,39 +21967,39 @@ i
 	`ÿche_æush
 ();
 
-840 
+841 
 ÿche_cÚfig
 ){
 
-841 
+842 
 FuncCacheP»ãrNÚe
 :
-
-842 
-m_shad”_cÚfig
-->
-m_L1D_cÚfig
-.
-	`š™
-(m_shad”_cÚfig->m_L1D_cÚfig.
-m_cÚfig_¡ršg
-, 
-FuncCacheP»ãrNÚe
-);
 
 843 
 m_shad”_cÚfig
 ->
+m_L1D_cÚfig
+.
+	`š™
+(m_shad”_cÚfig->m_L1D_cÚfig.
+m_cÚfig_¡ršg
+, 
+FuncCacheP»ãrNÚe
+);
+
+844 
+m_shad”_cÚfig
+->
 gpgpu_shmem_size
 =m_shad”_cÚfig->
 gpgpu_shmem_sizeDeçuÉ
 ;
 
-845 
+846 
 FuncCacheP»ãrL1
 :
 
-846 if((
+847 if((
 m_shad”_cÚfig
 ->
 m_L1D_cÚfig
@@ -22011,31 +22011,31 @@ NULL
 gpgpu_shmem_sizeP»fL1
  == ()-1))
 
-848 
+849 
 	`´štf
 ("WARNING: missing Preferred L1 configuration\n");
-
-849 
-m_shad”_cÚfig
-->
-m_L1D_cÚfig
-.
-	`š™
-(m_shad”_cÚfig->m_L1D_cÚfig.
-m_cÚfig_¡ršg
-, 
-FuncCacheP»ãrNÚe
-);
 
 850 
 m_shad”_cÚfig
 ->
+m_L1D_cÚfig
+.
+	`š™
+(m_shad”_cÚfig->m_L1D_cÚfig.
+m_cÚfig_¡ršg
+, 
+FuncCacheP»ãrNÚe
+);
+
+851 
+m_shad”_cÚfig
+->
 gpgpu_shmem_size
 =m_shad”_cÚfig->
 gpgpu_shmem_sizeDeçuÉ
 ;
 
-853 
+854 
 m_shad”_cÚfig
 ->
 m_L1D_cÚfig
@@ -22047,7 +22047,7 @@ m_cÚfig_¡ršgP»fL1
 FuncCacheP»ãrL1
 );
 
-854 
+855 
 m_shad”_cÚfig
 ->
 gpgpu_shmem_size
@@ -22055,11 +22055,11 @@ gpgpu_shmem_size
 gpgpu_shmem_sizeP»fL1
 ;
 
-857 
+858 
 FuncCacheP»ãrSh¬ed
 :
 
-858 if((
+859 if((
 m_shad”_cÚfig
 ->
 m_L1D_cÚfig
@@ -22071,11 +22071,11 @@ NULL
 gpgpu_shmem_sizeP»fSh¬ed
  == ()-1))
 
-860 
+861 
 	`´štf
 ("WARNING: missing Preferred L1 configuration\n");
 
-861 
+862 
 m_shad”_cÚfig
 ->
 m_L1D_cÚfig
@@ -22087,7 +22087,7 @@ m_cÚfig_¡ršg
 FuncCacheP»ãrNÚe
 );
 
-862 
+863 
 m_shad”_cÚfig
 ->
 gpgpu_shmem_size
@@ -22095,7 +22095,7 @@ gpgpu_shmem_size
 gpgpu_shmem_sizeDeçuÉ
 ;
 
-864 
+865 
 m_shad”_cÚfig
 ->
 m_L1D_cÚfig
@@ -22107,7 +22107,7 @@ m_cÚfig_¡ršgP»fSh¬ed
 FuncCacheP»ãrSh¬ed
 );
 
-865 
+866 
 m_shad”_cÚfig
 ->
 gpgpu_shmem_size
@@ -22115,39 +22115,39 @@ gpgpu_shmem_size
 gpgpu_shmem_sizeP»fSh¬ed
 ;
 
-871 
+872 
 	}
 }
 
-874 
+875 
 	ggpgpu_sim
 ::
 	$ş—r_execu‹d_k”Ãl_šfo
 ()
 
-876 
+877 
 m_execu‹d_k”Ãl_Çmes
 .
 	`ş—r
 ();
 
-877 
+878 
 m_execu‹d_k”Ãl_uids
 .
 	`ş—r
 ();
 
-878 
+879 
 	}
 }
 
-879 
+880 
 	ggpgpu_sim
 ::
 	$gpu_´št_¡©
 ()
 
-881 
+882 
 FILE
  *
 ¡©fout
@@ -22155,7 +22155,7 @@ FILE
 ¡dout
 ;
 
-883 
+884 
 ¡d
 ::
 ¡ršg
@@ -22165,7 +22165,7 @@ k”Ãl_šfo_¡r
 	`execu‹d_k”Ãl_šfo_¡ršg
 ();
 
-884 
+885 
 	`årštf
 (
 ¡©fout
@@ -22175,19 +22175,19 @@ k”Ãl_šfo_¡r
 	`c_¡r
 ());
 
-886 
+887 
 	`´štf
 ("gpu_sim_cyşğ%Îd\n", 
 gpu_sim_cyşe
 );
 
-887 
+888 
 	`´štf
 ("gpu_sim_š¢ = %Îd\n", 
 gpu_sim_š¢
 );
 
-888 
+889 
 	`´štf
 ("gpu_øğ%12.4f\n", ()
 gpu_sim_š¢
@@ -22195,7 +22195,7 @@ gpu_sim_š¢
 gpu_sim_cyşe
 );
 
-889 
+890 
 	`´štf
 ("gpu_tÙ_sim_cyşğ%Îd\n", 
 gpu_tÙ_sim_cyşe
@@ -22203,7 +22203,7 @@ gpu_tÙ_sim_cyşe
 gpu_sim_cyşe
 );
 
-890 
+891 
 	`´štf
 ("gpu_tÙ_sim_š¢ = %Îd\n", 
 gpu_tÙ_sim_š¢
@@ -22211,7 +22211,7 @@ gpu_tÙ_sim_š¢
 gpu_sim_š¢
 );
 
-891 
+892 
 	`´štf
 ("gpu_tÙ_øğ%12.4f\n", ()(
 gpu_tÙ_sim_š¢
@@ -22223,37 +22223,37 @@ gpu_tÙ_sim_cyşe
 gpu_sim_cyşe
 ));
 
-892 
+893 
 	`´štf
 ("gpu_tÙ_issued_ù¨ğ%Îd\n", 
 gpu_tÙ_issued_ùa
 );
 
-897 
+898 
 	`´štf
 ("gpu_¡®l_d¿mfuÎ = %d\n", 
 gpu_¡®l_d¿mfuÎ
 );
 
-898 
+899 
 	`´štf
 ("gpu_¡®l_iút2sh = %d\n", 
 gpu_¡®l_iút2sh
  );
 
-900 
+901 
 time_t
  
 cu¼_time
 ;
 
-901 
+902 
 	`time
 (&
 cu¼_time
 );
 
-902 
+903 
 –­£d_time
  = 
 	`MAX
@@ -22263,7 +22263,7 @@ cu¼_time
 g_simuÏtiÚ_¡¬‰ime
 , 1 );
 
-903 
+904 
 	`´štf
 Ğ"gpu_tÙ®_sim_¿‹=%u\n", ()ĞĞ
 gpu_tÙ_sim_š¢
@@ -22273,25 +22273,25 @@ gpu_sim_š¢
 –­£d_time
  ) );
 
-906 
+907 
 	`shad”_´št_ÿche_¡©s
 (
 ¡dout
 );
 
-908 
+909 
 ÿche_¡©s
  
 cÜe_ÿche_¡©s
 ;
 
-909 
+910 
 cÜe_ÿche_¡©s
 .
 	`ş—r
 ();
 
-910 
+911 
 i
 =0; i<
 m_cÚfig
@@ -22299,7 +22299,7 @@ m_cÚfig
 	`num_şu¡”
 (); i++){
 
-911 
+912 
 m_şu¡”
 [
 i
@@ -22309,11 +22309,11 @@ i
 cÜe_ÿche_¡©s
 );
 
-913 
+914 
 	`´štf
 ("\nTotal_core_cache_stats:\n");
 
-914 
+915 
 cÜe_ÿche_¡©s
 .
 	`´št_¡©s
@@ -22321,7 +22321,7 @@ cÜe_ÿche_¡©s
 ¡dout
 , "Total_core_cache_stats_breakdown");
 
-915 
+916 
 	`shad”_´št_scheduËr_¡©
 Ğ
 ¡dout
@@ -22329,7 +22329,7 @@ cÜe_ÿche_¡©s
 çl£
  );
 
-917 
+918 
 m_shad”_¡©s
 ->
 	`´št
@@ -22337,17 +22337,17 @@ m_shad”_¡©s
 ¡dout
 );
 
-918 #ifdeà
+919 #ifdeà
 GPGPUSIM_POWER_MODEL
 
 
-919 if(
+920 if(
 m_cÚfig
 .
 g_pow”_simuÏtiÚ_’abËd
 ){
 
-920 
+921 
 m_gpgpusim_w¿µ”
 ->
 	`´št_pow”_k”Ãl_¡©s
@@ -22365,13 +22365,13 @@ k”Ãl_šfo_¡r
 Œue
  );
 
-921 
+922 
 	`mı©_»£t_³rf_couÁ
 (
 m_gpgpusim_w¿µ”
 );
 
-926 
+927 
 m_memÜy_¡©s
 ->
 	`memÏt¡©_´št
@@ -22383,7 +22383,7 @@ m_n_mem
 nbk
 );
 
-927 
+928 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -22391,7 +22391,7 @@ m_memÜy_cÚfig
 m_n_mem
 ;i++)
 
-928 
+929 
 m_memÜy_·¹™iÚ_un™
 [
 i
@@ -22401,7 +22401,7 @@ i
 ¡dout
 );
 
-931 if(!
+932 if(!
 m_memÜy_cÚfig
 ->
 m_L2_cÚfig
@@ -22409,47 +22409,47 @@ m_L2_cÚfig
 	`di§bËd
 ()){
 
-932 
+933 
 ÿche_¡©s
  
 l2_¡©s
 ;
 
-933 
+934 
 ÿche_sub_¡©s
  
 l2_css
 ;
 
-934 
+935 
 ÿche_sub_¡©s
  
 tÙ®_l2_css
 ;
 
-935 
+936 
 l2_¡©s
 .
 	`ş—r
 ();
 
-936 
+937 
 l2_css
 .
 	`ş—r
 ();
 
-937 
+938 
 tÙ®_l2_css
 .
 	`ş—r
 ();
 
-939 
+940 
 	`´štf
 ("\n========= L2 cache stats =========\n");
 
-940 
+941 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -22457,7 +22457,7 @@ m_memÜy_cÚfig
 m_n_mem_sub_·¹™iÚ
 ;i++){
 
-941 
+942 
 m_memÜy_sub_·¹™iÚ
 [
 i
@@ -22467,7 +22467,7 @@ i
 l2_¡©s
 );
 
-942 
+943 
 m_memÜy_sub_·¹™iÚ
 [
 i
@@ -22477,13 +22477,13 @@ i
 l2_css
 );
 
-944 
+945 
 	`årštf
 Ğ
 ¡dout
 , "L2_cache_bank[%d]: Access = %u, Miss = %u, Miss_rate = %.3lf, Pending_hits = %u, Reservation_fails = %u\n",
 
-945 
+946 
 i
 , 
 l2_css
@@ -22497,13 +22497,13 @@ mis£s
 »s_çs
 );
 
-947 
+948 
 tÙ®_l2_css
  +ğ
 l2_css
 ;
 
-949 ià(!
+950 ià(!
 m_memÜy_cÚfig
 ->
 m_L2_cÚfig
@@ -22513,7 +22513,7 @@ m_L2_cÚfig
 	`g‘_num_lšes
 ()) {
 
-951 
+952 
 	`´štf
 ("L2_tÙ®_ÿche_acûs£ ğ%u\n", 
 tÙ®_l2_css
@@ -22521,7 +22521,7 @@ tÙ®_l2_css
 acûs£s
 );
 
-952 
+953 
 	`´štf
 ("L2_tÙ®_ÿche_mis£ ğ%u\n", 
 tÙ®_l2_css
@@ -22529,13 +22529,13 @@ tÙ®_l2_css
 mis£s
 );
 
-953 if(
+954 if(
 tÙ®_l2_css
 .
 acûs£s
  > 0)
 
-954 
+955 
 	`´štf
 ("L2_tÙ®_ÿche_miss_¿‹ = %.4lf\n", ()
 tÙ®_l2_css
@@ -22545,7 +22545,7 @@ mis£s
 acûs£s
 );
 
-955 
+956 
 	`´štf
 ("L2_tÙ®_ÿche_³ndšg_h™ ğ%u\n", 
 tÙ®_l2_css
@@ -22553,7 +22553,7 @@ tÙ®_l2_css
 ³ndšg_h™s
 );
 
-956 
+957 
 	`´štf
 ("L2_tÙ®_ÿche_»£rv©iÚ_ç ğ%u\n", 
 tÙ®_l2_css
@@ -22561,11 +22561,11 @@ tÙ®_l2_css
 »s_çs
 );
 
-957 
+958 
 	`´štf
 ("L2_total_cache_breakdown:\n");
 
-958 
+959 
 l2_¡©s
 .
 	`´št_¡©s
@@ -22573,7 +22573,7 @@ l2_¡©s
 ¡dout
 , "L2_cache_stats_breakdown");
 
-959 
+960 
 tÙ®_l2_css
 .
 	`´št_pÜt_¡©s
@@ -22581,13 +22581,13 @@ tÙ®_l2_css
 ¡dout
 , "L2_cache");
 
-963 ià(
+964 ià(
 m_cÚfig
 .
 gpgpu_cæog_š‹rv®
  != 0) {
 
-964 
+965 
 	`¥l_log_to_fe
  (
 ¡dout
@@ -22595,17 +22595,17 @@ gpgpu_cæog_š‹rv®
 gpu_sim_cyşe
 );
 
-965 
+966 
 	`š¢_w¬p_occ_´št
 (
 ¡dout
 );
 
-967 iàĞ
+968 iàĞ
 gpgpu_±x_š¡ruùiÚ_şassifiÿtiÚ
  ) {
 
-968 
+969 
 	`StDi¥
 Ğ
 g_š¡_şassifiÿtiÚ_¡©
@@ -22613,7 +22613,7 @@ g_š¡_şassifiÿtiÚ_¡©
 g_±x_k”Ãl_couÁ
 ]);
 
-969 
+970 
 	`StDi¥
 Ğ
 g_š¡_İ_şassifiÿtiÚ_¡©
@@ -22621,17 +22621,17 @@ g_š¡_İ_şassifiÿtiÚ_¡©
 g_±x_k”Ãl_couÁ
 ]);
 
-972 #ifdeà
+973 #ifdeà
 GPGPUSIM_POWER_MODEL
 
 
-973 if(
+974 if(
 m_cÚfig
 .
 g_pow”_simuÏtiÚ_’abËd
 ){
 
-974 
+975 
 m_gpgpusim_w¿µ”
 ->
 	`d‘eù_´št_¡—dy_¡©e
@@ -22641,23 +22641,23 @@ gpu_tÙ_sim_š¢
 gpu_sim_š¢
 );
 
-980 
+981 
 tÙ®_simt_to_mem
 =0;
 
-981 
+982 
 tÙ®_mem_to_simt
 =0;
 
-982 
+983 
 ‹mp_¡m
 =0;
 
-983 
+984 
 ‹mp_mts
  = 0;
 
-984 
+985 
 i
 =0; i<
 m_cÚfig
@@ -22665,7 +22665,7 @@ m_cÚfig
 	`num_şu¡”
 (); i++){
 
-985 
+986 
 m_şu¡”
 [
 i
@@ -22677,65 +22677,65 @@ i
 ‹mp_mts
 );
 
-986 
+987 
 tÙ®_simt_to_mem
  +ğ
 ‹mp_¡m
 ;
 
-987 
+988 
 tÙ®_mem_to_simt
  +ğ
 ‹mp_mts
 ;
 
-989 
+990 
 	`´štf
 ("\niút_tÙ®_pkts_mem_to_simt=%ld\n", 
 tÙ®_mem_to_simt
 );
 
-990 
+991 
 	`´štf
 ("iút_tÙ®_pkts_simt_to_mem=%ld\n", 
 tÙ®_simt_to_mem
 );
 
-992 
+993 
 	`time_veùÜ_´št
 ();
 
-993 
+994 
 	`fæush
 (
 ¡dout
 );
 
-995 
+996 
 	`ş—r_execu‹d_k”Ãl_šfo
 ();
 
-996 
+997 
 	}
 }
 
-1000 
+1001 
 	ggpgpu_sim
 ::
 	$th»ads_³r_cÜe
 () const
 
-1002  
+1003  
 m_shad”_cÚfig
 ->
 n_th»ad_³r_shad”
 ;
 
-1003 
+1004 
 	}
 }
 
-1005 
+1006 
 	gshad”_cÜe_ùx
 ::
 	$mem_š¡ruùiÚ_¡©s
@@ -22745,7 +22745,7 @@ w¬p_š¡_t
 š¡
 )
 
-1007 
+1008 
 aùive_couÁ
  = 
 š¡
@@ -22753,7 +22753,7 @@ aùive_couÁ
 	`aùive_couÁ
 ();
 
-1009 
+1010 
 š¡
 .
 ¥aû
@@ -22761,19 +22761,19 @@ aùive_couÁ
 	`g‘_ty³
 ()) {
 
-1010 
+1011 
 undefšed_¥aû
 :
 
-1011 
+1012 
 »g_¥aû
 :
 
-1013 
+1014 
 sh¬ed_¥aû
 :
 
-1014 
+1015 
 m_¡©s
 ->
 gpgpu_n_shmem_š¢
@@ -22781,11 +22781,11 @@ gpgpu_n_shmem_š¢
 aùive_couÁ
 ;
 
-1016 
+1017 
 cÚ¡_¥aû
 :
 
-1017 
+1018 
 m_¡©s
 ->
 gpgpu_n_cÚ¡_š¢
@@ -22793,15 +22793,15 @@ gpgpu_n_cÚ¡_š¢
 aùive_couÁ
 ;
 
-1019 
+1020 
 ·¿m_¥aû_k”Ãl
 :
 
-1020 
+1021 
 ·¿m_¥aû_loÿl
 :
 
-1021 
+1022 
 m_¡©s
 ->
 gpgpu_n_·¿m_š¢
@@ -22809,11 +22809,11 @@ gpgpu_n_·¿m_š¢
 aùive_couÁ
 ;
 
-1023 
+1024 
 ‹x_¥aû
 :
 
-1024 
+1025 
 m_¡©s
 ->
 gpgpu_n_‹x_š¢
@@ -22821,21 +22821,21 @@ gpgpu_n_‹x_š¢
 aùive_couÁ
 ;
 
-1026 
+1027 
 glob®_¥aû
 :
 
-1027 
+1028 
 loÿl_¥aû
 :
 
-1028 ifĞ
+1029 ifĞ
 š¡
 .
 	`is_¡Üe
 () )
 
-1029 
+1030 
 m_¡©s
 ->
 gpgpu_n_¡Üe_š¢
@@ -22843,7 +22843,7 @@ gpgpu_n_¡Üe_š¢
 aùive_couÁ
 ;
 
-1031 
+1032 
 m_¡©s
 ->
 gpgpu_n_lßd_š¢
@@ -22851,15 +22851,15 @@ gpgpu_n_lßd_š¢
 aùive_couÁ
 ;
 
-1034 
+1035 
 	`abÜt
 ();
 
-1036 
+1037 
 	}
 }
 
-1048 
+1049 
 	gshad”_cÜe_ùx
 ::
 	$issue_block2cÜe
@@ -22869,41 +22869,41 @@ k”Ãl_šfo_t
 k”Ãl
  )
 
-1050 
+1051 
 	`£t_max_ùa
 (
 k”Ãl
 );
 
-1053 
+1054 
 ä“_ùa_hw_id
 =()-1;
 
-1054 
+1055 
 i
 =0;i<
 k”Ãl_max_ùa_³r_shad”
 ;i++ ) {
 
-1055 ifĞ
+1056 ifĞ
 m_ùa_¡©us
 [
 i
 ]==0 ) {
 
-1056 
+1057 
 ä“_ùa_hw_id
 =
 i
 ;
 
-1060 
+1061 
 	`as£¹
 Ğ
 ä“_ùa_hw_id
 !=()-1 );
 
-1063 
+1064 
 ùa_size
  = 
 k”Ãl
@@ -22911,13 +22911,13 @@ k”Ãl
 	`th»ads_³r_ùa
 ();
 
-1068 
+1069 
 ·dded_ùa_size
  = 
 ùa_size
 ;
 
-1069 ià(
+1070 ià(
 ùa_size
 %
 m_cÚfig
@@ -22925,7 +22925,7 @@ m_cÚfig
 w¬p_size
 )
 
-1070 
+1071 
 ·dded_ùa_size
  = ((
 ùa_size
@@ -22935,7 +22935,7 @@ m_cÚfig
 w¬p_size
 )+1)*(m_config->warp_size);
 
-1071 
+1072 
 ¡¬t_th»ad
  = 
 ä“_ùa_hw_id
@@ -22943,7 +22943,7 @@ w¬p_size
 ·dded_ùa_size
 ;
 
-1072 
+1073 
 ’d_th»ad
  = 
 ¡¬t_th»ad
@@ -22951,7 +22951,7 @@ w¬p_size
 ùa_size
 ;
 
-1075 
+1076 
 	`»š™
 (
 ¡¬t_th»ad
@@ -22961,17 +22961,17 @@ w¬p_size
 çl£
 );
 
-1079 
+1080 
 w¬p_£t_t
  
 w¬ps
 ;
 
-1080 
+1081 
 Áh»ads_š_block
 = 0;
 
-1081 
+1082 
 i
  = 
 ¡¬t_th»ad
@@ -22979,7 +22979,7 @@ i
 ’d_th»ad
 ; i++) {
 
-1082 
+1083 
 m_th»adS‹
 [
 i
@@ -22989,7 +22989,7 @@ m_ùa_id
 ä“_ùa_hw_id
 ;
 
-1083 
+1084 
 w¬p_id
  = 
 i
@@ -22999,7 +22999,7 @@ m_cÚfig
 w¬p_size
 ;
 
-1084 
+1085 
 Áh»ads_š_block
  +ğ
 	`±x_sim_š™_th»ad
@@ -23031,7 +23031,7 @@ m_şu¡”
 	`g‘_gpu
 ());
 
-1085 
+1086 
 m_th»adS‹
 [
 i
@@ -23041,7 +23041,7 @@ m_aùive
 Œue
 ;
 
-1086 
+1087 
 w¬ps
 .
 	`£t
@@ -23049,7 +23049,7 @@ w¬ps
 w¬p_id
  );
 
-1088 
+1089 
 	`as£¹
 Ğ
 Áh»ads_š_block
@@ -23059,7 +23059,7 @@ m_cÚfig
 n_th»ad_³r_shad”
 );
 
-1089 
+1090 
 m_ùa_¡©us
 [
 ä“_ùa_hw_id
@@ -23067,7 +23067,7 @@ m_ùa_¡©us
 Áh»ads_š_block
 ;
 
-1093 
+1094 
 m_b¬r›rs
 .
 	`®loÿ‹_b¬r›r
@@ -23077,7 +23077,7 @@ m_b¬r›rs
 w¬ps
 );
 
-1096 
+1097 
 	`š™_w¬ps
 Ğ
 ä“_ùa_hw_id
@@ -23087,17 +23087,17 @@ w¬ps
 ’d_th»ad
 );
 
-1097 
+1098 
 m_n_aùive_ùa
 ++;
 
-1099 
+1100 
 	`shad”_CTA_couÁ_log
 (
 m_sid
 , 1);
 
-1100 
+1101 
 	`´štf
 ("GPGPU-Sim uArch: cÜe:%3d, c:%2u in™Ÿlized @(%Îd,%Îd)\n", 
 m_sid
@@ -23109,11 +23109,11 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
  );
 
-1101 
+1102 
 	}
 }
 
-1105 
+1106 
 	gd¿m_t
 ::
 	$d¿m_log
@@ -23121,13 +23121,13 @@ gpu_tÙ_sim_cyşe
 sk
  )
 
-1107 ià(
+1108 ià(
 sk
  =ğ
 SAMPLELOG
 ) {
 
-1108 
+1109 
 	`StAddSam¶e
 (
 mrqq_Di¡
@@ -23135,13 +23135,13 @@ mrqq_Di¡
 	`que_Ëngth
 ());
 
-1109 } ià(
+1110 } ià(
 sk
  =ğ
 DUMPLOG
 ) {
 
-1110 
+1111 
 	`´štf
  ("QueuL’gth DRAM[%d] ",
 id
@@ -23151,17 +23151,17 @@ id
 mrqq_Di¡
 );
 
-1112 
+1113 
 	}
 }
 
-1115 
+1116 
 	ggpgpu_sim
 ::
 	$Ãxt_şock_domaš
 ()
 
-1117 
+1118 
 sm®Ë¡
  = 
 	`mš3
@@ -23173,29 +23173,29 @@ iút_time
 d¿m_time
 );
 
-1118 
+1119 
 mask
  = 0x00;
 
-1119 iàĞ
+1120 iàĞ
 l2_time
  <ğ
 sm®Ë¡
  ) {
 
-1120 
+1121 
 sm®Ë¡
  = 
 l2_time
 ;
 
-1121 
+1122 
 mask
  |ğ
 L2
  ;
 
-1122 
+1123 
 l2_time
  +ğ
 m_cÚfig
@@ -23203,19 +23203,19 @@ m_cÚfig
 l2_³riod
 ;
 
-1124 iàĞ
+1125 iàĞ
 iút_time
  <ğ
 sm®Ë¡
  ) {
 
-1125 
+1126 
 mask
  |ğ
 ICNT
 ;
 
-1126 
+1127 
 iút_time
  +ğ
 m_cÚfig
@@ -23223,19 +23223,19 @@ m_cÚfig
 iút_³riod
 ;
 
-1128 iàĞ
+1129 iàĞ
 d¿m_time
  <ğ
 sm®Ë¡
  ) {
 
-1129 
+1130 
 mask
  |ğ
 DRAM
 ;
 
-1130 
+1131 
 d¿m_time
  +ğ
 m_cÚfig
@@ -23243,19 +23243,19 @@ m_cÚfig
 d¿m_³riod
 ;
 
-1132 iàĞ
+1133 iàĞ
 cÜe_time
  <ğ
 sm®Ë¡
  ) {
 
-1133 
+1134 
 mask
  |ğ
 CORE
 ;
 
-1134 
+1135 
 cÜe_time
  +ğ
 m_cÚfig
@@ -23263,27 +23263,27 @@ m_cÚfig
 cÜe_³riod
 ;
 
-1136  
+1137  
 mask
 ;
 
-1137 
+1138 
 	}
 }
 
-1139 
+1140 
 	ggpgpu_sim
 ::
 	$issue_block2cÜe
 ()
 
-1141 
+1142 
 Ï¡_issued
  = 
 m_Ï¡_şu¡”_issue
 ;
 
-1142 
+1143 
 i
 =0;i<
 m_shad”_cÚfig
@@ -23291,7 +23291,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++) {
 
-1143 
+1144 
 idx
  = (
 i
@@ -23303,7 +23303,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;
 
-1144 
+1145 
 num
  = 
 m_şu¡”
@@ -23313,49 +23313,49 @@ idx
 	`issue_block2cÜe
 ();
 
-1145 ifĞ
+1146 ifĞ
 num
  ) {
 
-1146 
+1147 
 m_Ï¡_şu¡”_issue
 =
 idx
 ;
 
-1147 
+1148 
 m_tÙ®_ùa_Ïunched
  +ğ
 num
 ;
 
-1150 
+1151 
 	}
 }
 
-1152 
+1153 
 	gg_sšgË_¡•
 =0;
 
-1154 
+1155 
 	ggpgpu_sim
 ::
 	$cyşe
 ()
 
-1156 
+1157 
 şock_mask
  = 
 	`Ãxt_şock_domaš
 ();
 
-1158 ià(
+1159 ià(
 şock_mask
  & 
 CORE
  ) {
 
-1160 
+1161 
 i
 =0;i<
 m_shad”_cÚfig
@@ -23363,7 +23363,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++)
 
-1161 
+1162 
 m_şu¡”
 [
 i
@@ -23371,13 +23371,13 @@ i
 	`iút_cyşe
 ();
 
-1163 ià(
+1164 ià(
 şock_mask
  & 
 ICNT
 ) {
 
-1165 
+1166 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -23385,7 +23385,7 @@ m_memÜy_cÚfig
 m_n_mem_sub_·¹™iÚ
 ;i++) {
 
-1166 
+1167 
 mem_ãtch
 * 
 mf
@@ -23397,11 +23397,11 @@ i
 	`tİ
 ();
 
-1167 ià(
+1168 ià(
 mf
 ) {
 
-1168 
+1169 
 »¥Ú£_size
  = 
 mf
@@ -23413,7 +23413,7 @@ mf
 	`size
 ();
 
-1169 iàĞ::
+1170 iàĞ::
 	`iút_has_bufãr
 Ğ
 m_shad”_cÚfig
@@ -23425,13 +23425,13 @@ i
 »¥Ú£_size
  ) ) {
 
-1170 ià(!
+1171 ià(!
 mf
 ->
 	`g‘_is_wr™e
 ())
 
-1171 
+1172 
 mf
 ->
 	`£t_»tuº_time¡amp
@@ -23441,7 +23441,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-1172 
+1173 
 mf
 ->
 	`£t_¡©us
@@ -23453,7 +23453,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-1173 ::
+1174 ::
 	`iút_push
 Ğ
 m_shad”_cÚfig
@@ -23469,7 +23469,7 @@ mf
 »¥Ú£_size
  );
 
-1174 
+1175 
 m_memÜy_sub_·¹™iÚ
 [
 i
@@ -23477,11 +23477,11 @@ i
 	`pİ
 ();
 
-1176 
+1177 
 gpu_¡®l_iút2sh
 ++;
 
-1179 
+1180 
 m_memÜy_sub_·¹™iÚ
 [
 i
@@ -23489,13 +23489,13 @@ i
 	`pİ
 ();
 
-1184 ià(
+1185 ià(
 şock_mask
  & 
 DRAM
 ) {
 
-1185 
+1186 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -23503,7 +23503,7 @@ m_memÜy_cÚfig
 m_n_mem
 ;i++){
 
-1186 
+1187 
 m_memÜy_·¹™iÚ_un™
 [
 i
@@ -23511,7 +23511,7 @@ i
 	`d¿m_cyşe
 ();
 
-1188 
+1189 
 m_memÜy_·¹™iÚ_un™
 [
 i
@@ -23529,7 +23529,7 @@ CURRENT_STAT_IDX
 n_aùiv™y
 [CURRENT_STAT_IDX][i],
 
-1189 
+1190 
 m_pow”_¡©s
 ->
 pwr_mem_¡©
@@ -23545,7 +23545,7 @@ n_aù
 n_´e
 [CURRENT_STAT_IDX][i],
 
-1190 
+1191 
 m_pow”_¡©s
 ->
 pwr_mem_¡©
@@ -23561,13 +23561,53 @@ n_wr
 n_»q
 [CURRENT_STAT_IDX][i]);
 
-1195 ià(
+1193 
+FILE
+ *
+pfe
+=
+	`fİ’
+("bw_stats.csv","a");
+
+1194 
+	`as£¹
+(
+pfe
+);
+
+1195 
+	`årštf
+(
+pfe
+,"%u,%Îu\n", 
+m_memÜy_·¹™iÚ_un™
+[0]->
+	`g‘_bw
+(),
+gpu_sim_cyşe
++
+gpu_tÙ_sim_cyşe
+);
+
+1196 
+	`fşo£
+(
+pfe
+);
+
+1197 
+m_memÜy_·¹™iÚ_un™
+[0]->
+	`£t_bw
+(0);
+
+1201 ià(
 şock_mask
  & 
 L2
 ) {
 
-1196 
+1202 
 m_pow”_¡©s
 ->
 pwr_mem_¡©
@@ -23579,7 +23619,7 @@ CURRENT_STAT_IDX
 	`ş—r
 ();
 
-1197 
+1203 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -23587,7 +23627,7 @@ m_memÜy_cÚfig
 m_n_mem_sub_·¹™iÚ
 ;i++) {
 
-1200 iàĞ
+1206 iàĞ
 m_memÜy_sub_·¹™iÚ
 [
 i
@@ -23595,11 +23635,11 @@ i
 	`fuÎ
 () ) {
 
-1201 
+1207 
 gpu_¡®l_d¿mfuÎ
 ++;
 
-1203 
+1209 
 mem_ãtch
 * 
 mf
@@ -23613,7 +23653,7 @@ m_shad”_cÚfig
 i
 ) );
 
-1204 
+1210 
 m_memÜy_sub_·¹™iÚ
 [
 i
@@ -23627,7 +23667,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
  );
 
-1206 
+1212 
 m_memÜy_sub_·¹™iÚ
 [
 i
@@ -23639,7 +23679,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-1207 
+1213 
 m_memÜy_sub_·¹™iÚ
 [
 i
@@ -23655,23 +23695,23 @@ l2_ÿche_¡©s
 CURRENT_STAT_IDX
 ]);
 
-1211 ià(
+1217 ià(
 şock_mask
  & 
 ICNT
 ) {
 
-1212 
+1218 
 	`iút_Œªsãr
 ();
 
-1215 ià(
+1221 ià(
 şock_mask
  & 
 CORE
 ) {
 
-1217 
+1223 
 m_pow”_¡©s
 ->
 pwr_mem_¡©
@@ -23683,7 +23723,7 @@ CURRENT_STAT_IDX
 	`ş—r
 ();
 
-1218 
+1224 
 i
 =0;i<
 m_shad”_cÚfig
@@ -23691,7 +23731,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++) {
 
-1219 ià(
+1225 ià(
 m_şu¡”
 [
 i
@@ -23701,7 +23741,7 @@ i
 	`g‘_mÜe_ùa_Ëá
 () ) {
 
-1220 
+1226 
 m_şu¡”
 [
 i
@@ -23709,7 +23749,7 @@ i
 	`cÜe_cyşe
 ();
 
-1221 *
+1227 *
 aùive_sms
 +=
 m_şu¡”
@@ -23719,7 +23759,7 @@ i
 	`g‘_n_aùive_sms
 ();
 
-1224 
+1230 
 m_şu¡”
 [
 i
@@ -23737,7 +23777,7 @@ CURRENT_STAT_IDX
 n_mem_to_simt
 [CURRENT_STAT_IDX][i]);
 
-1225 
+1231 
 m_şu¡”
 [
 i
@@ -23753,11 +23793,11 @@ cÜe_ÿche_¡©s
 CURRENT_STAT_IDX
 ]);
 
-1227 
+1233 
 ‹mp
 =0;
 
-1228 
+1234 
 i
 =0;i<
 m_shad”_cÚfig
@@ -23765,7 +23805,7 @@ m_shad”_cÚfig
 	`num_shad”
 ();i++){
 
-1229 
+1235 
 ‹mp
 +=
 m_shad”_¡©s
@@ -23775,7 +23815,7 @@ m_p–še_duty_cyşe
 i
 ];
 
-1231 
+1237 
 ‹mp
 ñemp/
 m_shad”_cÚfig
@@ -23783,13 +23823,13 @@ m_shad”_cÚfig
 	`num_shad”
 ();
 
-1232 *
+1238 *
 av”age_p–še_duty_cyşe
 =((*av”age_p–še_duty_cyşe)+
 ‹mp
 );
 
-1236 ifĞ
+1242 ifĞ
 g_sšgË_¡•
  && ((
 gpu_sim_cyşe
@@ -23797,33 +23837,33 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 ) >= g_single_step) ) {
 
-1237 
+1243 
 	`asm
 ("int $03");
 
-1239 
+1245 
 gpu_sim_cyşe
 ++;
 
-1240 ifĞ
+1246 ifĞ
 g_š‹¿ùive_debugg”_’abËd
  )
 
-1241 
+1247 
 	`gpgpu_debug
 ();
 
-1244 #ifdeà
+1250 #ifdeà
 GPGPUSIM_POWER_MODEL
 
 
-1245 if(
+1251 if(
 m_cÚfig
 .
 g_pow”_simuÏtiÚ_’abËd
 ){
 
-1246 
+1252 
 	`mı©_cyşe
 (
 m_cÚfig
@@ -23845,21 +23885,21 @@ gpu_tÙ_sim_š¢
 gpu_sim_š¢
 );
 
-1250 
+1256 
 	`issue_block2cÜe
 ();
 
-1253 
+1259 
 ®l_th»ads_com¶‘e
  = 1;
 
-1254 ià(
+1260 ià(
 m_cÚfig
 .
 gpgpu_æush_l1_ÿche
 ) {
 
-1255 
+1261 
 i
 =0;i<
 m_shad”_cÚfig
@@ -23867,7 +23907,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++) {
 
-1256 ià(
+1262 ià(
 m_şu¡”
 [
 i
@@ -23875,7 +23915,7 @@ i
 	`g‘_nÙ_com¶‘ed
 () == 0)
 
-1257 
+1263 
 m_şu¡”
 [
 i
@@ -23883,23 +23923,23 @@ i
 	`ÿche_æush
 ();
 
-1259 
+1265 
 ®l_th»ads_com¶‘e
  = 0 ;
 
-1263 if(
+1269 if(
 m_cÚfig
 .
 gpgpu_æush_l2_ÿche
 ){
 
-1264 if(!
+1270 if(!
 m_cÚfig
 .
 gpgpu_æush_l1_ÿche
 ){
 
-1265 
+1271 
 i
 =0;i<
 m_shad”_cÚfig
@@ -23907,7 +23947,7 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++) {
 
-1266 ià(
+1272 ià(
 m_şu¡”
 [
 i
@@ -23915,11 +23955,11 @@ i
 	`g‘_nÙ_com¶‘ed
 () != 0){
 
-1267 
+1273 
 ®l_th»ads_com¶‘e
  = 0 ;
 
-1273 ià(
+1279 ià(
 ®l_th»ads_com¶‘e
  && !
 m_memÜy_cÚfig
@@ -23929,11 +23969,11 @@ m_L2_cÚfig
 	`di§bËd
 () ) {
 
-1274 
+1280 
 	`´štf
 ("Flushed L2 caches...\n");
 
-1275 ià(
+1281 ià(
 m_memÜy_cÚfig
 ->
 m_L2_cÚfig
@@ -23941,11 +23981,11 @@ m_L2_cÚfig
 	`g‘_num_lšes
 ()) {
 
-1276 
+1282 
 dlc
  = 0;
 
-1277 
+1283 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -23953,7 +23993,7 @@ m_memÜy_cÚfig
 m_n_mem
 ;i++) {
 
-1278 
+1284 
 dlc
  = 
 m_memÜy_sub_·¹™iÚ
@@ -23963,13 +24003,13 @@ i
 	`æushL2
 ();
 
-1279 
+1285 
 	`as£¹
  (
 dlc
  == 0);
 
-1280 
+1286 
 	`´štf
 ("Dœty†še æushed from L2 %d i %d\n", 
 i
@@ -23977,7 +24017,7 @@ i
 dlc
  );
 
-1286 ià(!(
+1292 ià(!(
 gpu_sim_cyşe
  % 
 m_cÚfig
@@ -23985,7 +24025,7 @@ m_cÚfig
 gpu_¡©_§m¶e_äeq
 )) {
 
-1287 
+1293 
 time_t
  
 days
@@ -23997,19 +24037,19 @@ mšu‹s
 £c
 ;
 
-1288 
+1294 
 time_t
  
 cu¼_time
 ;
 
-1289 
+1295 
 	`time
 (&
 cu¼_time
 );
 
-1290 
+1296 
 –­£d_time
  = 
 	`MAX
@@ -24019,7 +24059,7 @@ cu¼_time
 g_simuÏtiÚ_¡¬‰ime
 , 1);
 
-1291 iàĞ(
+1297 iàĞ(
 –­£d_time
  - 
 Ï¡_liv’ess_mes§ge_time
@@ -24029,13 +24069,13 @@ m_cÚfig
 liv’ess_mes§ge_äeq
  ) {
 
-1292 
+1298 
 days
  = 
 –­£d_time
 /(3600*24);
 
-1293 
+1299 
 hrs
  = 
 –­£d_time
@@ -24043,7 +24083,7 @@ hrs
 days
 ;
 
-1294 
+1300 
 mšu‹s
  = 
 –­£d_time
@@ -24053,7 +24093,7 @@ hrs
 days
 );
 
-1295 
+1301 
 £c
  = 
 –­£d_time
@@ -24065,11 +24105,11 @@ hrs
 days
 ));
 
-1296 
+1302 
 	`´štf
 ("GPGPU-Sim uArch: cycles simulated: %lld inst.: %lld (ipc=%4.1f) sim_rate=%u (inst/sec)ƒlapsed = %u:%u:%02u:%02u / %s",
 
-1297 
+1303 
 gpu_tÙ_sim_cyşe
  + 
 gpu_sim_cyşe
@@ -24079,13 +24119,13 @@ gpu_tÙ_sim_š¢
 gpu_sim_š¢
 ,
 
-1298 ()
+1304 ()
 gpu_sim_š¢
 /()
 gpu_sim_cyşe
 ,
 
-1299 ()((
+1305 ()((
 gpu_tÙ_sim_š¢
 +
 gpu_sim_š¢
@@ -24093,7 +24133,7 @@ gpu_sim_š¢
 –­£d_time
 ),
 
-1300 ()
+1306 ()
 days
 ,()
 hrs
@@ -24103,35 +24143,35 @@ mšu‹s
 £c
 ,
 
-1301 
+1307 
 	`ùime
 (&
 cu¼_time
 ));
 
-1302 
+1308 
 	`fæush
 (
 ¡dout
 );
 
-1303 
+1309 
 Ï¡_liv’ess_mes§ge_time
  = 
 –­£d_time
 ;
 
-1305 
+1311 
 	`visu®iz”_´št¡©
 ();
 
-1306 
+1312 
 m_memÜy_¡©s
 ->
 	`memÏt¡©_Ït_pw
 ();
 
-1307 ià(
+1313 ià(
 m_cÚfig
 .
 gpgpu_ruÁime_¡©
@@ -24139,7 +24179,7 @@ gpgpu_ruÁime_¡©
 gpu_ruÁime_¡©_æag
  != 0) ) {
 
-1308 ià(
+1314 ià(
 m_cÚfig
 .
 gpu_ruÁime_¡©_æag
@@ -24147,7 +24187,7 @@ gpu_ruÁime_¡©_æag
 GPU_RSTAT_BW_STAT
 ) {
 
-1309 
+1315 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -24155,7 +24195,7 @@ m_memÜy_cÚfig
 m_n_mem
 ;i++)
 
-1310 
+1316 
 m_memÜy_·¹™iÚ_un™
 [
 i
@@ -24165,7 +24205,7 @@ i
 ¡dout
 );
 
-1311 
+1317 
 	`´štf
 ("maxmrqÏ‹ncy = %d \n", 
 m_memÜy_¡©s
@@ -24173,7 +24213,7 @@ m_memÜy_¡©s
 max_mrq_Ï‹ncy
 );
 
-1312 
+1318 
 	`´štf
 ("maxmæ©’cy = %d \n", 
 m_memÜy_¡©s
@@ -24181,7 +24221,7 @@ m_memÜy_¡©s
 max_mf_Ï‹ncy
 );
 
-1314 ià(
+1320 ià(
 m_cÚfig
 .
 gpu_ruÁime_¡©_æag
@@ -24189,13 +24229,13 @@ gpu_ruÁime_¡©_æag
 GPU_RSTAT_SHD_INFO
 )
 
-1315 
+1321 
 	`shad”_´št_ruÁime_¡©
 Ğ
 ¡dout
  );
 
-1316 ià(
+1322 ià(
 m_cÚfig
 .
 gpu_ruÁime_¡©_æag
@@ -24203,13 +24243,13 @@ gpu_ruÁime_¡©_æag
 GPU_RSTAT_L1MISS
 )
 
-1317 
+1323 
 	`shad”_´št_l1_miss_¡©
 Ğ
 ¡dout
  );
 
-1318 ià(
+1324 ià(
 m_cÚfig
 .
 gpu_ruÁime_¡©_æag
@@ -24217,7 +24257,7 @@ gpu_ruÁime_¡©_æag
 GPU_RSTAT_SCHED
 )
 
-1319 
+1325 
 	`shad”_´št_scheduËr_¡©
 Ğ
 ¡dout
@@ -24225,11 +24265,11 @@ GPU_RSTAT_SCHED
 çl£
  );
 
-1323 ià(!(
+1329 ià(!(
 gpu_sim_cyşe
  % 20000)) {
 
-1325 ià(
+1331 ià(
 m_cÚfig
 .
 gpu_d—dlock_d‘eù
@@ -24239,25 +24279,25 @@ gpu_sim_š¢
 Ï¡_gpu_sim_š¢
 ) {
 
-1326 
+1332 
 gpu_d—dlock
  = 
 Œue
 ;
 
-1328 
+1334 
 Ï¡_gpu_sim_š¢
  = 
 gpu_sim_š¢
 ;
 
-1331 
+1337 
 	`Œy_¢­_shÙ
 (
 gpu_sim_cyşe
 );
 
-1332 
+1338 
 	`¥l_log_to_fe
  (
 ¡dout
@@ -24265,11 +24305,11 @@ gpu_sim_cyşe
 gpu_sim_cyşe
 );
 
-1334 
+1340 
 	}
 }
 
-1337 
+1343 
 	gshad”_cÜe_ùx
 ::
 	$dump_w¬p_¡©e
@@ -24279,19 +24319,19 @@ FILE
 fout
  ) const
 
-1339 
+1345 
 	`årštf
 (
 fout
 , "\n");
 
-1340 
+1346 
 	`årštf
 (
 fout
 , "per warp functional simulation status:\n");
 
-1341 
+1347 
 w
 =0; w < 
 m_cÚfig
@@ -24299,7 +24339,7 @@ m_cÚfig
 max_w¬ps_³r_shad”
 ; w++ )
 
-1342 
+1348 
 m_w¬p
 [
 w
@@ -24309,11 +24349,11 @@ w
 fout
 );
 
-1343 
+1349 
 	}
 }
 
-1345 
+1351 
 	ggpgpu_sim
 ::
 	$dump_p–še
@@ -24325,15 +24365,15 @@ s
 m
  ) const
 
-1358 
+1364 
 	`´štf
 ("Dumping…ipeline state...\n");
 
-1359 if(!
+1365 if(!
 mask
 ) mask = 0xFFFFFFFF;
 
-1360 
+1366 
 i
 =0;i<
 m_shad”_cÚfig
@@ -24341,17 +24381,17 @@ m_shad”_cÚfig
 n_simt_şu¡”s
 ;i++) {
 
-1361 if(
+1367 if(
 s
  != -1) {
 
-1362 
+1368 
 i
  = 
 s
 ;
 
-1364 if(
+1370 if(
 mask
 &1è
 m_şu¡”
@@ -24367,15 +24407,15 @@ i
 ¡dout
 ,1,mask & 0x2E);
 
-1365 if(
+1371 if(
 s
  != -1) {
 
-1369 if(
+1375 if(
 mask
 &0x10000) {
 
-1370 
+1376 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -24383,23 +24423,23 @@ m_memÜy_cÚfig
 m_n_mem
 ;i++) {
 
-1371 if(
+1377 if(
 m
  != -1) {
 
-1372 
+1378 
 i
 =
 m
 ;
 
-1374 
+1380 
 	`´štf
 ("DRAM / memÜy cÚŒŞË¸%u:\n", 
 i
 );
 
-1375 if(
+1381 if(
 mask
 &0x100000è
 m_memÜy_·¹™iÚ_un™
@@ -24411,7 +24451,7 @@ i
 ¡dout
 );
 
-1376 if(
+1382 if(
 mask
 &0x1000000è
 m_memÜy_·¹™iÚ_un™
@@ -24421,7 +24461,7 @@ i
 	`visu®ize
 ();
 
-1377 if(
+1383 if(
 mask
 &0x10000000è
 m_memÜy_·¹™iÚ_un™
@@ -24433,21 +24473,21 @@ i
 ¡dout
 );
 
-1378 if(
+1384 if(
 m
  != -1) {
 
-1383 
+1389 
 	`fæush
 (
 ¡dout
 );
 
-1384 
+1390 
 	}
 }
 
-1386 cÚ¡ 
+1392 cÚ¡ 
 shad”_cÜe_cÚfig
  * 
 	ggpgpu_sim
@@ -24455,15 +24495,15 @@ shad”_cÜe_cÚfig
 	$g‘Shad”CÜeCÚfig
 ()
 
-1388  
+1394  
 m_shad”_cÚfig
 ;
 
-1389 
+1395 
 	}
 }
 
-1391 cÚ¡ 
+1397 cÚ¡ 
 memÜy_cÚfig
  * 
 	ggpgpu_sim
@@ -24471,15 +24511,15 @@ memÜy_cÚfig
 	$g‘MemÜyCÚfig
 ()
 
-1393  
+1399  
 m_memÜy_cÚfig
 ;
 
-1394 
+1400 
 	}
 }
 
-1396 
+1402 
 simt_cÜe_şu¡”
  * 
 	ggpgpu_sim
@@ -24487,11 +24527,11 @@ simt_cÜe_şu¡”
 	$g‘SIMTClu¡”
 ()
 
-1398  *
+1404  *
 m_şu¡”
 ;
 
-1399 
+1405 
 	}
 }
 
@@ -27949,23 +27989,23 @@ m_cÚfig
 ¡©s
 );
 
-75 
+76 
 	}
 }
 
-77 
+78 
 	gmemÜy_·¹™iÚ_un™
 ::~
 	$memÜy_·¹™iÚ_un™
 ()
 
-79 
+80 
 d–‘e
  
 m_d¿m
 ;
 
-80 
+81 
 p
  = 0;… < 
 m_cÚfig
@@ -27973,7 +28013,7 @@ m_cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 ;…++) {
 
-81 
+82 
 d–‘e
  
 m_sub_·¹™iÚ
@@ -27981,17 +28021,17 @@ m_sub_·¹™iÚ
 p
 ];
 
-83 
+84 
 d–‘e
 [] 
 m_sub_·¹™iÚ
 ;
 
-84 
+85 
 	}
 }
 
-86 
+87 
 	gmemÜy_·¹™iÚ_un™
 ::
 ¬b™¿tiÚ_m‘ad©a
@@ -28003,7 +28043,7 @@ memÜy_cÚfig
 cÚfig
 )
 
-87 : 
+88 : 
 	`m_Ï¡_bÜrow”
 (
 cÚfig
@@ -28011,7 +28051,7 @@ cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
  - 1),
 
-88 
+89 
 	`m_´iv©e_üed™
 (
 cÚfig
@@ -28019,15 +28059,15 @@ cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 , 0),
 
-89 
+90 
 	$m_sh¬ed_üed™
 (0)
 
-93 
+94 
 m_´iv©e_üed™_lim™
  = 1;
 
-94 
+95 
 m_sh¬ed_üed™_lim™
  = 
 cÚfig
@@ -28035,25 +28075,25 @@ cÚfig
 gpgpu_äfcfs_d¿m_sched_queue_size
 
 
-95 + 
+96 + 
 cÚfig
 ->
 gpgpu_d¿m_»tuº_queue_size
 
 
-96 - (
+97 - (
 cÚfig
 ->
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
  - 1);
 
-97 ià(
+98 ià(
 cÚfig
 ->
 gpgpu_äfcfs_d¿m_sched_queue_size
  == 0
 
-98 
+99 
 Ü
  
 cÚfig
@@ -28061,21 +28101,21 @@ cÚfig
 gpgpu_d¿m_»tuº_queue_size
  == 0)
 
-100 
+101 
 m_sh¬ed_üed™_lim™
  = 0;
 
-102 
+103 
 	`as£¹
 (
 m_sh¬ed_üed™_lim™
  >= 0);
 
-103 
+104 
 	}
 }
 
-105 
+106 
 boŞ
  
 	gmemÜy_·¹™iÚ_un™
@@ -28087,13 +28127,13 @@ boŞ
 šÃr_sub_·¹™iÚ_id
 ) const
 
-107 
+108 
 ¥id
  = 
 šÃr_sub_·¹™iÚ_id
 ;
 
-108 ià(
+109 ià(
 m_´iv©e_üed™
 [
 ¥id
@@ -28101,29 +28141,29 @@ m_´iv©e_üed™
 m_´iv©e_üed™_lim™
 ) {
 
-109  
+110  
 Œue
 ;
 
-110 } ià(
+111 } ià(
 m_sh¬ed_üed™_lim™
  =ğ0 || 
 m_sh¬ed_üed™
  < m_shared_credit_limit) {
 
-111  
+112  
 Œue
 ;
 
-113  
+114  
 çl£
 ;
 
-115 
+116 
 	}
 }
 
-117 
+118 
 	gmemÜy_·¹™iÚ_un™
 ::
 ¬b™¿tiÚ_m‘ad©a
@@ -28133,13 +28173,13 @@ m_sh¬ed_üed™
 šÃr_sub_·¹™iÚ_id
 )
 
-119 
+120 
 ¥id
  = 
 šÃr_sub_·¹™iÚ_id
 ;
 
-120 ià(
+121 ià(
 m_´iv©e_üed™
 [
 ¥id
@@ -28147,37 +28187,37 @@ m_´iv©e_üed™
 m_´iv©e_üed™_lim™
 ) {
 
-121 
+122 
 m_´iv©e_üed™
 [
 ¥id
 ] += 1;
 
-122 } ià(
+123 } ià(
 m_sh¬ed_üed™_lim™
  =ğ0 || 
 m_sh¬ed_üed™
  < m_shared_credit_limit) {
 
-123 
+124 
 m_sh¬ed_üed™
  += 1;
 
-125 
+126 
 	`as£¹
 (0 && "DRAM‡rbitrationƒrror: Borrowing from depleted credit!");
 
-127 
+128 
 m_Ï¡_bÜrow”
  = 
 ¥id
 ;
 
-128 
+129 
 	}
 }
 
-130 
+131 
 	gmemÜy_·¹™iÚ_un™
 ::
 ¬b™¿tiÚ_m‘ad©a
@@ -28187,39 +28227,39 @@ m_Ï¡_bÜrow”
 šÃr_sub_·¹™iÚ_id
 )
 
-132 
+133 
 ¥id
  = 
 šÃr_sub_·¹™iÚ_id
 ;
 
-133 ià(
+134 ià(
 m_´iv©e_üed™
 [
 ¥id
 ] > 0) {
 
-134 
+135 
 m_´iv©e_üed™
 [
 ¥id
 ] -= 1;
 
-136 
+137 
 m_sh¬ed_üed™
  -= 1;
 
-138 
+139 
 	`as£¹
 ((
 m_sh¬ed_üed™
  >= 0) && "DRAM‡rbitrationƒrror: Returning morehan‡vailable credits!");
 
-139 
+140 
 	}
 }
 
-141 
+142 
 	gmemÜy_·¹™iÚ_un™
 ::
 ¬b™¿tiÚ_m‘ad©a
@@ -28231,13 +28271,13 @@ FILE
 å
  ) const
 
-143 
+144 
 	`årštf
 (
 å
 , "private_credit = ");
 
-144 
+145 
 p
  = 0;… < 
 m_´iv©e_üed™
@@ -28245,7 +28285,7 @@ m_´iv©e_üed™
 	`size
 ();…++) {
 
-145 
+146 
 	`årštf
 (
 å
@@ -28255,7 +28295,7 @@ m_´iv©e_üed™
 p
 ]);
 
-147 
+148 
 	`årštf
 (
 å
@@ -28263,7 +28303,7 @@ p
 m_´iv©e_üed™_lim™
 );
 
-148 
+149 
 	`årštf
 (
 å
@@ -28273,11 +28313,11 @@ m_sh¬ed_üed™
 m_sh¬ed_üed™_lim™
 );
 
-149 
+150 
 	}
 }
 
-151 
+152 
 boŞ
  
 	gmemÜy_·¹™iÚ_un™
@@ -28285,7 +28325,7 @@ boŞ
 	$busy
 () const
 
-153 
+154 
 boŞ
  
 busy
@@ -28293,7 +28333,7 @@ busy
 çl£
 ;
 
-154 
+155 
 p
  = 0;… < 
 m_cÚfig
@@ -28301,7 +28341,7 @@ m_cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 ;…++) {
 
-155 ià(
+156 ià(
 m_sub_·¹™iÚ
 [
 p
@@ -28309,21 +28349,21 @@ p
 	`busy
 ()) {
 
-156 
+157 
 busy
  = 
 Œue
 ;
 
-159  
+160  
 busy
 ;
 
-160 
+161 
 	}
 }
 
-162 
+163 
 	gmemÜy_·¹™iÚ_un™
 ::
 	$ÿche_cyşe
@@ -28331,7 +28371,7 @@ busy
 cyşe
 )
 
-164 
+165 
 p
  = 0;… < 
 m_cÚfig
@@ -28339,7 +28379,7 @@ m_cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 ;…++) {
 
-165 
+166 
 m_sub_·¹™iÚ
 [
 p
@@ -28349,11 +28389,11 @@ p
 cyşe
 );
 
-167 
+168 
 	}
 }
 
-169 
+170 
 	gmemÜy_·¹™iÚ_un™
 ::
 	$visu®iz”_´št
@@ -28363,7 +28403,7 @@ gzFe
 visu®iz”_fe
  ) const
 
-171 
+172 
 m_d¿m
 ->
 	`visu®iz”_´št
@@ -28371,7 +28411,7 @@ m_d¿m
 visu®iz”_fe
 );
 
-172 
+173 
 p
  = 0;… < 
 m_cÚfig
@@ -28379,7 +28419,7 @@ m_cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 ;…++) {
 
-173 
+174 
 m_sub_·¹™iÚ
 [
 p
@@ -28389,11 +28429,11 @@ p
 visu®iz”_fe
 );
 
-175 
+176 
 	}
 }
 
-178 
+179 
 boŞ
  
 	gmemÜy_·¹™iÚ_un™
@@ -28403,13 +28443,13 @@ boŞ
 šÃr_sub_·¹™iÚ_id
 )
 
-180 
+181 
 ¥id
  = 
 šÃr_sub_·¹™iÚ_id
 ;
 
-181 
+182 
 boŞ
  
 sub_·¹™iÚ_cÚ‹ÁiÚ
@@ -28421,7 +28461,7 @@ m_sub_·¹™iÚ
 	`d¿m_L2_queue_fuÎ
 ();
 
-182 
+183 
 boŞ
  
 has_d¿m_»sourû
@@ -28433,11 +28473,11 @@ m_¬b™¿tiÚ_m‘ad©a
 ¥id
 );
 
-184 
+185 
 	`MEMPART_DPRINTF
 ("sub…artition %d sub_partition_contention=%c has_dram_resource=%c\n",
 
-185 
+186 
 ¥id
 , (
 sub_·¹™iÚ_cÚ‹ÁiÚ
@@ -28445,17 +28485,17 @@ sub_·¹™iÚ_cÚ‹ÁiÚ
 has_d¿m_»sourû
 )? 'T':'F');
 
-187  (
+188  (
 has_d¿m_»sourû
  && !
 sub_·¹™iÚ_cÚ‹ÁiÚ
 );
 
-188 
+189 
 	}
 }
 
-190 
+191 
 	gmemÜy_·¹™iÚ_un™
 ::
 	$glob®_sub_·¹™iÚ_id_to_loÿl_id
@@ -28463,7 +28503,7 @@ sub_·¹™iÚ_cÚ‹ÁiÚ
 glob®_sub_·¹™iÚ_id
 ) const
 
-192  (
+193  (
 glob®_sub_·¹™iÚ_id
  - 
 m_id
@@ -28473,17 +28513,17 @@ m_cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 );
 
-193 
+194 
 	}
 }
 
-195 
+196 
 	gmemÜy_·¹™iÚ_un™
 ::
 	$d¿m_cyşe
 ()
 
-199 
+200 
 mem_ãtch
 * 
 mf_»tuº
@@ -28493,11 +28533,11 @@ m_d¿m
 	`»tuº_queue_tİ
 ();
 
-200 ià(
+201 ià(
 mf_»tuº
 ) {
 
-201 
+202 
 de¡_glob®_¥id
  = 
 mf_»tuº
@@ -28505,7 +28545,7 @@ mf_»tuº
 	`g‘_sub_·¹™iÚ_id
 ();
 
-202 
+203 
 de¡_¥id
  = 
 	`glob®_sub_·¹™iÚ_id_to_loÿl_id
@@ -28513,7 +28553,7 @@ de¡_¥id
 de¡_glob®_¥id
 );
 
-203 
+204 
 	`as£¹
 (
 m_sub_·¹™iÚ
@@ -28525,7 +28565,7 @@ de¡_¥id
 de¡_glob®_¥id
 );
 
-204 ià(!
+205 ià(!
 m_sub_·¹™iÚ
 [
 de¡_¥id
@@ -28533,7 +28573,7 @@ de¡_¥id
 	`d¿m_L2_queue_fuÎ
 ()) {
 
-205 ifĞ
+206 ifĞ
 mf_»tuº
 ->
 	`g‘_acûss_ty³
@@ -28541,7 +28581,7 @@ mf_»tuº
 L1_WRBK_ACC
  ) {
 
-206 
+207 
 m_sub_·¹™iÚ
 [
 de¡_¥id
@@ -28551,13 +28591,13 @@ de¡_¥id
 mf_»tuº
 );
 
-207 
+208 
 d–‘e
  
 mf_»tuº
 ;
 
-209 
+210 
 m_sub_·¹™iÚ
 [
 de¡_¥id
@@ -28567,7 +28607,7 @@ de¡_¥id
 mf_»tuº
 );
 
-210 
+211 
 mf_»tuº
 ->
 	`£t_¡©us
@@ -28579,7 +28619,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-211 
+212 
 m_¬b™¿tiÚ_m‘ad©a
 .
 	`»tuº_üed™
@@ -28587,7 +28627,7 @@ m_¬b™¿tiÚ_m‘ad©a
 de¡_¥id
 );
 
-212 
+213 
 	`MEMPART_DPRINTF
 ("mem_ãtch„eque¡ %°»tuº from d¿mØsub…¬t™iÚ %d\n", 
 mf_»tuº
@@ -28595,25 +28635,25 @@ mf_»tuº
 de¡_¥id
 );
 
-214 
+215 
 m_d¿m
 ->
 	`»tuº_queue_pİ
 ();
 
-217 
+218 
 m_d¿m
 ->
 	`»tuº_queue_pİ
 ();
 
-220 
+221 
 m_d¿m
 ->
 	`cyşe
 ();
 
-221 
+222 
 m_d¿m
 ->
 	`d¿m_log
@@ -28621,13 +28661,13 @@ m_d¿m
 SAMPLELOG
 );
 
-223 ifĞ!
+224 ifĞ!
 m_d¿m
 ->
 	`fuÎ
 () ) {
 
-226 
+227 
 Ï¡_issued_·¹™iÚ
  = 
 m_¬b™¿tiÚ_m‘ad©a
@@ -28635,7 +28675,7 @@ m_¬b™¿tiÚ_m‘ad©a
 	`Ï¡_bÜrow”
 ();
 
-227 
+228 
 p
  = 0;… < 
 m_cÚfig
@@ -28643,7 +28683,7 @@ m_cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 ;…++) {
 
-228 
+229 
 ¥id
  = (
 p
@@ -28655,7 +28695,7 @@ m_cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 ;
 
-229 ià(!
+230 ià(!
 m_sub_·¹™iÚ
 [
 ¥id
@@ -28665,7 +28705,7 @@ m_sub_·¹™iÚ
 	`ÿn_issue_to_d¿m
 (spid)) {
 
-230 
+231 
 mem_ãtch
  *
 mf
@@ -28677,7 +28717,7 @@ m_sub_·¹™iÚ
 	`L2_d¿m_queue_tİ
 ();
 
-231 
+232 
 m_sub_·¹™iÚ
 [
 ¥id
@@ -28685,7 +28725,7 @@ m_sub_·¹™iÚ
 	`L2_d¿m_queue_pİ
 ();
 
-232 
+233 
 	`MEMPART_DPRINTF
 ("Issumem_ãtch„eque¡ %°äom sub…¬t™iÚ %dØd¿m\n", 
 mf
@@ -28693,13 +28733,13 @@ mf
 ¥id
 );
 
-233 
+234 
 d¿m_d–ay_t
  
 d
 ;
 
-234 
+235 
 d
 .
 »q
@@ -28707,7 +28747,7 @@ d
 mf
 ;
 
-235 
+236 
 d
 .
 »ady_cyşe
@@ -28721,7 +28761,7 @@ m_cÚfig
 d¿m_Ï‹ncy
 ;
 
-236 
+237 
 m_d¿m_Ï‹ncy_queue
 .
 	`push_back
@@ -28729,7 +28769,7 @@ m_d¿m_Ï‹ncy_queue
 d
 );
 
-237 
+238 
 mf
 ->
 	`£t_¡©us
@@ -28741,7 +28781,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-238 
+239 
 m_¬b™¿tiÚ_m‘ad©a
 .
 	`bÜrow_üed™
@@ -28749,7 +28789,7 @@ m_¬b™¿tiÚ_m‘ad©a
 ¥id
 );
 
-245 ifĞ!
+246 ifĞ!
 m_d¿m_Ï‹ncy_queue
 .
 	`em±y
@@ -28767,7 +28807,7 @@ m_d¿m
 	`fuÎ
 () ) {
 
-246 
+247 
 mem_ãtch
 * 
 mf
@@ -28779,13 +28819,13 @@ m_d¿m_Ï‹ncy_queue
 »q
 ;
 
-247 
+248 
 m_d¿m_Ï‹ncy_queue
 .
 	`pİ_äÚt
 ();
 
-248 
+249 
 m_d¿m
 ->
 	`push
@@ -28794,10 +28834,14 @@ mf
 );
 
 250 
+bw_couÁ”
+++;
+
+252 
 	}
 }
 
-252 
+254 
 	gmemÜy_·¹™iÚ_un™
 ::
 	$£t_dÚe
@@ -28807,7 +28851,7 @@ mem_ãtch
 mf
  )
 
-254 
+256 
 glob®_¥id
  = 
 mf
@@ -28815,7 +28859,7 @@ mf
 	`g‘_sub_·¹™iÚ_id
 ();
 
-255 
+257 
 ¥id
  = 
 	`glob®_sub_·¹™iÚ_id_to_loÿl_id
@@ -28823,7 +28867,7 @@ mf
 glob®_¥id
 );
 
-256 
+258 
 	`as£¹
 (
 m_sub_·¹™iÚ
@@ -28835,7 +28879,7 @@ m_sub_·¹™iÚ
 glob®_¥id
 );
 
-257 ià(
+259 ià(
 mf
 ->
 	`g‘_acûss_ty³
@@ -28845,7 +28889,7 @@ L1_WRBK_ACC
 L2_WRBK_ACC
 ) {
 
-258 
+260 
 m_¬b™¿tiÚ_m‘ad©a
 .
 	`»tuº_üed™
@@ -28853,7 +28897,7 @@ m_¬b™¿tiÚ_m‘ad©a
 ¥id
 );
 
-259 
+261 
 	`MEMPART_DPRINTF
 ("mem_ãtch„eque¡ %°»tuº from d¿mØsub…¬t™iÚ %d\n", 
 mf
@@ -28861,7 +28905,7 @@ mf
 ¥id
 );
 
-261 
+263 
 m_sub_·¹™iÚ
 [
 ¥id
@@ -28871,11 +28915,11 @@ m_sub_·¹™iÚ
 mf
 );
 
-262 
+264 
 	}
 }
 
-264 
+266 
 	gmemÜy_·¹™iÚ_un™
 ::
 	$£t_d¿m_pow”_¡©s
@@ -28883,35 +28927,35 @@ mf
 n_cmd
 ,
 
-265 &
+267 &
 n_aùiv™y
 ,
 
-266 &
+268 &
 n_nİ
 ,
 
-267 &
+269 &
 n_aù
 ,
 
-268 &
+270 &
 n_´e
 ,
 
-269 &
+271 &
 n_rd
 ,
 
-270 &
+272 &
 n_wr
 ,
 
-271 &
+273 &
 n_»q
 ) const
 
-273 
+275 
 m_d¿m
 ->
 	`£t_d¿m_pow”_¡©s
@@ -28933,11 +28977,11 @@ n_wr
 n_»q
 );
 
-274 
+276 
 	}
 }
 
-276 
+278 
 	gmemÜy_·¹™iÚ_un™
 ::
 	$´št
@@ -28947,7 +28991,7 @@ FILE
 å
  ) const
 
-278 
+280 
 	`årštf
 (
 å
@@ -28955,7 +28999,7 @@ FILE
 m_id
 );
 
-279 
+281 
 p
  = 0;… < 
 m_cÚfig
@@ -28963,7 +29007,7 @@ m_cÚfig
 m_n_sub_·¹™iÚ_³r_memÜy_chªÃl
 ;…++) {
 
-280 
+282 
 m_sub_·¹™iÚ
 [
 p
@@ -28973,7 +29017,7 @@ p
 å
 );
 
-282 
+284 
 	`årštf
 (
 å
@@ -28983,7 +29027,7 @@ m_d¿m_Ï‹ncy_queue
 	`size
 ());
 
-283 
+285 
 ¡d
 ::
 li¡
@@ -28999,7 +29043,7 @@ m_d¿m_Ï‹ncy_queue
 	`begš
 ();
 
-284 
+286 
 mf_dlq
  !ğ
 m_d¿m_Ï‹ncy_queue
@@ -29007,7 +29051,7 @@ m_d¿m_Ï‹ncy_queue
 	`’d
 (); ++mf_dlq) {
 
-285 
+287 
 mem_ãtch
  *
 mf
@@ -29017,7 +29061,7 @@ mf_dlq
 »q
 ;
 
-286 
+288 
 	`årštf
 (
 å
@@ -29027,11 +29071,11 @@ mf_dlq
 »ady_cyşe
 );
 
-287 ià(
+289 ià(
 mf
 )
 
-288 
+290 
 mf
 ->
 	`´št
@@ -29039,13 +29083,13 @@ mf
 å
 );
 
-290 
+292 
 	`årštf
 (
 å
 , " <NULL mem_fetch?>\n");
 
-292 
+294 
 m_d¿m
 ->
 	`´št
@@ -29053,11 +29097,11 @@ m_d¿m
 å
 );
 
-293 
+295 
 	}
 }
 
-295 
+297 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$memÜy_sub_·¹™iÚ
@@ -29065,13 +29109,13 @@ m_d¿m
 sub_·¹™iÚ_id
 ,
 
-296 cÚ¡ 
+298 cÚ¡ 
 memÜy_cÚfig
  *
 cÚfig
 ,
 
-297 
+299 
 şass
  
 memÜy_¡©s_t
@@ -29079,25 +29123,25 @@ memÜy_¡©s_t
 ¡©s
  )
 
-299 
+301 
 m_id
  = 
 sub_·¹™iÚ_id
 ;
 
-300 
+302 
 m_cÚfig
 =
 cÚfig
 ;
 
-301 
+303 
 m_¡©s
 =
 ¡©s
 ;
 
-303 
+305 
 	`as£¹
 (
 m_id
@@ -29107,11 +29151,11 @@ m_cÚfig
 m_n_mem_sub_·¹™iÚ
 );
 
-305 
+307 
 L2c_Çme
 [32];
 
-306 
+308 
 	`¢´štf
 (
 L2c_Çme
@@ -29119,7 +29163,7 @@ L2c_Çme
 m_id
 );
 
-307 
+309 
 m_L2š‹rçû
  = 
 Ãw
@@ -29129,7 +29173,7 @@ m_L2š‹rçû
 this
 );
 
-308 
+310 
 m_mf_®loÿtÜ
  = 
 Ãw
@@ -29139,7 +29183,7 @@ m_mf_®loÿtÜ
 cÚfig
 );
 
-310 if(!
+312 if(!
 m_cÚfig
 ->
 m_L2_cÚfig
@@ -29147,7 +29191,7 @@ m_L2_cÚfig
 	`di§bËd
 ())
 
-311 
+313 
 m_L2ÿche
  = 
 Ãw
@@ -29167,23 +29211,23 @@ m_mf_®loÿtÜ
 IN_PARTITION_L2_MISS_QUEUE
 );
 
-313 
+315 
 iút_L2
 ;
 
-314 
+316 
 L2_d¿m
 ;
 
-315 
+317 
 d¿m_L2
 ;
 
-316 
+318 
 L2_iút
 ;
 
-317 
+319 
 	`ssÿnf
 (
 m_cÚfig
@@ -29199,7 +29243,7 @@ d¿m_L2
 L2_iút
  );
 
-318 
+320 
 m_iút_L2_queue
  = 
 Ãw
@@ -29211,7 +29255,7 @@ mem_ãtch
 iút_L2
 );
 
-319 
+321 
 m_L2_d¿m_queue
  = 
 Ãw
@@ -29223,7 +29267,7 @@ mem_ãtch
 L2_d¿m
 );
 
-320 
+322 
 m_d¿m_L2_queue
  = 
 Ãw
@@ -29235,7 +29279,7 @@ mem_ãtch
 d¿m_L2
 );
 
-321 
+323 
 m_L2_iút_queue
  = 
 Ãw
@@ -29247,61 +29291,61 @@ mem_ãtch
 L2_iút
 );
 
-322 
+324 
 wb_addr
 =-1;
 
-323 
+325 
 	}
 }
 
-325 
+327 
 	gmemÜy_sub_·¹™iÚ
 ::~
 	$memÜy_sub_·¹™iÚ
 ()
 
-327 
+329 
 d–‘e
  
 m_iút_L2_queue
 ;
 
-328 
+330 
 d–‘e
  
 m_L2_d¿m_queue
 ;
 
-329 
+331 
 d–‘e
  
 m_d¿m_L2_queue
 ;
 
-330 
+332 
 d–‘e
  
 m_L2_iút_queue
 ;
 
-331 
+333 
 d–‘e
  
 m_L2ÿche
 ;
 
-332 
+334 
 d–‘e
  
 m_L2š‹rçû
 ;
 
-333 
+335 
 	}
 }
 
-335 
+337 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$ÿche_cyşe
@@ -29309,7 +29353,7 @@ m_L2š‹rçû
 cyşe
  )
 
-338 ifĞ!
+340 ifĞ!
 m_cÚfig
 ->
 m_L2_cÚfig
@@ -29317,7 +29361,7 @@ m_L2_cÚfig
 	`di§bËd
 ()) {
 
-339 iàĞ
+341 iàĞ
 m_L2ÿche
 ->
 	`acûss_»ady
@@ -29327,7 +29371,7 @@ m_L2_iút_queue
 	`fuÎ
 () ) {
 
-340 
+342 
 mem_ãtch
  *
 mf
@@ -29337,7 +29381,7 @@ m_L2ÿche
 	`Ãxt_acûss
 ();
 
-341 if(
+343 if(
 mf
 ->
 	`g‘_acûss_ty³
@@ -29345,13 +29389,13 @@ mf
 L2_WR_ALLOC_R
 ){
 
-342 
+344 
 mf
 ->
 	`£t_»¶y
 ();
 
-343 
+345 
 mf
 ->
 	`£t_¡©us
@@ -29363,7 +29407,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-344 
+346 
 m_L2_iút_queue
 ->
 	`push
@@ -29371,7 +29415,7 @@ m_L2_iút_queue
 mf
 );
 
-346 
+348 
 m_»que¡_Œack”
 .
 	`”a£
@@ -29379,19 +29423,19 @@ m_»que¡_Œack”
 mf
 );
 
-347 
+349 
 d–‘e
  
 mf
 ;
 
-353 iàĞ!
+355 iàĞ!
 m_d¿m_L2_queue
 ->
 	`em±y
 () ) {
 
-354 
+356 
 mem_ãtch
  *
 mf
@@ -29401,7 +29445,7 @@ m_d¿m_L2_queue
 	`tİ
 ();
 
-355 iàĞ!
+357 iàĞ!
 m_cÚfig
 ->
 m_L2_cÚfig
@@ -29415,13 +29459,13 @@ m_L2ÿche
 mf
 ) ) {
 
-356 ià(
+358 ià(
 m_L2ÿche
 ->
 	`fl_pÜt_ä“
 ()) {
 
-357 
+359 
 mf
 ->
 	`£t_¡©us
@@ -29433,7 +29477,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-358 
+360 
 m_L2ÿche
 ->
 	`fl
@@ -29445,19 +29489,19 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-359 
+361 
 m_d¿m_L2_queue
 ->
 	`pİ
 ();
 
-361 } iàĞ!
+363 } iàĞ!
 m_L2_iút_queue
 ->
 	`fuÎ
 () ) {
 
-362 
+364 
 mf
 ->
 	`£t_¡©us
@@ -29469,7 +29513,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-363 
+365 
 m_L2_iút_queue
 ->
 	`push
@@ -29477,13 +29521,13 @@ m_L2_iút_queue
 mf
 );
 
-364 
+366 
 m_d¿m_L2_queue
 ->
 	`pİ
 ();
 
-369 ifĞ!
+371 ifĞ!
 m_cÚfig
 ->
 m_L2_cÚfig
@@ -29491,13 +29535,13 @@ m_L2_cÚfig
 	`di§bËd
 () )
 
-370 
+372 
 m_L2ÿche
 ->
 	`cyşe
 ();
 
-373 iàĞ!
+375 iàĞ!
 m_L2_d¿m_queue
 ->
 	`fuÎ
@@ -29507,7 +29551,7 @@ m_iút_L2_queue
 	`em±y
 () ) {
 
-374 
+376 
 mem_ãtch
  *
 mf
@@ -29517,7 +29561,7 @@ m_iút_L2_queue
 	`tİ
 ();
 
-375 iàĞ!
+377 iàĞ!
 m_cÚfig
 ->
 m_L2_cÚfig
@@ -29525,7 +29569,7 @@ m_L2_cÚfig
 	`di§bËd
 () &&
 
-376 Ğ(
+378 Ğ(
 m_cÚfig
 ->
 m_L2_‹xu»_Úly
@@ -29535,7 +29579,7 @@ mf
 	`i¡extu»
 ()) || (!m_config->m_L2_texure_only) )
 
-379 
+381 
 boŞ
  
 ouut_fuÎ
@@ -29545,7 +29589,7 @@ m_L2_iút_queue
 	`fuÎ
 ();
 
-380 
+382 
 boŞ
  
 pÜt_ä“
@@ -29555,13 +29599,13 @@ m_L2ÿche
 	`d©a_pÜt_ä“
 ();
 
-381 iàĞ!
+383 iàĞ!
 ouut_fuÎ
  && 
 pÜt_ä“
  ) {
 
-382 
+384 
 ¡d
 ::
 li¡
@@ -29571,7 +29615,7 @@ li¡
 ev’ts
 ;
 
-383 
+385 
 ÿche_»que¡_¡©us
  
 ¡©us
@@ -29591,7 +29635,7 @@ gpu_tÙ_sim_cyşe
 ev’ts
 );
 
-384 
+386 
 boŞ
  
 wr™e_£Á
@@ -29601,7 +29645,7 @@ wr™e_£Á
 ev’ts
 );
 
-385 
+387 
 boŞ
  
 »ad_£Á
@@ -29611,23 +29655,23 @@ boŞ
 ev’ts
 );
 
-387 iàĞ
+389 iàĞ
 ¡©us
  =ğ
 HIT
  ) {
 
-388 ifĞ!
+390 ifĞ!
 wr™e_£Á
  ) {
 
-390 
+392 
 	`as£¹
 (!
 »ad_£Á
 );
 
-391 ifĞ
+393 ifĞ
 mf
 ->
 	`g‘_acûss_ty³
@@ -29635,7 +29679,7 @@ mf
 L1_WRBK_ACC
  ) {
 
-392 
+394 
 m_»que¡_Œack”
 .
 	`”a£
@@ -29643,19 +29687,19 @@ m_»que¡_Œack”
 mf
 );
 
-393 
+395 
 d–‘e
  
 mf
 ;
 
-395 
+397 
 mf
 ->
 	`£t_»¶y
 ();
 
-396 
+398 
 mf
 ->
 	`£t_¡©us
@@ -29667,7 +29711,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-397 
+399 
 m_L2_iút_queue
 ->
 	`push
@@ -29675,49 +29719,49 @@ m_L2_iút_queue
 mf
 );
 
-399 
+401 
 m_iút_L2_queue
 ->
 	`pİ
 ();
 
-401 
+403 
 	`as£¹
 (
 wr™e_£Á
 );
 
-402 
+404 
 m_iút_L2_queue
 ->
 	`pİ
 ();
 
-404 } iàĞ
+406 } iàĞ
 ¡©us
  !ğ
 RESERVATION_FAIL
  ) {
 
-406 
+408 
 m_iút_L2_queue
 ->
 	`pİ
 ();
 
-408 
+410 
 	`as£¹
 (!
 wr™e_£Á
 );
 
-409 
+411 
 	`as£¹
 (!
 »ad_£Á
 );
 
-415 
+417 
 mf
 ->
 	`£t_¡©us
@@ -29729,7 +29773,7 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-416 
+418 
 m_L2_d¿m_queue
 ->
 	`push
@@ -29737,13 +29781,13 @@ m_L2_d¿m_queue
 mf
 );
 
-417 
+419 
 m_iút_L2_queue
 ->
 	`pİ
 ();
 
-422 ifĞ!
+424 ifĞ!
 m_rİ
 .
 	`em±y
@@ -29759,7 +29803,7 @@ m_iút_L2_queue
 	`fuÎ
 () ) {
 
-423 
+425 
 mem_ãtch
 * 
 mf
@@ -29771,13 +29815,13 @@ m_rİ
 »q
 ;
 
-424 
+426 
 m_rİ
 .
 	`pİ
 ();
 
-425 
+427 
 m_iút_L2_queue
 ->
 	`push
@@ -29785,7 +29829,7 @@ m_iút_L2_queue
 mf
 );
 
-426 
+428 
 mf
 ->
 	`£t_¡©us
@@ -29797,11 +29841,11 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-428 
+430 
 	}
 }
 
-430 
+432 
 boŞ
  
 	gmemÜy_sub_·¹™iÚ
@@ -29809,17 +29853,17 @@ boŞ
 	$fuÎ
 () const
 
-432  
+434  
 m_iút_L2_queue
 ->
 	`fuÎ
 ();
 
-433 
+435 
 	}
 }
 
-435 
+437 
 boŞ
  
 	gmemÜy_sub_·¹™iÚ
@@ -29827,17 +29871,17 @@ boŞ
 	$L2_d¿m_queue_em±y
 () const
 
-437  
+439  
 m_L2_d¿m_queue
 ->
 	`em±y
 ();
 
-438 
+440 
 	}
 }
 
-440 
+442 
 şass
  
 mem_ãtch
@@ -29847,33 +29891,33 @@ mem_ãtch
 	$L2_d¿m_queue_tİ
 () const
 
-442  
+444  
 m_L2_d¿m_queue
 ->
 	`tİ
 ();
 
-443 
+445 
 	}
 }
 
-445 
+447 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$L2_d¿m_queue_pİ
 ()
 
-447 
+449 
 m_L2_d¿m_queue
 ->
 	`pİ
 ();
 
-448 
+450 
 	}
 }
 
-450 
+452 
 boŞ
  
 	gmemÜy_sub_·¹™iÚ
@@ -29881,17 +29925,17 @@ boŞ
 	$d¿m_L2_queue_fuÎ
 () const
 
-452  
+454  
 m_d¿m_L2_queue
 ->
 	`fuÎ
 ();
 
-453 
+455 
 	}
 }
 
-455 
+457 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$d¿m_L2_queue_push
@@ -29903,7 +29947,7 @@ mem_ãtch
 mf
  )
 
-457 
+459 
 m_d¿m_L2_queue
 ->
 	`push
@@ -29911,11 +29955,11 @@ m_d¿m_L2_queue
 mf
 );
 
-458 
+460 
 	}
 }
 
-460 
+462 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$´št_ÿche_¡©
@@ -29925,7 +29969,7 @@ acûs£s
 mis£s
 ) const
 
-462 
+464 
 FILE
  *
 å
@@ -29933,7 +29977,7 @@ FILE
 ¡dout
 ;
 
-463 ifĞ!
+465 ifĞ!
 m_cÚfig
 ->
 m_L2_cÚfig
@@ -29941,7 +29985,7 @@ m_L2_cÚfig
 	`di§bËd
 () )
 
-464 
+466 
 m_L2ÿche
 ->
 	`´št
@@ -29953,11 +29997,11 @@ acûs£s
 mis£s
 );
 
-465 
+467 
 	}
 }
 
-467 
+469 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$´št
@@ -29967,13 +30011,13 @@ FILE
 å
  ) const
 
-469 iàĞ!
+471 iàĞ!
 m_»que¡_Œack”
 .
 	`em±y
 () ) {
 
-470 
+472 
 	`årštf
 (
 å
@@ -29981,7 +30025,7 @@ m_»que¡_Œack”
 m_id
 );
 
-471  
+473  
 ¡d
 ::
 £t
@@ -29999,7 +30043,7 @@ m_»que¡_Œack”
 	`’d
 (); ++r ) {
 
-472 
+474 
 mem_ãtch
  *
 mf
@@ -30007,11 +30051,11 @@ mf
 r
 ;
 
-473 iàĞ
+475 iàĞ
 mf
  )
 
-474 
+476 
 mf
 ->
 	`´št
@@ -30019,13 +30063,13 @@ mf
 å
 );
 
-476 
+478 
 	`årštf
 (
 å
 ," <NULL mem_fetch?>\n");
 
-479 ifĞ!
+481 ifĞ!
 m_cÚfig
 ->
 m_L2_cÚfig
@@ -30033,7 +30077,7 @@ m_L2_cÚfig
 	`di§bËd
 () )
 
-480 
+482 
 m_L2ÿche
 ->
 	`di¥Ïy_¡©e
@@ -30041,11 +30085,11 @@ m_L2ÿche
 å
 );
 
-481 
+483 
 	}
 }
 
-483 
+485 
 	gmemÜy_¡©s_t
 ::
 	$visu®iz”_´št
@@ -30055,11 +30099,11 @@ gzFe
 visu®iz”_fe
  )
 
-489 ià(
+491 ià(
 num_mfs
 )
 
-490 
+492 
 	`gz´štf
 (
 visu®iz”_fe
@@ -30069,11 +30113,11 @@ mf_tÙ®_Ït
 num_mfs
 );
 
-491 
+493 
 	}
 }
 
-493 
+495 
 	ggpgpu_sim
 ::
 	$´št_d¿m_¡©s
@@ -30083,67 +30127,67 @@ FILE
 fout
 ) const
 
-495 
+497 
 cmd
 =0;
 
-496 
+498 
 aùiv™y
 =0;
 
-497 
+499 
 nİ
 =0;
 
-498 
+500 
 aù
 =0;
 
-499 
+501 
 ´e
 =0;
 
-500 
+502 
 rd
 =0;
 
-501 
+503 
 wr
 =0;
 
-502 
+504 
 »q
 =0;
 
-503 
+505 
 tÙ_cmd
 =0;
 
-504 
+506 
 tÙ_nİ
 =0;
 
-505 
+507 
 tÙ_aù
 =0;
 
-506 
+508 
 tÙ_´e
 =0;
 
-507 
+509 
 tÙ_rd
 =0;
 
-508 
+510 
 tÙ_wr
 =0;
 
-509 
+511 
 tÙ_»q
 =0;
 
-511 
+513 
 i
 =0;i<
 m_memÜy_cÚfig
@@ -30151,7 +30195,7 @@ m_memÜy_cÚfig
 m_n_mem
 ;i++){
 
-512 
+514 
 m_memÜy_·¹™iÚ_un™
 [
 i
@@ -30175,49 +30219,49 @@ wr
 »q
 );
 
-513 
+515 
 tÙ_cmd
 +=
 cmd
 ;
 
-514 
+516 
 tÙ_nİ
 +=
 nİ
 ;
 
-515 
+517 
 tÙ_aù
 +=
 aù
 ;
 
-516 
+518 
 tÙ_´e
 +=
 ´e
 ;
 
-517 
+519 
 tÙ_rd
 +=
 rd
 ;
 
-518 
+520 
 tÙ_wr
 +=
 wr
 ;
 
-519 
+521 
 tÙ_»q
 +=
 »q
 ;
 
-521 
+523 
 	`årštf
 (
 fout
@@ -30225,7 +30269,7 @@ fout
 tÙ_rd
  );
 
-522 
+524 
 	`årštf
 (
 fout
@@ -30233,7 +30277,7 @@ fout
 tÙ_wr
  );
 
-523 
+525 
 	`årštf
 (
 fout
@@ -30241,7 +30285,7 @@ fout
 tÙ_aù
  );
 
-524 
+526 
 	`årštf
 (
 fout
@@ -30249,7 +30293,7 @@ fout
 tÙ_cmd
 );
 
-525 
+527 
 	`årštf
 (
 fout
@@ -30257,7 +30301,7 @@ fout
 tÙ_nİ
  );
 
-526 
+528 
 	`årštf
 (
 fout
@@ -30265,7 +30309,7 @@ fout
 tÙ_´e
  );
 
-527 
+529 
 	`årštf
 (
 fout
@@ -30273,17 +30317,17 @@ fout
 tÙ_»q
  );
 
-528 
+530 
 	}
 }
 
-530 
+532 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$æushL2
 ()
 
-532 ià(!
+534 ià(!
 m_cÚfig
 ->
 m_L2_cÚfig
@@ -30291,17 +30335,17 @@ m_L2_cÚfig
 	`di§bËd
 ()) {
 
-533 
+535 
 m_L2ÿche
 ->
 	`æush
 ();
 
-536 
+538 
 	}
 }
 
-538 
+540 
 boŞ
  
 	gmemÜy_sub_·¹™iÚ
@@ -30309,17 +30353,17 @@ boŞ
 	$busy
 () const
 
-540  !
+542  !
 m_»que¡_Œack”
 .
 	`em±y
 ();
 
-541 
+543 
 	}
 }
 
-543 
+545 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$push
@@ -30331,11 +30375,11 @@ mem_ãtch
 cyşe
  )
 
-545 ià(
+547 ià(
 »q
 ) {
 
-546 
+548 
 m_»que¡_Œack”
 .
 	`š£¹
@@ -30343,7 +30387,7 @@ m_»que¡_Œack”
 »q
 );
 
-547 
+549 
 m_¡©s
 ->
 	`memÏt¡©_iút2mem_pİ
@@ -30351,13 +30395,13 @@ m_¡©s
 »q
 );
 
-548 ifĞ
+550 ifĞ
 »q
 ->
 	`i¡extu»
 () ) {
 
-549 
+551 
 m_iút_L2_queue
 ->
 	`push
@@ -30365,7 +30409,7 @@ m_iút_L2_queue
 »q
 );
 
-550 
+552 
 »q
 ->
 	`£t_¡©us
@@ -30377,19 +30421,19 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-552 
+554 
 rİ_d–ay_t
  
 r
 ;
 
-553 
+555 
 r
 .
 »q
  =„eq;
 
-554 
+556 
 r
 .
 »ady_cyşe
@@ -30401,7 +30445,7 @@ m_cÚfig
 rİ_Ï‹ncy
 ;
 
-555 
+557 
 m_rİ
 .
 	`push
@@ -30409,7 +30453,7 @@ m_rİ
 r
 );
 
-556 
+558 
 »q
 ->
 	`£t_¡©us
@@ -30421,11 +30465,11 @@ gpu_sim_cyşe
 gpu_tÙ_sim_cyşe
 );
 
-559 
+561 
 	}
 }
 
-561 
+563 
 mem_ãtch
 * 
 	gmemÜy_sub_·¹™iÚ
@@ -30433,7 +30477,7 @@ mem_ãtch
 	$pİ
 ()
 
-563 
+565 
 mem_ãtch
 * 
 mf
@@ -30443,7 +30487,7 @@ m_L2_iút_queue
 	`pİ
 ();
 
-564 
+566 
 m_»que¡_Œack”
 .
 	`”a£
@@ -30451,19 +30495,19 @@ m_»que¡_Œack”
 mf
 );
 
-565 iàĞ
+567 iàĞ
 mf
  && mf->
 	`i§tomic
 () )
 
-566 
+568 
 mf
 ->
 	`do_©omic
 ();
 
-567 ifĞ
+569 ifĞ
 mf
  && (mf->
 	`g‘_acûss_ty³
@@ -30473,27 +30517,27 @@ L2_WRBK_ACC
 L1_WRBK_ACC
 ) ) {
 
-568 
+570 
 d–‘e
  
 mf
 ;
 
-569 
+571 
 mf
  = 
 NULL
 ;
 
-571  
+573  
 mf
 ;
 
-572 
+574 
 	}
 }
 
-574 
+576 
 mem_ãtch
 * 
 	gmemÜy_sub_·¹™iÚ
@@ -30501,7 +30545,7 @@ mem_ãtch
 	$tİ
 ()
 
-576 
+578 
 mem_ãtch
  *
 mf
@@ -30511,7 +30555,7 @@ m_L2_iút_queue
 	`tİ
 ();
 
-577 ifĞ
+579 ifĞ
 mf
  && (mf->
 	`g‘_acûss_ty³
@@ -30521,13 +30565,13 @@ L2_WRBK_ACC
 L1_WRBK_ACC
 ) ) {
 
-578 
+580 
 m_L2_iút_queue
 ->
 	`pİ
 ();
 
-579 
+581 
 m_»que¡_Œack”
 .
 	`”a£
@@ -30535,27 +30579,27 @@ m_»que¡_Œack”
 mf
 );
 
-580 
+582 
 d–‘e
  
 mf
 ;
 
-581 
+583 
 mf
  = 
 NULL
 ;
 
-583  
+585  
 mf
 ;
 
-584 
+586 
 	}
 }
 
-586 
+588 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$£t_dÚe
@@ -30565,7 +30609,7 @@ mem_ãtch
 mf
  )
 
-588 
+590 
 m_»que¡_Œack”
 .
 	`”a£
@@ -30573,11 +30617,11 @@ m_»que¡_Œack”
 mf
 );
 
-589 
+591 
 	}
 }
 
-591 
+593 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$accumuÏ‹_L2ÿche_¡©s
@@ -30589,7 +30633,7 @@ mf
 l2_¡©s
 ) const {
 
-592 ià(!
+594 ià(!
 m_cÚfig
 ->
 m_L2_cÚfig
@@ -30597,7 +30641,7 @@ m_L2_cÚfig
 	`di§bËd
 ()) {
 
-593 
+595 
 l2_¡©s
  +ğ
 m_L2ÿche
@@ -30605,11 +30649,11 @@ m_L2ÿche
 	`g‘_¡©s
 ();
 
-595 
+597 
 	}
 }
 
-597 
+599 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$g‘_L2ÿche_sub_¡©s
@@ -30619,7 +30663,7 @@ m_L2ÿche
 css
 ) const{
 
-598 ià(!
+600 ià(!
 m_cÚfig
 ->
 m_L2_cÚfig
@@ -30627,7 +30671,7 @@ m_L2_cÚfig
 	`di§bËd
 ()) {
 
-599 
+601 
 m_L2ÿche
 ->
 	`g‘_sub_¡©s
@@ -30635,11 +30679,11 @@ m_L2ÿche
 css
 );
 
-601 
+603 
 	}
 }
 
-603 
+605 
 	gmemÜy_sub_·¹™iÚ
 ::
 	$visu®iz”_´št
@@ -30649,7 +30693,7 @@ gzFe
 visu®iz”_fe
  )
 
-606 
+608 
 	}
 }
 
@@ -30937,21 +30981,39 @@ m_id
 	}
 }
 
-95 
+94 
+	$g‘_bw
+(è{ 
+bw_couÁ”
+;
+	}
+}
+
+95 
+	$£t_bw
+(
+bw_v
+è{
+bw_couÁ”
+=bw_v;
+	}
+}
+
+97 
 	g´iv©e
 :
 
-97 
+99 
 m_id
 ;
 
-98 cÚ¡ 
+100 cÚ¡ 
 memÜy_cÚfig
  *
 	gm_cÚfig
 ;
 
-99 
+101 
 şass
  
 memÜy_¡©s_t
@@ -30959,7 +31021,7 @@ memÜy_¡©s_t
 	gm_¡©s
 ;
 
-100 
+102 
 şass
  
 memÜy_sub_·¹™iÚ
@@ -30967,7 +31029,7 @@ memÜy_sub_·¹™iÚ
 	gm_sub_·¹™iÚ
 ;
 
-101 
+103 
 şass
  
 d¿m_t
@@ -30975,15 +31037,19 @@ d¿m_t
 	gm_d¿m
 ;
 
-103 şas 
+104 
+	gbw_couÁ”
+;
+
+106 şas 
 	c¬b™¿tiÚ_m‘ad©a
 
 
-105 
+108 
 	gpublic
 :
 
-106 
+109 
 ¬b™¿tiÚ_m‘ad©a
 (cÚ¡ 
 memÜy_cÚfig
@@ -30991,7 +31057,7 @@ memÜy_cÚfig
 cÚfig
 );
 
-109 
+112 
 boŞ
  
 has_üed™s
@@ -30999,25 +31065,25 @@ has_üed™s
 šÃr_sub_·¹™iÚ_id
 ) const;
 
-111 
+114 
 bÜrow_üed™
 (
 šÃr_sub_·¹™iÚ_id
 );
 
-113 
+116 
 »tuº_üed™
 (
 šÃr_sub_·¹™iÚ_id
 );
 
-116 
+119 
 Ï¡_bÜrow”
 (ècÚ¡ {  
 	gm_Ï¡_bÜrow”
 ; }
 
-118 
+121 
 ´št
 Ğ
 FILE
@@ -31025,23 +31091,23 @@ FILE
 å
  ) const;
 
-119 
+122 
 	g´iv©e
 :
 
-121 
+124 
 m_Ï¡_bÜrow”
 ;
 
-123 
+126 
 	gm_sh¬ed_üed™_lim™
 ;
 
-124 
+127 
 	gm_´iv©e_üed™_lim™
 ;
 
-127 
+130 
 	g¡d
 ::
 veùÜ
@@ -31049,17 +31115,17 @@ veùÜ
 m_´iv©e_üed™
 ;
 
-128 
+131 
 	gm_sh¬ed_üed™
 ;
 
-130 
+133 
 ¬b™¿tiÚ_m‘ad©a
  
 	gm_¬b™¿tiÚ_m‘ad©a
 ;
 
-133 
+136 
 boŞ
  
 ÿn_issue_to_d¿m
@@ -31067,15 +31133,15 @@ boŞ
 šÃr_sub_·¹™iÚ_id
 );
 
-136 
+139 
 	sd¿m_d–ay_t
 
 
-138 
+141 
 	g»ady_cyşe
 ;
 
-139 
+142 
 şass
  
 mem_ãtch
@@ -31083,7 +31149,7 @@ mem_ãtch
 	g»q
 ;
 
-141 
+144 
 	g¡d
 ::
 li¡
@@ -31093,15 +31159,15 @@ d¿m_d–ay_t
 m_d¿m_Ï‹ncy_queue
 ;
 
-144 şas 
+147 şas 
 	cmemÜy_sub_·¹™iÚ
 
 
-146 
+149 
 	mpublic
 :
 
-147 
+150 
 memÜy_sub_·¹™iÚ
 Ğ
 sub_·¹™iÚ_id
@@ -31117,35 +31183,35 @@ memÜy_¡©s_t
 ¡©s
  );
 
-148 ~
+151 ~
 memÜy_sub_·¹™iÚ
 ();
 
-150 
+153 
 	$g‘_id
 (ècÚ¡ {  
 m_id
 ; }
 
-152 
+155 
 boŞ
  
 	$busy
 () const;
 
-154 
+157 
 	`ÿche_cyşe
 Ğ
 cyşe
  );
 
-156 
+159 
 boŞ
  
 	$fuÎ
 () const;
 
-157 
+160 
 	`push
 Ğ
 şass
@@ -31157,7 +31223,7 @@ mf
 şock_cyşe
  );
 
-158 
+161 
 şass
  
 mem_ãtch
@@ -31165,7 +31231,7 @@ mem_ãtch
 	`pİ
 ();
 
-159 
+162 
 şass
  
 mem_ãtch
@@ -31173,7 +31239,7 @@ mem_ãtch
 	`tİ
 ();
 
-160 
+163 
 	`£t_dÚe
 Ğ
 mem_ãtch
@@ -31181,17 +31247,17 @@ mem_ãtch
 mf
  );
 
-162 
+165 
 	`æushL2
 ();
 
-165 
+168 
 boŞ
  
 	$L2_d¿m_queue_em±y
 () const;
 
-166 
+169 
 şass
  
 mem_ãtch
@@ -31199,17 +31265,17 @@ mem_ãtch
 	$L2_d¿m_queue_tİ
 () const;
 
-167 
+170 
 	`L2_d¿m_queue_pİ
 ();
 
-170 
+173 
 boŞ
  
 	$d¿m_L2_queue_fuÎ
 () const;
 
-171 
+174 
 	`d¿m_L2_queue_push
 Ğ
 şass
@@ -31219,7 +31285,7 @@ mem_ãtch
 mf
  );
 
-173 
+176 
 	`visu®iz”_´št
 Ğ
 gzFe
@@ -31227,7 +31293,7 @@ gzFe
 visu®iz”_fe
  );
 
-174 
+177 
 	$´št_ÿche_¡©
 (&
 acûs£s
@@ -31235,7 +31301,7 @@ acûs£s
 mis£s
 ) const;
 
-175 
+178 
 	$´št
 Ğ
 FILE
@@ -31243,7 +31309,7 @@ FILE
 å
  ) const;
 
-177 
+180 
 	$accumuÏ‹_L2ÿche_¡©s
 (
 şass
@@ -31253,7 +31319,7 @@ FILE
 l2_¡©s
 ) const;
 
-178 
+181 
 	$g‘_L2ÿche_sub_¡©s
 (
 ÿche_sub_¡©s
@@ -31261,21 +31327,21 @@ l2_¡©s
 css
 ) const;
 
-180 
+183 
 ´iv©e
 :
 
-182 
+185 
 m_id
 ;
 
-183 cÚ¡ 
+186 cÚ¡ 
 memÜy_cÚfig
  *
 m_cÚfig
 ;
 
-184 
+187 
 şass
  
 l2_ÿche
@@ -31283,7 +31349,7 @@ l2_ÿche
 m_L2ÿche
 ;
 
-185 
+188 
 şass
  
 L2š‹rçû
@@ -31291,21 +31357,21 @@ L2š‹rçû
 m_L2š‹rçû
 ;
 
-186 
+189 
 ·¹™iÚ_mf_®loÿtÜ
  *
 m_mf_®loÿtÜ
 ;
 
-189 
+192 
 	srİ_d–ay_t
 
 
-191 
+194 
 »ady_cyşe
 ;
 
-192 
+195 
 şass
  
 mem_ãtch
@@ -31313,11 +31379,11 @@ mem_ãtch
 »q
 ;
 
-193 
+196 
 	}
 };
 
-194 
+197 
 	g¡d
 ::
 queue
@@ -31327,7 +31393,7 @@ rİ_d–ay_t
 m_rİ
 ;
 
-197 
+200 
 	gfifo_p–še
 <
 	gmem_ãtch
@@ -31335,7 +31401,7 @@ m_rİ
 	gm_iút_L2_queue
 ;
 
-198 
+201 
 	gfifo_p–še
 <
 	gmem_ãtch
@@ -31343,7 +31409,7 @@ m_rİ
 	gm_L2_d¿m_queue
 ;
 
-199 
+202 
 	gfifo_p–še
 <
 	gmem_ãtch
@@ -31351,7 +31417,7 @@ m_rİ
 	gm_d¿m_L2_queue
 ;
 
-200 
+203 
 	gfifo_p–še
 <
 	gmem_ãtch
@@ -31359,7 +31425,7 @@ m_rİ
 	gm_L2_iút_queue
 ;
 
-202 
+205 
 şass
  
 mem_ãtch
@@ -31367,11 +31433,11 @@ mem_ãtch
 	gL2d¿mout
 ;
 
-203 
+206 
 	gwb_addr
 ;
 
-205 
+208 
 şass
  
 memÜy_¡©s_t
@@ -31379,7 +31445,7 @@ memÜy_¡©s_t
 	gm_¡©s
 ;
 
-207 
+210 
 	g¡d
 ::
 £t
@@ -31389,7 +31455,7 @@ mem_ãtch
 m_»que¡_Œack”
 ;
 
-209 
+212 
 ä›nd
  
 şass
@@ -31397,7 +31463,7 @@ m_»que¡_Œack”
 	gL2š‹rçû
 ;
 
-212 şas 
+215 şas 
 	cL2š‹rçû
  : 
 public
@@ -31405,11 +31471,11 @@ public
 mem_ãtch_š‹rçû
  {
 
-213 
+216 
 public
 :
 
-214 
+217 
 	$L2š‹rçû
 Ğ
 memÜy_sub_·¹™iÚ
@@ -31419,7 +31485,7 @@ un™
 m_un™
 =unit; }
 
-215 
+218 
 vœtu®
  ~
 	$L2š‹rçû
@@ -31427,7 +31493,7 @@ vœtu®
 	}
 }
 
-216 
+219 
 vœtu®
  
 boŞ
@@ -31441,7 +31507,7 @@ boŞ
 wr™e
 ) const
 
-219  
+222  
 m_un™
 ->
 m_L2_d¿m_queue
@@ -31449,11 +31515,11 @@ m_L2_d¿m_queue
 	`fuÎ
 ();
 
-220 
+223 
 	}
 }
 
-221 
+224 
 vœtu®
  
 	$push
@@ -31463,7 +31529,7 @@ mem_ãtch
 mf
 )
 
-223 
+226 
 mf
 ->
 	`£t_¡©us
@@ -31471,7 +31537,7 @@ mf
 IN_PARTITION_L2_TO_DRAM_QUEUE
 ,0 );
 
-224 
+227 
 m_un™
 ->
 m_L2_d¿m_queue
@@ -31481,15 +31547,15 @@ m_L2_d¿m_queue
 mf
 );
 
-225 
+228 
 	}
 }
 
-226 
+229 
 	g´iv©e
 :
 
-227 
+230 
 memÜy_sub_·¹™iÚ
  *
 m_un™

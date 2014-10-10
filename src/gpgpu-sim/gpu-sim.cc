@@ -1190,6 +1190,11 @@ void gpgpu_sim::cycle()
                         m_power_stats->pwr_mem_stat->n_nop[CURRENT_STAT_IDX][i], m_power_stats->pwr_mem_stat->n_act[CURRENT_STAT_IDX][i], m_power_stats->pwr_mem_stat->n_pre[CURRENT_STAT_IDX][i],
                         m_power_stats->pwr_mem_stat->n_rd[CURRENT_STAT_IDX][i], m_power_stats->pwr_mem_stat->n_wr[CURRENT_STAT_IDX][i], m_power_stats->pwr_mem_stat->n_req[CURRENT_STAT_IDX][i]);
       }
+      // FILE *pfile=fopen("bw_stats.csv","a");
+      // assert(pfile);
+      // fprintf(pfile,"%u,%llu\n", m_memory_partition_unit[0]->get_bw(),gpu_sim_cycle+gpu_tot_sim_cycle);
+      // fclose(pfile);
+      // m_memory_partition_unit[0]->set_bw(0);
    }
 
    // L2 operations follow L2 clock domain
