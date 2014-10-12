@@ -48,6 +48,7 @@ static void time_vector_print_interval2gzfile(gzFile outfile);
 
 void gpgpu_sim::dump_manual_stats(){
 
+
 	FILE *manual_dump_file = NULL;	
 
 	static bool manual_dump_first_print = true;
@@ -65,11 +66,13 @@ void gpgpu_sim::dump_manual_stats(){
 		fprintf(manual_dump_file,"shared_mem_inst_completed,");
 		fprintf(manual_dump_file,"constant_cache_inst_completed,");
 		fprintf(manual_dump_file,"texture_cache_inst_completed,");
-		fprintf(manual_dump_file,"local_mem_inst_completed");
+		fprintf(manual_dump_file,"local_mem_inst_completed,");
 		for(unsigned i=0;i<total_program_phases;i++)
 			fprintf(manual_dump_file,"Warps in phase %d",i);
 		
-		
+		fprintf(manual_dump_file,"dram_request_bandwidth,");
+		fprintf(manual_dump_file,"dram_response_bandwidth,");
+
 		fprintf(manual_dump_file,"\n");
 	
 	}
@@ -80,6 +83,7 @@ void gpgpu_sim::dump_manual_stats(){
 
 	// Put all the SM related extra stats in here
 	m_shader_stats->manual_stats_print(manual_dump_file);
+	m_memory_stats->manual_stats_print(manual_dump_file);
 
 	// CR before the next time we print stats
 	fprintf(manual_dump_file,"\n");

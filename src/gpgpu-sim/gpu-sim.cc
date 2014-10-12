@@ -1205,9 +1205,10 @@ void gpgpu_sim::cycle()
       }
       // FILE *pfile=fopen("bw_stats.csv","a");
       // assert(pfile);
-      // fprintf(pfile,"%u,%llu\n", m_memory_partition_unit[0]->get_bw(),gpu_sim_cycle+gpu_tot_sim_cycle);
+      // fprintf(pfile,"%u,%u,%llu\n", memory_partition_unit::get_req_bw(),memory_partition_unit::get_rsp_bw(),gpu_sim_cycle+gpu_tot_sim_cycle);
       // fclose(pfile);
-      // m_memory_partition_unit[0]->set_bw(0);
+      memory_partition_unit::set_req_bw(0);
+      memory_partition_unit::set_rsp_bw(0);      
    }
 
    // L2 operations follow L2 clock domain

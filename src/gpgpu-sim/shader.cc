@@ -1020,12 +1020,12 @@ void scheduler_unit::cycle()
 		unsigned phase = 0;
 		ptx_instruction *ptx_PI = pc_to_ptx_instruction[pc];
 		phase = ptx_PI->get_phase();
-		printf("Cycle:%llu SM:%d W:%d PC:%04x phase:%d\n", gpu_sim_cycle,get_sid(),warp_id,pI->pc,phase);
+		//printf("Cycle:%llu SM:%d W:%d PC:%04x phase:%d\n", gpu_sim_cycle,get_sid(),warp_id,pI->pc,phase);
 		m_stats->populate_phase_stats(get_sid(),phase);
 		m_stats->set_phases_created();
-		}else{
-			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
-		}
+		}// else{
+		// 	//printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
+		// }
 	}
     
     // issue stall statistics:

@@ -46,6 +46,9 @@
 #include "l2cache_trace.h"
 
 
+unsigned memory_partition_unit::req_bw=0;
+unsigned memory_partition_unit::rsp_bw=0;
+
 mem_fetch * partition_mf_allocator::alloc(new_addr_type addr, mem_access_type type, unsigned size, bool wr ) const 
 {
     assert( wr );
@@ -72,7 +75,6 @@ memory_partition_unit::memory_partition_unit( unsigned partition_id,
         unsigned sub_partition_id = m_id * m_config->m_n_sub_partition_per_memory_channel + p; 
         m_sub_partition[p] = new memory_sub_partition(sub_partition_id, m_config, stats); 
     }
-    // bw_counter=0;
 }
 
 memory_partition_unit::~memory_partition_unit() 
@@ -247,8 +249,10 @@ void memory_partition_unit::dram_cycle()
         mem_fetch* mf = m_dram_latency_queue.front().req;
         m_dram_latency_queue.pop_front();
         m_dram->push(mf);
-//	bw_counter++;
+	m_stats->mem_request_bw[m_id]=1;
+	req_bw++;
     }
+    else{ m_stats->mem_request_bw[m_id]==0;}
 }
 
 void memory_partition_unit::set_done( mem_fetch *mf )

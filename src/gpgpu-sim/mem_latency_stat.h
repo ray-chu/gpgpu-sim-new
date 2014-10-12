@@ -46,6 +46,7 @@ public:
    void memlatstat_print(unsigned n_mem, unsigned gpu_mem_n_bk);
 
    void visualizer_print( gzFile visualizer_file );
+   void manual_stats_print(FILE* manual_dump_file);
 
    unsigned m_n_shader;
 
@@ -77,6 +78,8 @@ public:
    unsigned int **totalbankaccesses; //bankaccesses[dram chip id][bank id]
    unsigned int *num_MCBs_accessed; //tracks how many memory controllers are accessed whenever any thread in a warp misses in cache
    unsigned int *position_of_mrq_chosen; //position of mrq in m_queue chosen 
+   unsigned *mem_request_bw;  //profile memory request bandwidth. unit is number per cycle
+   unsigned *mem_response_bw;  //profile memory response bandwidth. Unit is number per cycle
    
    unsigned ***mem_access_type_stats; // dram access type classification
 
