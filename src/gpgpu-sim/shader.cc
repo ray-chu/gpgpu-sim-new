@@ -132,19 +132,23 @@ shader_core_ctx::shader_core_ctx( class gpgpu_sim *gpu,
                                          CONCRETE_SCHEDULER_LRR :
                                          sched_config.find("two_level_active") != std::string::npos ?
                                          CONCRETE_SCHEDULER_TWO_LEVEL_ACTIVE :
-	                                 sched_config.find("gto_i_gto_o") !=std::string::npos ?	      
-	                                 CONCRETE_SCHEDULER_GTO_INNER_GTO_OUTER :
-	                                 sched_config.find("greedy_i_gto_o") !=std::string::npos ?	      
-	                                 CONCRETE_SCHEDULER_GREEDY_INNER_GTO_OUTER :
-	                                 sched_config.find("rr_i_gto_o") !=std::string::npos ?	      
-	                                 CONCRETE_SCHEDULER_RR_INNER_GTO_OUTER :
-	                                 sched_config.find("rr_i_greedy_o") !=std::string::npos ?	      
-	                                 CONCRETE_SCHEDULER_RR_INNER_GREEDY_OUTER :
+	                                 	 sched_config.find("gto_i_gto_o") !=std::string::npos ?	      
+	                                 	 CONCRETE_SCHEDULER_GTO_INNER_GTO_OUTER :
+	                                 	 sched_config.find("greedy_i_gto_o") !=std::string::npos ?	      
+	                                 	 CONCRETE_SCHEDULER_GREEDY_INNER_GTO_OUTER :
+	                                 	 sched_config.find("rr_i_gto_o") !=std::string::npos ?	      
+	                                 	 CONCRETE_SCHEDULER_RR_INNER_GTO_OUTER :
+	                                 	 sched_config.find("rr_i_greedy_o") !=std::string::npos ?	      
+	                                 	 CONCRETE_SCHEDULER_RR_INNER_GREEDY_OUTER :
                                          sched_config.find("gto") != std::string::npos ?
                                          CONCRETE_SCHEDULER_GTO :
                                          sched_config.find("warp_limiting") != std::string::npos ?
                                          CONCRETE_SCHEDULER_WARP_LIMITING:
-                                         NUM_CONCRETE_SCHEDULERS;
+                                         sched_config.find("phase") != std::string::npos ?
+                                         CONCRETE_SCHEDULER_PHASE:
+										 sched_config.find("heirarchial") != std::string::npos ?
+                                         CONCRETE_SCHEDULER_HEIRARCHIAL_PHASE:
+										 NUM_CONCRETE_SCHEDULERS;
     assert ( scheduler != NUM_CONCRETE_SCHEDULERS );
     
     for (int i = 0; i < m_config->gpgpu_num_sched_per_core; i++) {
@@ -193,7 +197,7 @@ shader_core_ctx::shader_core_ctx( class gpgpu_sim *gpu,
                                      )
                 );
                 break;
-	    case CONCRETE_SCHEDULER_GTO_INNER_GTO_OUTER:
+	    	case CONCRETE_SCHEDULER_GTO_INNER_GTO_OUTER:
                 schedulers.push_back(
                     new gto_inner_gto_outer_scheduler( m_stats,
                                                     this,
@@ -208,8 +212,8 @@ shader_core_ctx::shader_core_ctx( class gpgpu_sim *gpu,
                                                   )
                 );
                 break;
-	    case CONCRETE_SCHEDULER_GREEDY_INNER_GTO_OUTER :
-		schedulers.push_back(
+	    	case CONCRETE_SCHEDULER_GREEDY_INNER_GTO_OUTER :
+				schedulers.push_back(
                     new greedy_inner_gto_outer_scheduler( m_stats,
                                                     this,
                                                     m_scoreboard,
@@ -223,8 +227,8 @@ shader_core_ctx::shader_core_ctx( class gpgpu_sim *gpu,
                                                   )
                 );
                 break;
-	    case CONCRETE_SCHEDULER_RR_INNER_GTO_OUTER :
-		schedulers.push_back(
+	    	case CONCRETE_SCHEDULER_RR_INNER_GTO_OUTER :
+				schedulers.push_back(
                     new rr_inner_gto_outer_scheduler( m_stats,
                                                     this,
                                                     m_scoreboard,
@@ -238,8 +242,8 @@ shader_core_ctx::shader_core_ctx( class gpgpu_sim *gpu,
                                                   )
                 );
                 break;
-	    case CONCRETE_SCHEDULER_RR_INNER_GREEDY_OUTER :
-		schedulers.push_back(
+	    	case CONCRETE_SCHEDULER_RR_INNER_GREEDY_OUTER :
+				schedulers.push_back(
                     new rr_inner_greedy_outer_scheduler( m_stats,
                                                     this,
                                                     m_scoreboard,
@@ -268,7 +272,36 @@ shader_core_ctx::shader_core_ctx( class gpgpu_sim *gpu,
                                      )
                 );
                 break;
-            default:
+            case CONCRETE_SCHEDULER_PHASE:
+                schedulers.push_back(
+                    new phase_scheduler( m_stats,
+                                       this,
+                                       m_scoreboard,
+                                       m_simt_stack,
+                                       &m_warp,
+                                       &m_pipeline_reg[ID_OC_SP],
+                                       &m_pipeline_reg[ID_OC_SFU],
+                                       &m_pipeline_reg[ID_OC_MEM],
+                                       i
+                                     )
+                );
+                break;
+			case CONCRETE_SCHEDULER_HEIRARCHIAL_PHASE:
+                schedulers.push_back(
+                    new heirarchial_phase_scheduler( m_stats,
+                                       this,
+                                       m_scoreboard,
+                                       m_simt_stack,
+                                       &m_warp,
+                                       &m_pipeline_reg[ID_OC_SP],
+                                       &m_pipeline_reg[ID_OC_SFU],
+                                       &m_pipeline_reg[ID_OC_MEM],
+                                       i,
+                                       config->gpgpu_scheduler_string
+                                     )
+                );
+                break;
+			default:
                 abort();
         };
     }
@@ -902,15 +935,130 @@ void scheduler_unit::order_by_priority( std::vector< T >& result_list,
     }
 }
 
+void heirarchial_phase_scheduler::print_scheduler_queue(){
+
+	printf("Active:\n");
+	for( std::vector<shd_warp_t*>::iterator i=m_next_cycle_prioritized_warps.begin();i!=m_next_cycle_prioritized_warps.end();i++){
+						
+		if ( (*i) == NULL || (*i)->done_exit() ) 
+            continue;
+        
+		unsigned warp_id = (*i)->get_warp_id();
+		unsigned pc,rpc;
+		
+		if(!warp(warp_id).ibuffer_empty()){
+			const warp_inst_t *pI = warp(warp_id).ibuffer_next_inst();
+			unsigned phase,distance = 0;
+
+			//m_simt_stack[warp_id]->get_pdom_stack_top_info(&pc,&rpc);
+			ptx_instruction *ptx_PI = pc_to_ptx_instruction[pI->pc];
+			phase = ptx_PI->get_phase();
+			distance = ptx_PI->get_distance();
+			printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
+			m_stats->populate_phase_stats(get_sid(),phase);
+			m_stats->set_phases_created();
+		}else{
+			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
+		}
+	}
+
+	printf("Pending:\n");
+	for( std::deque<shd_warp_t*>::iterator i=m_pending_warps.begin();i!=m_pending_warps.end();i++){
+						
+		if ( (*i) == NULL || (*i)->done_exit() ) 
+            continue;
+        
+		unsigned warp_id = (*i)->get_warp_id();
+		unsigned pc,rpc;
+		
+		if(!warp(warp_id).ibuffer_empty()){
+			const warp_inst_t *pI = warp(warp_id).ibuffer_next_inst();
+			unsigned phase,distance = 0;
+
+			//m_simt_stack[warp_id]->get_pdom_stack_top_info(&pc,&rpc);
+			ptx_instruction *ptx_PI = pc_to_ptx_instruction[pI->pc];
+			phase = ptx_PI->get_phase();
+			distance = ptx_PI->get_distance();
+			printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
+			m_stats->populate_phase_stats(get_sid(),phase);
+			m_stats->set_phases_created();
+		}else{
+			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
+		}
+	}
+
+	if(m_ready_warps.empty())
+			return;
+	
+	printf("Ready:\n");
+	for( std::deque<shd_warp_t*>::iterator i=m_ready_warps.begin();i!=m_ready_warps.end();i++){
+						
+		if ( (*i) == NULL || (*i)->done_exit() ) 
+            continue;
+        
+		unsigned warp_id = (*i)->get_warp_id();
+		unsigned pc,rpc;
+		
+		if(!warp(warp_id).ibuffer_empty()){
+			const warp_inst_t *pI = warp(warp_id).ibuffer_next_inst();
+			unsigned phase,distance = 0;
+
+			//m_simt_stack[warp_id]->get_pdom_stack_top_info(&pc,&rpc);
+			ptx_instruction *ptx_PI = pc_to_ptx_instruction[pI->pc];
+			phase = ptx_PI->get_phase();
+			distance = ptx_PI->get_distance();
+			printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
+			m_stats->populate_phase_stats(get_sid(),phase);
+			m_stats->set_phases_created();
+		}else{
+			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
+		}
+	}
+
+
+}
+
+void scheduler_unit::print_scheduler_queue(){
+
+	for( std::vector<shd_warp_t*>::iterator i=m_next_cycle_prioritized_warps.begin();i!=m_next_cycle_prioritized_warps.end();i++){
+						
+		if ( (*i) == NULL || (*i)->done_exit() ) 
+            continue;
+        
+		unsigned warp_id = (*i)->get_warp_id();
+		unsigned pc,rpc;
+		
+		if(!warp(warp_id).ibuffer_empty()){
+			const warp_inst_t *pI = warp(warp_id).ibuffer_next_inst();
+			unsigned phase,distance = 0;
+
+			//m_simt_stack[warp_id]->get_pdom_stack_top_info(&pc,&rpc);
+			ptx_instruction *ptx_PI = pc_to_ptx_instruction[pI->pc];
+			phase = ptx_PI->get_phase();
+			distance = ptx_PI->get_distance();
+			printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
+			m_stats->populate_phase_stats(get_sid(),phase);
+			m_stats->set_phases_created();
+		}else{
+			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
+		}
+	}
+}
+
 void scheduler_unit::cycle()
 {
     SCHED_DPRINTF( "scheduler_unit::cycle()\n" );
     bool valid_inst = false;  // there was one warp with a valid instruction to issue (didn't require flush due to control hazard)
     bool ready_inst = false;  // of the valid instructions, there was one not waiting for pending register writes
     bool issued_inst = false; // of these we issued one
-
+	
+	//printf("Before ordering:\n");
+	//print_scheduler_queue();
 	order_warps();
-    for ( std::vector< shd_warp_t* >::const_iterator iter = m_next_cycle_prioritized_warps.begin();
+	//printf("After ordering:\n");
+	//print_scheduler_queue();
+
+	for ( std::vector< shd_warp_t* >::const_iterator iter = m_next_cycle_prioritized_warps.begin();
           iter != m_next_cycle_prioritized_warps.end();
           iter++ ) {
         // Don't consider warps that are not yet valid
@@ -1006,28 +1154,7 @@ void scheduler_unit::cycle()
         } 
     }
 
-	for( std::vector<shd_warp_t*>::iterator i=m_supervised_warps.begin();i!=m_supervised_warps.end();i++){
-		unsigned warp_id = (*i)->get_warp_id();
-		const warp_inst_t *pI = warp(warp_id).ibuffer_next_inst();
-		
-		if ( (*i) == NULL || (*i)->done_exit() ) 
-            continue;
-        
-		unsigned pc,rpc;
-		if(!warp(warp_id).ibuffer_empty()){
-        	m_simt_stack[warp_id]->get_pdom_stack_top_info(&pc,&rpc);
-
-		unsigned phase = 0;
-		ptx_instruction *ptx_PI = pc_to_ptx_instruction[pc];
-		phase = ptx_PI->get_phase();
-		printf("Cycle:%llu SM:%d W:%d PC:%04x phase:%d\n", gpu_sim_cycle,get_sid(),warp_id,pI->pc,phase);
-		m_stats->populate_phase_stats(get_sid(),phase);
-		m_stats->set_phases_created();
-		}else{
-			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
-		}
-	}
-    
+	    
     // issue stall statistics:
     if( !valid_inst ) 
         m_stats->shader_cycle_distro[0]++; // idle or control hazard
@@ -1063,6 +1190,33 @@ bool scheduler_unit::sort_warps_by_oldest_dynamic_id(shd_warp_t* lhs, shd_warp_t
     }
 }
 
+bool scheduler_unit::sort_warps_by_shortest_phase_length(shd_warp_t* lhs, shd_warp_t* rhs)
+{
+	if (rhs && lhs) {
+        if ( lhs->done_exit() || lhs->waiting() ) {
+            return false;
+        } else if ( rhs->done_exit() || rhs->waiting() ) {
+            return true;
+        } else {
+				if(lhs->ibuffer_empty()){
+						return false;
+				}else if (rhs->ibuffer_empty()){
+						return true;
+				}else{
+						const warp_inst_t *l_pI = lhs->ibuffer_next_inst();
+						const warp_inst_t *r_pI = rhs->ibuffer_next_inst();
+						ptx_instruction *l_ptx_pI = pc_to_ptx_instruction[l_pI->pc];
+						ptx_instruction *r_ptx_pI = pc_to_ptx_instruction[r_pI->pc];
+						unsigned l_distance = l_ptx_pI->get_distance();
+						unsigned r_distance = r_ptx_pI->get_distance();
+			            return l_distance < r_distance;
+        		}
+		}
+    } else {
+        return lhs < rhs;
+    }
+}
+
 void lrr_scheduler::order_warps()
 {
     order_lrr( m_next_cycle_prioritized_warps,
@@ -1081,8 +1235,127 @@ void gto_scheduler::order_warps()
                        scheduler_unit::sort_warps_by_oldest_dynamic_id );
 }
 
-void
-two_level_active_scheduler::do_on_warp_issued( unsigned warp_id,
+void phase_scheduler::order_warps()
+{
+    order_by_priority( m_next_cycle_prioritized_warps,
+                       m_supervised_warps,
+                       m_last_supervised_issued,
+                       m_supervised_warps.size(),
+                       ORDERING_GREEDY_THEN_PRIORITY_FUNC,
+                       scheduler_unit::sort_warps_by_shortest_phase_length );
+}
+
+void heirarchial_phase_scheduler::order_warps()
+{
+
+	//Move waiting warps to m_pending_warps
+    unsigned num_demoted = 0;
+    for (   std::vector< shd_warp_t* >::iterator iter = m_next_cycle_prioritized_warps.begin();
+            iter != m_next_cycle_prioritized_warps.end();) {
+        bool waiting = (*iter)->waiting();
+        for (int i=0; i<4; i++){
+            const warp_inst_t* inst = (*iter)->ibuffer_next_inst();
+            //Is the instruction waiting on a long operation?
+            if ( inst && inst->in[i] > 0 && this->m_scoreboard->islongop((*iter)->get_warp_id(), inst->in[i])){
+                waiting = true;
+            }
+        }
+
+        if( waiting ) {
+			m_pending_warps.push_back(*iter);
+            iter = m_next_cycle_prioritized_warps.erase(iter);
+            SCHED_DPRINTF( "DEMOTED warp_id=%d, dynamic_warp_id=%d\n",
+                           (*iter)->get_warp_id(),
+                           (*iter)->get_dynamic_warp_id() );
+		}else{
+			++iter;
+		}
+	}
+	//Mover warps from pedning to ready
+	for ( std::deque< shd_warp_t* >::iterator pending_warps_iter = m_pending_warps.begin(); pending_warps_iter != m_pending_warps.end();){
+		bool waiting = (*pending_warps_iter)->waiting();
+		const warp_inst_t* pending_warps_pI = (*pending_warps_iter)->ibuffer_next_inst();
+		for (int i=0; i<4; i++){
+           	if ( pending_warps_pI && pending_warps_pI->in[i] > 0 && this->m_scoreboard->islongop((*pending_warps_iter)->get_warp_id(), pending_warps_pI->in[i])){
+                	waiting = true;
+         	}
+        }
+
+		if(!waiting){
+			if((*pending_warps_iter)->ibuffer_empty()){
+					++pending_warps_iter;		
+					continue;
+			}
+
+				ptx_instruction *pending_warps_ptx_pI = pc_to_ptx_instruction[pending_warps_pI->pc];
+				unsigned pending_warps_distance = pending_warps_ptx_pI->get_distance();
+				std::deque<shd_warp_t*>::iterator i = m_ready_warps.end(); 
+				while(i != m_ready_warps.begin()){
+					i--;
+					if ((*i)->ibuffer_empty())
+						continue;
+			
+					const warp_inst_t *i_pI = (*i)->ibuffer_next_inst();
+					ptx_instruction *i_ptx_pI = pc_to_ptx_instruction[i_pI->pc];
+					unsigned i_distance = i_ptx_pI->get_distance();
+		
+					if(i_distance <= pending_warps_distance)
+						break;
+				
+				}
+				if(i==m_ready_warps.begin()){
+					m_ready_warps.push_front(*pending_warps_iter);
+				}else{
+					i++;
+					m_ready_warps.insert(i,*pending_warps_iter);
+				}
+				pending_warps_iter = m_pending_warps.erase(pending_warps_iter);
+		}else{
+			++pending_warps_iter;
+		}
+    
+	}
+
+
+    //If there is space in m_next_cycle_prioritized_warps, promote the next m_ready_warps
+    unsigned num_promoted = 0;
+    if ( SCHEDULER_PRIORITIZATION_SRR == m_outer_level_prioritization ) {
+        while ( m_next_cycle_prioritized_warps.size() < m_max_active_warps && m_ready_warps.size() > 0) {
+            m_next_cycle_prioritized_warps.push_back(m_ready_warps.front());
+            m_ready_warps.pop_front();
+            SCHED_DPRINTF( "PROMOTED warp_id=%d, dynamic_warp_id=%d\n",
+                           (m_next_cycle_prioritized_warps.back())->get_warp_id(),
+                           (m_next_cycle_prioritized_warps.back())->get_dynamic_warp_id() );
+        }
+    } else {
+        fprintf( stderr,
+                 "Unimplemented m_outer_level_prioritization: %d\n",
+                 m_outer_level_prioritization );
+        abort();
+    }
+}
+
+void heirarchial_phase_scheduler::do_on_warp_issued( unsigned warp_id,
+                                               unsigned num_issued,
+                                               const std::vector< shd_warp_t* >::const_iterator& prioritized_iter )
+{
+    scheduler_unit::do_on_warp_issued( warp_id, num_issued, prioritized_iter );
+    if ( SCHEDULER_PRIORITIZATION_LRR == m_inner_level_prioritization ) {
+        std::vector< shd_warp_t* > new_active; 
+        order_lrr( new_active,
+                   m_next_cycle_prioritized_warps,
+                   prioritized_iter,
+                   m_next_cycle_prioritized_warps.size() );
+        m_next_cycle_prioritized_warps = new_active;
+    } else {
+        fprintf( stderr,
+                 "Unimplemented m_inner_level_prioritization: %d\n",
+                 m_inner_level_prioritization );
+        abort();
+    }
+}
+
+void two_level_active_scheduler::do_on_warp_issued( unsigned warp_id,
                                                unsigned num_issued,
                                                const std::vector< shd_warp_t* >::const_iterator& prioritized_iter )
 {
