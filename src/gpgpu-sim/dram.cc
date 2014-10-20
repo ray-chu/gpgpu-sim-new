@@ -224,10 +224,13 @@ void dram_t::cycle()
               }
               delete cmd;
            }
+	   m_stats->mem_response_bw[id]=1;
+	   memory_partition_unit::set_rsp_bw(memory_partition_unit::get_rsp_bw()+1);
 #ifdef DRAM_VIEWCMD 
            printf("\n");
 #endif
        }
+       else{ m_stats->mem_response_bw[id]=0;}
    }
 
    /* check if the upcoming request is on an idle bank */

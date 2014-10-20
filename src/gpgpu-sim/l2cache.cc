@@ -46,6 +46,9 @@
 #include "l2cache_trace.h"
 
 
+unsigned memory_partition_unit::req_bw=0;
+unsigned memory_partition_unit::rsp_bw=0;
+
 mem_fetch * partition_mf_allocator::alloc(new_addr_type addr, mem_access_type type, unsigned size, bool wr ) const 
 {
     assert( wr );
@@ -63,7 +66,7 @@ mem_fetch * partition_mf_allocator::alloc(new_addr_type addr, mem_access_type ty
 memory_partition_unit::memory_partition_unit( unsigned partition_id, 
                                               const struct memory_config *config,
                                               class memory_stats_t *stats )
-: m_id(partition_id), m_config(config), m_stats(stats), m_arbitration_metadata(config) 
+	: m_id(partition_id), m_config(config), m_stats(stats), m_arbitration_metadata(config)
 {
     m_dram = new dram_t(m_id,m_config,m_stats,this);
 
@@ -246,7 +249,10 @@ void memory_partition_unit::dram_cycle()
         mem_fetch* mf = m_dram_latency_queue.front().req;
         m_dram_latency_queue.pop_front();
         m_dram->push(mf);
+	m_stats->mem_request_bw[m_id]=1;
+	req_bw++;
     }
+    else{ m_stats->mem_request_bw[m_id]==0;}
 }
 
 void memory_partition_unit::set_done( mem_fetch *mf )

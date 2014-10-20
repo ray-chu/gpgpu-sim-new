@@ -91,6 +91,10 @@ public:
    int global_sub_partition_id_to_local_id(int global_sub_partition_id) const; 
 
    unsigned get_mpid() const { return m_id; }
+   static unsigned get_req_bw() {return req_bw;}
+   static void set_req_bw(unsigned bw_v) {req_bw=bw_v;}
+   static unsigned get_rsp_bw() {return rsp_bw;}
+   static void set_rsp_bw(unsigned bw_v) {rsp_bw=bw_v;}
 
 private: 
 
@@ -99,6 +103,8 @@ private:
    class memory_stats_t *m_stats;
    class memory_sub_partition **m_sub_partition; 
    class dram_t *m_dram;
+   static unsigned req_bw;
+   static unsigned rsp_bw;
 
    class arbitration_metadata
    {
@@ -140,6 +146,7 @@ private:
    };
    std::list<dram_delay_t> m_dram_latency_queue;
 };
+
 
 class memory_sub_partition
 {

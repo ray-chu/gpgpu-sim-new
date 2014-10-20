@@ -55,6 +55,8 @@ memory_stats_t::memory_stats_t( unsigned n_shader, const struct shader_core_conf
    row_access = (unsigned int**) calloc(mem_config->m_n_mem, sizeof(unsigned int*));
    max_conc_access2samerow = (unsigned int**) calloc(mem_config->m_n_mem, sizeof(unsigned int*));
    max_servicetime2samerow = (unsigned int**) calloc(mem_config->m_n_mem, sizeof(unsigned int*));
+   mem_request_bw=(unsigned*)calloc(mem_config->m_n_mem, sizeof(unsigned));
+   mem_response_bw=(unsigned*)calloc(mem_config->m_n_mem, sizeof(unsigned));
 
    for (unsigned i=0;i<mem_config->m_n_mem ;i++ ) {
       concurrent_row_access[i] = (unsigned int*) calloc(mem_config->nbk, sizeof(unsigned int));
@@ -459,4 +461,16 @@ void memory_stats_t::memlatstat_print( unsigned n_mem, unsigned gpu_mem_n_bk )
       printf("\n");
       printf("\naverage position of mrq chosen = %f\n", (float)l/k);
    }
+}
+
+void memory_stats_t::manual_stats_print(FILE* manual_dump_file){
+	unsigned mem_tot_request_bw=0;
+	unsigned mem_tot_response_bw=0;
+	for(unsigned i=0; i<m_memory_config->m_n_mem; i++){
+		mem_tot_request_bw+=mem_request_bw[i];
+		mem_tot_response_bw+=mem_response_bw[i];
+	}
+
+	fprintf(manual_dump_file,"%u,",mem_tot_request_bw);
+	fprintf(manual_dump_file,"%u,",mem_tot_response_bw);
 }
