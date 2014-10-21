@@ -573,7 +573,7 @@ void shader_core_stats::event_warp_issued( unsigned s_id, unsigned warp_id, unsi
 
 void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 
-
+	// Writeback stats
 	fprintf(manual_dump_file,"%u,",sp_inst_completed_per_sm[0] - sp_inst_completed_last_cycle_per_sm[0]);
 	fprintf(manual_dump_file,"%u,",sfu_inst_completed_per_sm[0] - sfu_inst_completed_last_cycle_per_sm[0]);
 	fprintf(manual_dump_file,"%u,",data_cache_inst_completed_per_sm[0] - data_cache_inst_completed_last_cycle_per_sm[0]);
@@ -582,6 +582,21 @@ void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 	fprintf(manual_dump_file,"%u,",texture_cache_inst_completed_per_sm[0] - texture_cache_inst_completed_last_cycle_per_sm[0]);
 	fprintf(manual_dump_file,"%u,",local_mem_inst_completed_per_sm[0] - local_mem_inst_completed_last_cycle_per_sm[0]);
 	
+	// Stats from scheduler
+	fprintf(manual_dump_file,"%u,",m_num_core_issued_alu[0] - m_num_core_committed_alu[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_issued_sp[0] - m_num_core_committed_sp[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_issued_sfu[0] - m_num_core_committed_sfu[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_issued_mem[0] - m_num_core_committed_mem[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_stall_alu[0] - m_num_core_stall_alu_last_cycle[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_stall_mem[0] - m_num_core_stall_mem_last_cycle[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_score_insn[0] - m_num_core_score_insn_last_cycle[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_score_mem[0] - m_num_core_score_mem_last_cycle[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_all_warps_stalled_at_alu[0] - m_num_core_all_warps_stalled_at_alu_last_cycle[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_all_warps_stalled_at_mem[0] - m_num_core_all_warps_stalled_at_mem_last_cycle[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_all_warps_waiting_for_insn[0] - m_num_core_all_warps_waiting_for_insn_last_cycle[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_all_warps_waiting_for_mem[0] - m_num_core_all_warps_waiting_for_mem_last_cycle[0]);
+	fprintf(manual_dump_file,"%u,",m_num_core_stall_idle[0] - m_num_core_stall_idle_last_cycle[0]);
+
 	if(get_phases_created()){
 		
 		for(unsigned i=0;i<total_program_phases;i++){
@@ -602,6 +617,16 @@ void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 	constant_cache_inst_completed_last_cycle_per_sm[0] = constant_cache_inst_completed_per_sm[0];
 	texture_cache_inst_completed_last_cycle_per_sm[0] = texture_cache_inst_completed_per_sm[0];
 	local_mem_inst_completed_last_cycle_per_sm[0] = local_mem_inst_completed_per_sm[0];
+
+	m_num_core_stall_alu_last_cycle[0] = m_num_core_stall_alu[0];
+	m_num_core_stall_mem_last_cycle[0] = m_num_core_stall_mem[0];
+	m_num_core_score_insn_last_cycle[0] = m_num_core_score_insn[0];
+	m_num_core_score_mem_last_cycle[0] = m_num_core_score_mem[0];
+	m_num_core_all_warps_stalled_at_alu_last_cycle[0] = m_num_core_all_warps_stalled_at_alu[0];
+	m_num_core_all_warps_stalled_at_mem_last_cycle[0] = m_num_core_all_warps_stalled_at_mem[0];
+	m_num_core_all_warps_waiting_for_insn_last_cycle[0] = m_num_core_all_warps_waiting_for_insn[0];
+	m_num_core_all_warps_waiting_for_mem_last_cycle[0] = m_num_core_all_warps_waiting_for_mem[0] ;
+	m_num_core_stall_idle_last_cycle[0] = m_num_core_stall_idle[0];
 
 
 }
@@ -937,7 +962,7 @@ void scheduler_unit::order_by_priority( std::vector< T >& result_list,
 
 void heirarchial_phase_scheduler::print_scheduler_queue(){
 
-	printf("Active:\n");
+	//printf("Active:\n");
 	for( std::vector<shd_warp_t*>::iterator i=m_next_cycle_prioritized_warps.begin();i!=m_next_cycle_prioritized_warps.end();i++){
 						
 		if ( (*i) == NULL || (*i)->done_exit() ) 
@@ -954,15 +979,16 @@ void heirarchial_phase_scheduler::print_scheduler_queue(){
 			ptx_instruction *ptx_PI = pc_to_ptx_instruction[pI->pc];
 			phase = ptx_PI->get_phase();
 			distance = ptx_PI->get_distance();
-			printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
+			//printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
 			m_stats->populate_phase_stats(get_sid(),phase);
-			m_stats->set_phases_created();
+			(*i)->set_phase(phase);
 		}else{
-			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
+			m_stats->populate_phase_stats(get_sid(),(*i)->get_phase());	
+			//printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
 		}
 	}
 
-	printf("Pending:\n");
+	//printf("Pending:\n");
 	for( std::deque<shd_warp_t*>::iterator i=m_pending_warps.begin();i!=m_pending_warps.end();i++){
 						
 		if ( (*i) == NULL || (*i)->done_exit() ) 
@@ -979,18 +1005,19 @@ void heirarchial_phase_scheduler::print_scheduler_queue(){
 			ptx_instruction *ptx_PI = pc_to_ptx_instruction[pI->pc];
 			phase = ptx_PI->get_phase();
 			distance = ptx_PI->get_distance();
-			printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
+		//	printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
 			m_stats->populate_phase_stats(get_sid(),phase);
-			m_stats->set_phases_created();
+			(*i)->set_phase(phase);
 		}else{
-			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
+			m_stats->populate_phase_stats(get_sid(),(*i)->get_phase());	
+			//printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
 		}
 	}
 
 	if(m_ready_warps.empty())
 			return;
 	
-	printf("Ready:\n");
+	//printf("Ready:\n");
 	for( std::deque<shd_warp_t*>::iterator i=m_ready_warps.begin();i!=m_ready_warps.end();i++){
 						
 		if ( (*i) == NULL || (*i)->done_exit() ) 
@@ -1007,11 +1034,12 @@ void heirarchial_phase_scheduler::print_scheduler_queue(){
 			ptx_instruction *ptx_PI = pc_to_ptx_instruction[pI->pc];
 			phase = ptx_PI->get_phase();
 			distance = ptx_PI->get_distance();
-			printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
+			//printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
 			m_stats->populate_phase_stats(get_sid(),phase);
-			m_stats->set_phases_created();
+			(*i)->set_phase(phase);
 		}else{
-			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
+			m_stats->populate_phase_stats(get_sid(),(*i)->get_phase());	
+			//printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
 		}
 	}
 
@@ -1036,11 +1064,12 @@ void scheduler_unit::print_scheduler_queue(){
 			ptx_instruction *ptx_PI = pc_to_ptx_instruction[pI->pc];
 			phase = ptx_PI->get_phase();
 			distance = ptx_PI->get_distance();
-			printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
+			//printf("Cycle:%llu SM:%d W:%d DW:%d PC:%04x phase:%d distance:%d\n", gpu_sim_cycle,get_sid(),warp_id,(*i)->get_dynamic_warp_id(),pI->pc,phase,distance);
 			m_stats->populate_phase_stats(get_sid(),phase);
-			m_stats->set_phases_created();
+			(*i)->set_phase(phase);
 		}else{
-			printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
+			m_stats->populate_phase_stats(get_sid(),(*i)->get_phase());	
+			//printf("Cycle:%llu SM:%d W:%d ibuffer empty\n", gpu_sim_cycle,get_sid(),warp_id);
 		}
 	}
 }
@@ -1051,12 +1080,14 @@ void scheduler_unit::cycle()
     bool valid_inst = false;  // there was one warp with a valid instruction to issue (didn't require flush due to control hazard)
     bool ready_inst = false;  // of the valid instructions, there was one not waiting for pending register writes
     bool issued_inst = false; // of these we issued one
+	//Flags for stall stats collection
+	bool mem_stall = false;
+	bool alu_stall = false;
+	bool waiting_on_prev_insn = false;
+	bool waiting_on_mem = false;
 	
-	//printf("Before ordering:\n");
-	//print_scheduler_queue();
+	print_scheduler_queue();
 	order_warps();
-	//printf("After ordering:\n");
-	//print_scheduler_queue();
 
 	for ( std::vector< shd_warp_t* >::const_iterator iter = m_next_cycle_prioritized_warps.begin();
           iter != m_next_cycle_prioritized_warps.end();
@@ -1070,8 +1101,10 @@ void scheduler_unit::cycle()
         unsigned warp_id = (*iter)->get_warp_id();
         unsigned checked=0;
         unsigned issued=0;
-        unsigned max_issue = m_shader->m_config->gpgpu_max_insn_issue_per_warp;
-        while( !warp(warp_id).waiting() && !warp(warp_id).ibuffer_empty() && (checked < max_issue) && (checked <= issued) && (issued < max_issue) ) {
+        unsigned scoreboarding_type = 0;
+		unsigned max_issue = m_shader->m_config->gpgpu_max_insn_issue_per_warp;
+        
+		while( !warp(warp_id).waiting() && !warp(warp_id).ibuffer_empty() && (checked < max_issue) && (checked <= issued) && (issued < max_issue) ) {
             const warp_inst_t *pI = warp(warp_id).ibuffer_next_inst();
             bool valid = warp(warp_id).ibuffer_next_valid();// Gets the first / second decoded instruction on instruction buffer
             bool warp_inst_issued = false;
@@ -1090,7 +1123,8 @@ void scheduler_unit::cycle()
                     warp(warp_id).ibuffer_flush();
                 } else {
                     valid_inst = true;
-                    if ( !m_scoreboard->checkCollision(warp_id, pI) ) {
+					scoreboarding_type = m_scoreboard->checkCollision(warp_id, pI);
+                    if ( scoreboarding_type==0 ) {
                         ready_inst = true;
                         const active_mask_t &active_mask = m_simt_stack[warp_id]->get_active_mask();
                         assert( warp(warp_id).inst_in_pipeline() );
@@ -1100,26 +1134,44 @@ void scheduler_unit::cycle()
                                 issued++;
                                 issued_inst=true;
                                 warp_inst_issued = true;
-                            }
+								m_stats->m_num_core_issued_mem[get_sid()]++;
+							}else{
+								mem_stall = true;
+							}
                         } else {
                             bool sp_pipe_avail = m_sp_out->has_free();
                             bool sfu_pipe_avail = m_sfu_out->has_free();
-                            if( sp_pipe_avail && (pI->op != SFU_OP) ) {
-                                // always prefer SP pipe for operations that can use both SP and SFU pipelines
-                                m_shader->issue_warp(*m_sp_out,pI,active_mask,warp_id);
-                                issued++;
-                                issued_inst=true;
-                                warp_inst_issued = true;
-                            } else if ( (pI->op == SFU_OP) || (pI->op == ALU_SFU_OP) ) {
+                            if(pI->op != SFU_OP ) {
+								if(sp_pipe_avail){
+                                	// always prefer SP pipe for operations that can use both SP and SFU pipelines
+                                	m_shader->issue_warp(*m_sp_out,pI,active_mask,warp_id);
+                                	issued++;
+                                	issued_inst=true;
+                                	warp_inst_issued = true;
+                            		m_stats->m_num_core_issued_sp[get_sid()]++;
+									m_stats->m_num_core_issued_alu[get_sid()]++;
+								}else{
+									alu_stall = true;
+								}
+							} else if ( (pI->op == SFU_OP) || (pI->op == ALU_SFU_OP) ) {
                                 if( sfu_pipe_avail ) {
                                     m_shader->issue_warp(*m_sfu_out,pI,active_mask,warp_id);
                                     issued++;
                                     issued_inst=true;
                                     warp_inst_issued = true;
-                                }
+									m_stats->m_num_core_issued_sfu[get_sid()]++;
+									m_stats->m_num_core_issued_alu[get_sid()]++;
+								}else{
+									alu_stall = true;
+								}
                             } 
                         }
-                    } 
+                    }else{
+						if(scoreboarding_type == 1)
+							waiting_on_mem = true;
+						if(scoreboarding_type == 2)
+							waiting_on_prev_insn = true;
+					}																																						 
                 }
             } else if( valid ) {
                // this case can happen after a return instruction in diverged warp
@@ -1156,12 +1208,35 @@ void scheduler_unit::cycle()
 
 	    
     // issue stall statistics:
-    if( !valid_inst ) 
+    if( !valid_inst ){ 
         m_stats->shader_cycle_distro[0]++; // idle or control hazard
-    else if( !ready_inst ) 
+    	m_stats->m_num_core_stall_idle[get_sid()]++;
+	}else if( !ready_inst ){
         m_stats->shader_cycle_distro[1]++; // waiting for RAW hazards (possibly due to memory) 
-    else if( !issued_inst ) 
+    	if(waiting_on_prev_insn){
+			m_stats->m_num_core_score_insn[get_sid()]++;
+			if(!waiting_on_mem){
+				m_stats->m_num_core_all_warps_waiting_for_insn[get_sid()]++;
+			}else{
+				m_stats->m_num_core_score_mem[get_sid()]++;
+			}	
+		}else{
+				m_stats->m_num_core_all_warps_waiting_for_mem[get_sid()]++;
+		}
+	}else if( !issued_inst ) {
         m_stats->shader_cycle_distro[2]++; // pipeline stalled
+		if(alu_stall){
+			m_stats->m_num_core_stall_alu[get_sid()]++;
+			if(!mem_stall){
+				m_stats->m_num_core_all_warps_stalled_at_alu[get_sid()]++;
+			}else{
+				m_stats->m_num_core_stall_mem[get_sid()]++;
+			}	
+		}else{
+				m_stats->m_num_core_all_warps_stalled_at_mem[get_sid()]++;
+		}
+
+	}
 }
 
 void scheduler_unit::do_on_warp_issued( unsigned warp_id,
@@ -1949,12 +2024,18 @@ void shader_core_ctx::warp_inst_complete(const warp_inst_t &inst)
       printf("[warp_inst_complete] uid=%u core=%u warp=%u pc=%#x @ time=%llu issued@%llu\n", 
              inst.get_uid(), m_sid, inst.warp_id(), inst.pc, gpu_tot_sim_cycle + gpu_sim_cycle, inst.get_issue_cycle()); 
    #endif
-  if(inst.op_pipe==SP__OP)
+  if(inst.op_pipe==SP__OP){
 	  m_stats->m_num_sp_committed[m_sid]++;
-  else if(inst.op_pipe==SFU__OP)
+  	  m_stats->m_num_core_committed_alu[m_sid]++; 
+  	  m_stats->m_num_core_committed_sp[m_sid]++;
+  }else if(inst.op_pipe==SFU__OP){
 	  m_stats->m_num_sfu_committed[m_sid]++;
-  else if(inst.op_pipe==MEM__OP)
+	  m_stats->m_num_core_committed_alu[m_sid]++;
+	  m_stats->m_num_core_committed_sfu[m_sid]++;
+  }else if(inst.op_pipe==MEM__OP){
 	  m_stats->m_num_mem_committed[m_sid]++;
+  	  m_stats->m_num_core_committed_mem[m_sid]++;
+  }
 
   if(m_config->gpgpu_clock_gated_lanes==false)
 	  m_stats->m_num_sim_insn[m_sid] += m_config->warp_size;

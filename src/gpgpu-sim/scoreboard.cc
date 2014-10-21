@@ -77,7 +77,7 @@ void Scoreboard::releaseRegister(unsigned wid, unsigned regnum)
 	longopregs[wid].erase(regnum);
 }
 
-const bool Scoreboard::islongop (unsigned warp_id,unsigned regnum) {
+bool Scoreboard::islongop (unsigned warp_id,unsigned regnum) const {
 	return longopregs[warp_id].find(regnum) != longopregs[warp_id].end();
 }
 
@@ -135,10 +135,12 @@ void Scoreboard::releaseRegisters(const class warp_inst_t *inst)
  * @return 
  * true if WAW or RAW hazard (no WAR since in-order issue)
  **/ 
-bool Scoreboard::checkCollision( unsigned wid, const class inst_t *inst ) const
+unsigned Scoreboard::checkCollision( unsigned wid, const class inst_t *inst ) const
 {
 	// Get list of all input and output registers
 	std::set<int> inst_regs;
+	bool waiting_on_mem = false;
+	bool waiting_on_insn = false;
 
 	if(inst->out[0] > 0) inst_regs.insert(inst->out[0]);
 	if(inst->out[1] > 0) inst_regs.insert(inst->out[1]);
@@ -154,11 +156,21 @@ bool Scoreboard::checkCollision( unsigned wid, const class inst_t *inst ) const
 
 	// Check for collision, get the intersection of reserved registers and instruction registers
 	std::set<int>::const_iterator it2;
-	for ( it2=inst_regs.begin() ; it2 != inst_regs.end(); it2++ )
+	for ( it2=inst_regs.begin() ; it2 != inst_regs.end(); it2++ ){
 		if(reg_table[wid].find(*it2) != reg_table[wid].end()) {
-			return true;
-		}
-	return false;
+			if(islongop(wid,(*it2))){
+				waiting_on_mem = true;
+			}else{
+				waiting_on_insn = true;
+			}
+		}	
+	}
+	if(waiting_on_mem)
+		return 1;
+	if(waiting_on_insn)
+		return 2;
+	return 0;
+	
 }
 
 bool Scoreboard::pendingWrites(unsigned wid) const

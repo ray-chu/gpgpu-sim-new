@@ -96,7 +96,7 @@ public:
         m_stores_outstanding=0;
         m_inst_in_pipeline=0;
         reset(); 
-    }
+	}
     void reset()
     {
         assert( m_stores_outstanding==0);
@@ -110,6 +110,7 @@ public:
         m_done_exit=true;
         m_last_fetch=0;
         m_next=0;
+		current_phase = 0;
     }
     void init( address_type start_pc,
                unsigned cta_id,
@@ -221,8 +222,10 @@ public:
 
     unsigned get_issue_group_id() const{return m_issue_group_id;}
     unsigned get_id_in_issue_group() const{return m_id_in_group;}
-
+	void set_phase(unsigned phase){ current_phase = phase;}
+	unsigned get_phase(){return current_phase;}
 private:
+	unsigned current_phase;
     static const unsigned IBUFFER_SIZE=2;
     class shader_core_ctx *m_shader;
     unsigned m_cta_id;
@@ -1832,6 +1835,48 @@ struct shader_core_stats_pod {
     unsigned *gpgpu_n_shmem_bank_access;
     long *n_simt_to_mem; // Interconnect power stats
     long *n_mem_to_simt;
+
+	//stats added by mihir
+	unsigned long long *m_num_core_issued_alu;
+    unsigned long long *m_num_core_issued_mem;
+    unsigned long long *m_num_core_issued_sp;
+    unsigned long long *m_num_core_issued_sfu;
+    unsigned long long *m_num_core_load_alu;
+    unsigned long long *m_num_core_load_mem;
+    unsigned long long *m_num_core_load_sp;
+    unsigned long long *m_num_core_load_sfu;
+    unsigned long long *m_num_core_committed_alu;
+    unsigned long long *m_num_core_committed_mem;
+    unsigned long long *m_num_core_committed_sp;
+    unsigned long long *m_num_core_committed_sfu;
+    unsigned long long *m_num_core_stall_alu;
+    unsigned long long *m_num_core_stall_mem;
+    unsigned long long *m_num_core_stall_idle;
+    unsigned long long *m_num_core_score_insn;
+    unsigned long long *m_num_core_score_mem;
+    unsigned long long *m_num_core_all_warps_stalled_at_mem;
+    unsigned long long *m_num_core_all_warps_stalled_at_alu;
+	unsigned long long *m_num_core_all_warps_waiting_for_mem;
+    unsigned long long *m_num_core_all_warps_waiting_for_insn;
+	unsigned long long *m_num_core_issued_alu_last_cycle;
+    unsigned long long *m_num_core_issued_mem_last_cycle;
+    unsigned long long *m_num_core_issued_sp_last_cycle;
+    unsigned long long *m_num_core_issued_sfu_last_cycle;
+    unsigned long long *m_num_core_committed_alu_last_cycle;
+    unsigned long long *m_num_core_committed_mem_last_cycle;
+    unsigned long long *m_num_core_committed_sp_last_cycle;
+    unsigned long long *m_num_core_committed_sfu_last_cycle;
+    unsigned long long *m_num_core_stall_alu_last_cycle;
+    unsigned long long *m_num_core_stall_mem_last_cycle;
+    unsigned long long *m_num_core_stall_idle_last_cycle;
+    unsigned long long *m_num_core_score_insn_last_cycle;
+    unsigned long long *m_num_core_score_mem_last_cycle;
+    unsigned long long *m_num_core_all_warps_stalled_at_mem_last_cycle;
+    unsigned long long *m_num_core_all_warps_stalled_at_alu_last_cycle;
+	unsigned long long *m_num_core_all_warps_waiting_for_mem_last_cycle;
+    unsigned long long *m_num_core_all_warps_waiting_for_insn_last_cycle;
+
+
 };
 
 class shader_core_stats : public shader_core_stats_pod {
@@ -1909,6 +1954,48 @@ public:
 		phases_per_sm.resize(config->num_shader());
 		phases_per_sm_last_cycle.resize(config->num_shader());
 		phases_created=false;
+		
+		m_num_core_issued_alu = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_issued_mem = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_issued_sp = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_issued_sfu = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_committed_alu = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_committed_mem = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_committed_sp = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_committed_sfu = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_load_alu = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_load_mem = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_load_sp = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_load_sfu = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_stall_alu = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_stall_mem = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_score_insn = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_score_mem = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_stall_idle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_all_warps_waiting_for_insn = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_all_warps_waiting_for_mem = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_all_warps_stalled_at_mem = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_all_warps_stalled_at_alu = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+	
+		m_num_core_issued_alu_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_issued_mem_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_issued_sp_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_issued_sfu_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_committed_alu_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_committed_mem_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_committed_sp_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_committed_sfu_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_stall_alu_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_stall_mem_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_score_insn_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_score_mem_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_stall_idle_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_all_warps_waiting_for_insn_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_all_warps_waiting_for_mem_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_all_warps_stalled_at_mem_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+        m_num_core_all_warps_stalled_at_alu_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+
+	
 	}
 
     ~shader_core_stats()
@@ -1973,6 +2060,7 @@ public:
 					phases_per_sm[i].resize(total_program_phases,0);
 					phases_per_sm_last_cycle[i].resize(total_program_phases,0);
 				}
+				set_phases_created();
 				first_access = false;
 			}
 			phases_per_sm[sm_id][phase]++;
