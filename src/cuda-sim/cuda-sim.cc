@@ -373,7 +373,9 @@ void function_info::create_phases()
 		printf("PC=0x%03x %50sOpcode:%5s\tLatency:%u\tPhase:%u\tDistance:%d\n",(*i)->get_PC(),(*i)->get_source(),
 				(*i)->get_opcode_cstr(),(*i)->get_latency(),(*i)->get_phase(),(*i)->get_distance());
 
-	total_program_phases = phase;
+	if(phase > total_program_phases)  // This is used as a global variable for stat collection. Hence we want it to be the max number of phases across all kernels.
+		total_program_phases = phase; //Ideally each kernel should have a copy of this varibale.
+
 	printf("Done creating phases for function \'%s\':. Total phases:%d\n", m_name.c_str(),total_program_phases);
 
 }

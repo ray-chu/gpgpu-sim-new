@@ -928,7 +928,7 @@ public:
 
     void print( FILE *fout ) const;
     unsigned get_uid() const { return m_uid; }
-
+	unsigned long long get_issue_cycle() const {return issue_cycle;}
 protected:
 
     unsigned m_uid;

@@ -46,7 +46,7 @@ extern unsigned total_program_phases;
 
 static void time_vector_print_interval2gzfile(gzFile outfile);
 
-void gpgpu_sim::dump_manual_stats(){
+void gpgpu_sim::dump_manual_stats(bool end_of_kernel){
 
 
 	FILE *manual_dump_file = NULL;	
@@ -67,6 +67,26 @@ void gpgpu_sim::dump_manual_stats(){
 		fprintf(manual_dump_file,"constant_cache_inst_completed,");
 		fprintf(manual_dump_file,"texture_cache_inst_completed,");
 		fprintf(manual_dump_file,"local_mem_inst_completed,");
+		fprintf(manual_dump_file,"local_mem_inst_completed");
+		fprintf(manual_dump_file,"ALU LOAD,");
+		fprintf(manual_dump_file,"SP LOAD,");
+		fprintf(manual_dump_file,"SFU LOAD,");
+		fprintf(manual_dump_file,"Outstanding memory requests,");
+		fprintf(manual_dump_file,"Avg. ALU Latency,");
+		fprintf(manual_dump_file,"Avg. SP Latency,");
+		fprintf(manual_dump_file,"Avg. SFU Latency,");
+		fprintf(manual_dump_file,"Avg. Mem Latency,");
+		fprintf(manual_dump_file,"ALU Stall,");
+		fprintf(manual_dump_file,"MEM Stall,");
+		fprintf(manual_dump_file,"ALU Scoreboard,");
+		fprintf(manual_dump_file,"MEM Scoreboard,");
+		fprintf(manual_dump_file,"All warps stalled at alu,");
+		fprintf(manual_dump_file,"All warps stalled at mem,");
+		fprintf(manual_dump_file,"All warps waiting for alu,");
+		fprintf(manual_dump_file,"All warps waiting for mem,");
+		fprintf(manual_dump_file,"Idle,");
+
+
 		for(unsigned i=0;i<total_program_phases;i++)
 			fprintf(manual_dump_file,"Warps in phase %d",i);
 		
@@ -87,6 +107,10 @@ void gpgpu_sim::dump_manual_stats(){
 
 	// CR before the next time we print stats
 	fprintf(manual_dump_file,"\n");
+	
+	if(end_of_kernel)
+		fprintf(manual_dump_file,"DETECTED END OF KERNEL\n");
+
 	fclose(manual_dump_file);
 }
 
