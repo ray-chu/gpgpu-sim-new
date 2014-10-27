@@ -300,6 +300,7 @@ enum concrete_scheduler
     CONCRETE_SCHEDULER_WARP_LIMITING,
 	CONCRETE_SCHEDULER_PHASE,
 	CONCRETE_SCHEDULER_HEIRARCHIAL_PHASE,
+	CONCRETE_SCHEDULER_TWO_LEVEL_GREEDY,
     NUM_CONCRETE_SCHEDULERS
 };
 
@@ -367,6 +368,7 @@ public:
     // m_supervised_warps with their scheduling policies
     virtual void order_warps() = 0;
 	virtual void print_scheduler_queue();
+	virtual void update_phase_stats();
 
 protected:
     virtual void do_on_warp_issued( unsigned warp_id,
@@ -494,7 +496,7 @@ public:
     }
 
 	virtual void print_scheduler_queue();
-
+	virtual void update_phase_stats();
 protected:
     virtual void do_on_warp_issued( unsigned warp_id,
                                     unsigned num_issued,
@@ -507,6 +509,60 @@ private:
     scheduler_prioritization_type m_outer_level_prioritization;
 	unsigned m_max_active_warps;
 };
+
+class two_level_greedy_scheduler : public scheduler_unit {
+public:
+	two_level_greedy_scheduler ( shader_core_stats* stats, shader_core_ctx* shader,
+                          Scoreboard* scoreboard, simt_stack** simt,
+                          std::vector<shd_warp_t>* warp,
+                          register_set* sp_out,
+                          register_set* sfu_out,
+                          register_set* mem_out,
+                          int id,
+                          char* config_str )
+	: scheduler_unit ( stats, shader, scoreboard, simt, warp, sp_out, sfu_out, mem_out, id ),
+	  m_pending_warps(),m_ready_warps() 
+    {
+        unsigned inner_level_readin;
+        unsigned outer_level_readin; 
+        int ret = sscanf( config_str,
+                          "two_level_greedy:%d:%d:%d",
+                          &m_max_active_warps,
+                          &inner_level_readin,
+                          &outer_level_readin);
+        assert( 3 == ret );
+        m_inner_level_prioritization=(scheduler_prioritization_type)inner_level_readin;
+        m_outer_level_prioritization=(scheduler_prioritization_type)outer_level_readin;
+    }
+	virtual ~two_level_greedy_scheduler() {}
+    virtual void order_warps();
+	void add_supervised_warp_id(int i) {
+		m_supervised_warps.push_back(&warp(i));
+        if ( m_next_cycle_prioritized_warps.size() < m_max_active_warps ) {
+            m_next_cycle_prioritized_warps.push_back( &warp(i) );
+        } else {
+		    m_pending_warps.push_back(&warp(i));
+        }
+	}
+    virtual void done_adding_supervised_warps() {
+        m_last_supervised_issued = m_supervised_warps.begin();
+    }
+
+	virtual void print_scheduler_queue();
+	virtual void update_phase_stats();
+protected:
+    virtual void do_on_warp_issued( unsigned warp_id,
+                                    unsigned num_issued,
+                                    const std::vector< shd_warp_t* >::const_iterator& prioritized_iter );
+
+private:
+	std::deque< shd_warp_t* > m_pending_warps;
+    std::deque< shd_warp_t* > m_ready_warps;
+	scheduler_prioritization_type m_inner_level_prioritization;
+    scheduler_prioritization_type m_outer_level_prioritization;
+	unsigned m_max_active_warps;
+};
+
 
 class two_level_active_scheduler : public scheduler_unit {
 public:
@@ -545,6 +601,9 @@ public:
     virtual void done_adding_supervised_warps() {
         m_last_supervised_issued = m_supervised_warps.begin();
     }
+	
+	virtual void print_scheduler_queue();
+	virtual void update_phase_stats();
 
 protected:
     virtual void do_on_warp_issued( unsigned warp_id,
@@ -1875,7 +1934,10 @@ struct shader_core_stats_pod {
     unsigned long long *m_num_core_all_warps_stalled_at_alu_last_cycle;
 	unsigned long long *m_num_core_all_warps_waiting_for_mem_last_cycle;
     unsigned long long *m_num_core_all_warps_waiting_for_insn_last_cycle;
-
+	double *m_num_core_alu_latency;
+    double *m_num_core_mem_latency;
+    double *m_num_core_sp_latency;
+	double *m_num_core_sfu_latency;
 
 };
 
@@ -1976,6 +2038,11 @@ public:
         m_num_core_all_warps_waiting_for_mem = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
         m_num_core_all_warps_stalled_at_mem = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
         m_num_core_all_warps_stalled_at_alu = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
+		m_num_core_alu_latency = (double*)calloc(config->num_shader(),sizeof(double));
+        m_num_core_mem_latency = (double*)calloc(config->num_shader(),sizeof(double));
+		m_num_core_sp_latency = (double*)calloc(config->num_shader(),sizeof(double));
+		m_num_core_sfu_latency = (double*)calloc(config->num_shader(),sizeof(double));
+
 	
 		m_num_core_issued_alu_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
         m_num_core_issued_mem_last_cycle = (unsigned long long*)calloc(config->num_shader(),sizeof(unsigned long long));
@@ -2025,7 +2092,71 @@ public:
 
     void new_grid()
     {
-    }
+    
+	 for (unsigned i = 0; i < m_config->num_shader(); i++){
+	 		sp_inst_completed_per_sm[i] = 0;
+			sp_inst_completed_last_cycle_per_sm[i] = 0;
+			sfu_inst_completed_per_sm[i] = 0;
+			sfu_inst_completed_last_cycle_per_sm[i]= 0;
+			data_cache_inst_completed_per_sm[i] = 0;
+			data_cache_inst_completed_last_cycle_per_sm[i] = 0;
+			shared_mem_inst_completed_per_sm[i] = 0;
+			shared_mem_inst_completed_last_cycle_per_sm[i] = 0;
+			constant_cache_inst_completed_per_sm[i] = 0;
+			constant_cache_inst_completed_last_cycle_per_sm[i] = 0;
+			texture_cache_inst_completed_per_sm[i] = 0;
+			texture_cache_inst_completed_last_cycle_per_sm[i] = 0;
+			local_mem_inst_completed_per_sm[i] = 0;
+			local_mem_inst_completed_last_cycle_per_sm[i] = 0;
+
+		
+			m_num_core_issued_alu[i] = 0;
+        	m_num_core_issued_mem[i] = 0;
+			m_num_core_issued_sp[i] = 0;
+			m_num_core_issued_sfu[i] = 0;
+			m_num_core_committed_alu[i] = 0;
+        	m_num_core_committed_mem[i] = 0;
+        	m_num_core_committed_sp[i] = 0;
+        	m_num_core_committed_sfu[i] = 0;
+			m_num_core_load_alu[i] = 0;
+        	m_num_core_load_mem[i] = 0;
+        	m_num_core_load_sp[i] = 0;
+        	m_num_core_load_sfu[i] = 0;
+			m_num_core_stall_alu[i] = 0;
+			m_num_core_stall_mem[i] = 0;
+			m_num_core_score_insn[i] = 0;
+			m_num_core_score_mem[i] = 0;
+			m_num_core_stall_idle[i] = 0;
+        	m_num_core_all_warps_waiting_for_insn[i] = 0;
+        	m_num_core_all_warps_waiting_for_mem[i] = 0;
+        	m_num_core_all_warps_stalled_at_mem[i] = 0;
+        	m_num_core_all_warps_stalled_at_alu[i] = 0;
+			m_num_core_alu_latency[i] = 0;
+        	m_num_core_mem_latency[i] = 0;
+			m_num_core_sp_latency[i] = 0;
+			m_num_core_sfu_latency[i] = 0;
+
+
+			m_num_core_issued_alu_last_cycle[i] = 0;
+        	m_num_core_issued_mem_last_cycle[i] = 0;
+			m_num_core_issued_sp_last_cycle[i] = 0;
+			m_num_core_issued_sfu_last_cycle[i] = 0;
+			m_num_core_committed_alu_last_cycle[i] = 0;
+        	m_num_core_committed_mem_last_cycle[i] = 0;
+        	m_num_core_committed_sp_last_cycle[i] = 0;
+        	m_num_core_committed_sfu_last_cycle[i] = 0;
+			m_num_core_stall_alu_last_cycle[i] = 0;
+			m_num_core_stall_mem_last_cycle[i] = 0;
+			m_num_core_score_insn_last_cycle[i] = 0;
+			m_num_core_score_mem_last_cycle[i] = 0;
+			m_num_core_stall_idle_last_cycle[i] = 0;
+        	m_num_core_all_warps_waiting_for_insn_last_cycle[i] = 0;
+        	m_num_core_all_warps_waiting_for_mem_last_cycle[i] = 0;
+        	m_num_core_all_warps_stalled_at_mem_last_cycle[i] = 0;
+        	m_num_core_all_warps_stalled_at_alu_last_cycle[i] = 0;
+
+		}
+	}
 
     void event_warp_issued( unsigned s_id, unsigned warp_id, unsigned num_issued, unsigned dynamic_warp_id );
 
@@ -2419,6 +2550,7 @@ private:
     // is that the dynamic_warp_id is a running number unique to every warp
     // run on this shader, where the warp_id is the static warp slot.
     unsigned m_dynamic_warp_id;
+
 };
 
 class simt_core_cluster {

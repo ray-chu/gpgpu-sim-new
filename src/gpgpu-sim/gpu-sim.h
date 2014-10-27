@@ -485,7 +485,7 @@ private:
    std::string executed_kernel_info_string(); //< format the kernel information into a string for stat printout
    void clear_executed_kernel_info(); //< clear the kernel information after stat printout
 
-   void dump_manual_stats();
+   void dump_manual_stats(bool end_of_kernel);
 
 public:
    unsigned long long  gpu_sim_insn;

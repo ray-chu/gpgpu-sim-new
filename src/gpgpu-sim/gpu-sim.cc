@@ -358,8 +358,8 @@ void shader_core_config::reg_options(class OptionParser * opp)
                             "Number if ldst units (default=1) WARNING: not hooked up to anything",
                              "1");
     option_parser_register(opp, "-gpgpu_scheduler", OPT_CSTR, &gpgpu_scheduler_string,
-                                "Scheduler configuration: < lrr | gto | two_level_active | rr_i_gto_o| rr_i_greedy_o|gto_i_gto_o|greedy_i_gto_o | phase | hierarchial_phase > "
-                                "If two_level_active:<num_active_warps>:<inner_prioritization>:<outer_prioritization>"
+                                "Scheduler configuration: < lrr | gto | two_level_active | rr_i_gto_o| rr_i_greedy_o|gto_i_gto_o|greedy_i_gto_o | phase | hierarchial_phase | two_level_greedy > "
+                                "If two_level_active/two_level_greedy/hirarchial_phase:<num_active_warps>:<inner_prioritization>:<outer_prioritization>"
 			        "If xx_i_yy_i:<num_active_warps_for_issue>:<number_of_warps_in_Group>:0:1"
                                 "For complete list of prioritization values see shader.h enum scheduler_prioritization_type"
                                 "Default: gto",
@@ -549,7 +549,8 @@ void gpgpu_sim::set_kernel_done( kernel_info_t *kernel )
             break;
         }
     }
-    assert( k != m_running_kernels.end() ); 
+    assert( k != m_running_kernels.end() );
+	dump_manual_stats(true);	 
 }
 
 void set_ptx_warp_size(const struct core_config * warp_size);
@@ -1301,7 +1302,7 @@ void gpgpu_sim::cycle()
 	  if(m_config.enable_manual_stat_dump && !(gpu_sim_cycle % m_config.manual_stat_sample_freq)){
 		
 		
-	    dump_manual_stats();	
+	    dump_manual_stats(false);	
 
 	  }
 
