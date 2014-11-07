@@ -1532,27 +1532,6 @@ void scheduler_unit::cycle()
         } 
     }
 
-  
-	for( std::vector<shd_warp_t*>::iterator i=m_supervised_warps.begin();i!=m_supervised_warps.end();i++){
-		unsigned warp_id = (*i)->get_warp_id();
-		const warp_inst_t *pI = warp(warp_id).ibuffer_next_inst();
-		
-		if ( (*i) == NULL || (*i)->done_exit() ) 
-            continue;
-        
-		unsigned pc,rpc;
-		if(!warp(warp_id).ibuffer_empty()){
-        	m_simt_stack[warp_id]->get_pdom_stack_top_info(&pc,&rpc);
-
-		unsigned phase = 0;
-		ptx_instruction *ptx_PI = pc_to_ptx_instruction[pc];
-		phase = ptx_PI->get_phase();
-		m_stats->populate_phase_stats(get_sid(),phase);
-		m_stats->set_phases_created();
-		}
-	}
-    
-
     // issue stall statistics:
     if( !valid_inst ){ 
         m_stats->shader_cycle_distro[0]++; // idle or control hazard
