@@ -1657,10 +1657,13 @@ void heirarchial_phase_scheduler::order_warps()
         for (int i=0; i<4; i++){
             const warp_inst_t* inst = (*iter)->ibuffer_next_inst();
             //Is the instruction waiting on a long operation?
-            if ( inst && inst->in[i] > 0 && this->m_scoreboard->islongop((*iter)->get_warp_id(), inst->in[i])){
-                waiting = true;
-            }
-        }
+            if (inst){ 
+				ptx_instruction *ptx_inst = pc_to_ptx_instruction[inst->pc];
+				if( (inst->in[i] > 0 && this->m_scoreboard->islongop((*iter)->get_warp_id(), inst->in[i])) || (ptx_inst->get_phase() != (*iter)->get_phase()) ){
+                	waiting = true;
+            	}
+        	}
+		}
 
         if( waiting ) {
 			m_pending_warps.push_back(*iter);
