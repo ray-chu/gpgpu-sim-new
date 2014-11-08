@@ -604,69 +604,73 @@ void shader_core_stats::event_warp_issued( unsigned s_id, unsigned warp_id, unsi
 
 void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 
+	for (unsigned core_id = 0; core_id < m_config->num_shader(); core_id ++){	
 	
-	// Writeback stats
-	fprintf(manual_dump_file,"%u,",sp_inst_completed_per_sm[0] - sp_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%u,",sfu_inst_completed_per_sm[0] - sfu_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%u,",data_cache_inst_completed_per_sm[0] - data_cache_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%u,",shared_mem_inst_completed_per_sm[0] - shared_mem_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%u,",constant_cache_inst_completed_per_sm[0] - constant_cache_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%u,",texture_cache_inst_completed_per_sm[0] - texture_cache_inst_completed_last_cycle_per_sm[0]);
-	fprintf(manual_dump_file,"%u,",local_mem_inst_completed_per_sm[0] - local_mem_inst_completed_last_cycle_per_sm[0]);
+		// Writeback stats
+		/*fprintf(manual_dump_file,"%u,",sp_inst_completed_per_sm[core_id] - sp_inst_completed_last_cycle_per_sm[core_id]);
+		fprintf(manual_dump_file,"%u,",sfu_inst_completed_per_sm[core_id] - sfu_inst_completed_last_cycle_per_sm[core_id]);
+		fprintf(manual_dump_file,"%u,",data_cache_inst_completed_per_sm[core_id] - data_cache_inst_completed_last_cycle_per_sm[core_id]);
+		fprintf(manual_dump_file,"%u,",shared_mem_inst_completed_per_sm[core_id] - shared_mem_inst_completed_last_cycle_per_sm[core_id]);
+		fprintf(manual_dump_file,"%u,",constant_cache_inst_completed_per_sm[core_id] - constant_cache_inst_completed_last_cycle_per_sm[core_id]);
+		fprintf(manual_dump_file,"%u,",texture_cache_inst_completed_per_sm[core_id] - texture_cache_inst_completed_last_cycle_per_sm[core_id]);
+		fprintf(manual_dump_file,"%u,",local_mem_inst_completed_per_sm[core_id] - local_mem_inst_completed_last_cycle_per_sm[core_id]);
+		*/
 	
-	// Stats from scheduler - Pipeline stats
-	fprintf(manual_dump_file,"%llu,",m_num_core_issued_alu[0] - m_num_core_committed_alu[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_issued_sp[0] - m_num_core_committed_sp[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_issued_sfu[0] - m_num_core_committed_sfu[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_issued_mem[0] - m_num_core_committed_mem[0]);
-	fprintf(manual_dump_file,"%lf,",(m_num_core_alu_latency[0] && m_num_core_committed_alu[0])?(m_num_core_alu_latency[0] / m_num_core_committed_alu[0]):-1);
-	fprintf(manual_dump_file,"%lf,",(m_num_core_sp_latency[0] && m_num_core_committed_sp[0])?(m_num_core_sp_latency[0] / m_num_core_committed_sp[0]):-1);
-	fprintf(manual_dump_file,"%lf,",(m_num_core_sfu_latency[0] && m_num_core_committed_sfu[0])?(m_num_core_sfu_latency[0] / m_num_core_committed_sfu[0]):-1);
-	fprintf(manual_dump_file,"%lf,",(m_num_core_mem_latency[0] && m_num_core_committed_mem[0])?(m_num_core_mem_latency[0] / m_num_core_committed_mem[0]):-1);
+		// Stats from scheduler - Pipeline stats
+		fprintf(manual_dump_file,"%llu,",m_num_core_issued_alu[core_id] - m_num_core_committed_alu[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_issued_sp[core_id] - m_num_core_committed_sp[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_issued_sfu[core_id] - m_num_core_committed_sfu[core_id]);
+		fprintf(manual_dump_file,"%llu,",m_num_core_issued_mem[core_id] - m_num_core_committed_mem[core_id]);
+		//fprintf(manual_dump_file,"%lf,",(m_num_core_alu_latency[core_id] && m_num_core_committed_alu[core_id])?(m_num_core_alu_latency[core_id] / m_num_core_committed_alu[core_id]):-1);
+		//fprintf(manual_dump_file,"%lf,",(m_num_core_sp_latency[core_id] && m_num_core_committed_sp[core_id])?(m_num_core_sp_latency[core_id] / m_num_core_committed_sp[core_id]):-1);
+		//fprintf(manual_dump_file,"%lf,",(m_num_core_sfu_latency[core_id] && m_num_core_committed_sfu[core_id])?(m_num_core_sfu_latency[core_id] / m_num_core_committed_sfu[core_id]):-1);
+		//fprintf(manual_dump_file,"%lf,",(m_num_core_mem_latency[core_id] && m_num_core_committed_mem[core_id])?(m_num_core_mem_latency[core_id] / m_num_core_committed_mem[core_id]):-1);
 
-	// Stats from scheduler - Stall stats
-	fprintf(manual_dump_file,"%llu,",m_num_core_stall_alu[0] - m_num_core_stall_alu_last_cycle[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_stall_mem[0] - m_num_core_stall_mem_last_cycle[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_score_insn[0] - m_num_core_score_insn_last_cycle[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_score_mem[0] - m_num_core_score_mem_last_cycle[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_stalled_at_alu[0] - m_num_core_all_warps_stalled_at_alu_last_cycle[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_stalled_at_mem[0] - m_num_core_all_warps_stalled_at_mem_last_cycle[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_waiting_for_insn[0] - m_num_core_all_warps_waiting_for_insn_last_cycle[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_waiting_for_mem[0] - m_num_core_all_warps_waiting_for_mem_last_cycle[0]);
-	fprintf(manual_dump_file,"%llu,",m_num_core_stall_idle[0] - m_num_core_stall_idle_last_cycle[0]);
+		// Stats from scheduler - Stall stats
+		//fprintf(manual_dump_file,"%llu,",m_num_core_stall_alu[core_id] - m_num_core_stall_alu_last_cycle[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_stall_mem[core_id] - m_num_core_stall_mem_last_cycle[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_score_insn[core_id] - m_num_core_score_insn_last_cycle[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_score_mem[core_id] - m_num_core_score_mem_last_cycle[core_id]);
+		fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_stalled_at_alu[core_id] - m_num_core_all_warps_stalled_at_alu_last_cycle[core_id]);
+		fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_stalled_at_mem[core_id] - m_num_core_all_warps_stalled_at_mem_last_cycle[core_id]);
+		fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_waiting_for_insn[core_id] - m_num_core_all_warps_waiting_for_insn_last_cycle[core_id]);
+		fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_waiting_for_mem[core_id] - m_num_core_all_warps_waiting_for_mem_last_cycle[core_id]);
+		fprintf(manual_dump_file,"%llu,",m_num_core_stall_idle[core_id] - m_num_core_stall_idle_last_cycle[core_id]);
 
-	if(get_phases_created()){
+		//Phase stats
+		/*if(get_phases_created()){
 		
-		for(unsigned i=0;i<total_program_phases;i++){
-			fprintf(manual_dump_file,"%u,",phases_per_sm[0][i]-phases_per_sm_last_cycle[0][i]);
-			phases_per_sm_last_cycle[0][i] = phases_per_sm[0][i];
-		}
-	}else{
+			for(unsigned i=0;i<total_program_phases;i++){
+				fprintf(manual_dump_file,"%u,",phases_per_sm[core_id][i]-phases_per_sm_last_cycle[core_id][i]);
+				phases_per_sm_last_cycle[core_id][i] = phases_per_sm[core_id][i];
+			}
+		}else{
 		
-		for(unsigned i=0;i<total_program_phases;i++)
-			fprintf(manual_dump_file,"N/A,");
+			for(unsigned i=0;i<total_program_phases;i++)
+				fprintf(manual_dump_file,"N/A,");
 
+		}*/
+
+		// Update previous cycle stats 
+		/*sp_inst_completed_last_cycle_per_sm[core_id] = sp_inst_completed_per_sm[core_id];
+		sfu_inst_completed_last_cycle_per_sm[core_id] = sfu_inst_completed_per_sm[core_id];
+		data_cache_inst_completed_last_cycle_per_sm[core_id] = data_cache_inst_completed_per_sm[core_id];
+		shared_mem_inst_completed_last_cycle_per_sm[core_id] = 	shared_mem_inst_completed_per_sm[core_id];
+		constant_cache_inst_completed_last_cycle_per_sm[core_id] = constant_cache_inst_completed_per_sm[core_id];
+		texture_cache_inst_completed_last_cycle_per_sm[core_id] = texture_cache_inst_completed_per_sm[core_id];
+		local_mem_inst_completed_last_cycle_per_sm[core_id] = local_mem_inst_completed_per_sm[core_id];
+    	*/
+	
+		//m_num_core_stall_alu_last_cycle[core_id] = m_num_core_stall_alu[core_id];
+		//m_num_core_stall_mem_last_cycle[core_id] = m_num_core_stall_mem[core_id];
+		//m_num_core_score_insn_last_cycle[core_id] = m_num_core_score_insn[core_id];
+		//m_num_core_score_mem_last_cycle[core_id] = m_num_core_score_mem[core_id];
+		m_num_core_all_warps_stalled_at_alu_last_cycle[core_id] = m_num_core_all_warps_stalled_at_alu[core_id];
+		m_num_core_all_warps_stalled_at_mem_last_cycle[core_id] = m_num_core_all_warps_stalled_at_mem[core_id];
+		m_num_core_all_warps_waiting_for_insn_last_cycle[core_id] = m_num_core_all_warps_waiting_for_insn[core_id];
+		m_num_core_all_warps_waiting_for_mem_last_cycle[core_id] = m_num_core_all_warps_waiting_for_mem[core_id] ;
+		m_num_core_stall_idle_last_cycle[core_id] = m_num_core_stall_idle[core_id];
 	}
-
-	sp_inst_completed_last_cycle_per_sm[0] = sp_inst_completed_per_sm[0];
-	sfu_inst_completed_last_cycle_per_sm[0] = sfu_inst_completed_per_sm[0];
-	data_cache_inst_completed_last_cycle_per_sm[0] = data_cache_inst_completed_per_sm[0];
-	shared_mem_inst_completed_last_cycle_per_sm[0] = 	shared_mem_inst_completed_per_sm[0];
-	constant_cache_inst_completed_last_cycle_per_sm[0] = constant_cache_inst_completed_per_sm[0];
-	texture_cache_inst_completed_last_cycle_per_sm[0] = texture_cache_inst_completed_per_sm[0];
-	local_mem_inst_completed_last_cycle_per_sm[0] = local_mem_inst_completed_per_sm[0];
-
-	m_num_core_stall_alu_last_cycle[0] = m_num_core_stall_alu[0];
-	m_num_core_stall_mem_last_cycle[0] = m_num_core_stall_mem[0];
-	m_num_core_score_insn_last_cycle[0] = m_num_core_score_insn[0];
-	m_num_core_score_mem_last_cycle[0] = m_num_core_score_mem[0];
-	m_num_core_all_warps_stalled_at_alu_last_cycle[0] = m_num_core_all_warps_stalled_at_alu[0];
-	m_num_core_all_warps_stalled_at_mem_last_cycle[0] = m_num_core_all_warps_stalled_at_mem[0];
-	m_num_core_all_warps_waiting_for_insn_last_cycle[0] = m_num_core_all_warps_waiting_for_insn[0];
-	m_num_core_all_warps_waiting_for_mem_last_cycle[0] = m_num_core_all_warps_waiting_for_mem[0] ;
-	m_num_core_stall_idle_last_cycle[0] = m_num_core_stall_idle[0];
-
-	
 }
 
 void shader_core_stats::visualizer_print( gzFile visualizer_file )

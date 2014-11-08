@@ -60,36 +60,38 @@ void gpgpu_sim::dump_manual_stats(bool end_of_kernel){
    	}
 	if(manual_dump_first_print){
 		fprintf(manual_dump_file,"Cycle,");
-		fprintf(manual_dump_file,"sp_inst_completed,");
-		fprintf(manual_dump_file,"sfu_inst_completed,");
-		fprintf(manual_dump_file,"data_cache_inst_completed,");
-		fprintf(manual_dump_file,"shared_mem_inst_completed,");
-		fprintf(manual_dump_file,"constant_cache_inst_completed,");
-		fprintf(manual_dump_file,"texture_cache_inst_completed,");
-		fprintf(manual_dump_file,"local_mem_inst_completed,");
-		fprintf(manual_dump_file,"local_mem_inst_completed");
-		fprintf(manual_dump_file,"ALU LOAD,");
-		fprintf(manual_dump_file,"SP LOAD,");
-		fprintf(manual_dump_file,"SFU LOAD,");
-		fprintf(manual_dump_file,"Outstanding memory requests,");
-		fprintf(manual_dump_file,"Avg. ALU Latency,");
-		fprintf(manual_dump_file,"Avg. SP Latency,");
-		fprintf(manual_dump_file,"Avg. SFU Latency,");
-		fprintf(manual_dump_file,"Avg. Mem Latency,");
-		fprintf(manual_dump_file,"ALU Stall,");
-		fprintf(manual_dump_file,"MEM Stall,");
-		fprintf(manual_dump_file,"ALU Scoreboard,");
-		fprintf(manual_dump_file,"MEM Scoreboard,");
-		fprintf(manual_dump_file,"All warps stalled at alu,");
-		fprintf(manual_dump_file,"All warps stalled at mem,");
-		fprintf(manual_dump_file,"All warps waiting for alu,");
-		fprintf(manual_dump_file,"All warps waiting for mem,");
-		fprintf(manual_dump_file,"Idle,");
+		for(unsigned core_id = 0; core_id < m_config.num_shader(); core_id++){
+			//fprintf(manual_dump_file,"sp_inst_completed_%d,",core_id);
+			//fprintf(manual_dump_file,"sfu_inst_completed_%d,",core_id);
+			//fprintf(manual_dump_file,"data_cache_inst_completed_%d,",core_id);
+			//fprintf(manual_dump_file,"shared_mem_inst_completed_%d,",core_id);
+			//fprintf(manual_dump_file,"constant_cache_inst_completed_%d,",core_id);
+			//fprintf(manual_dump_file,"texture_cache_inst_completed_%d,",core_id);
+			//fprintf(manual_dump_file,"local_mem_inst_completed_%d,",core_id);
+			//fprintf(manual_dump_file,"local_mem_inst_completed_%d,",core_id);
+			fprintf(manual_dump_file,"ALU LOAD_%d,",core_id);
+			//fprintf(manual_dump_file,"SP LOAD_%d,",core_id);
+			//fprintf(manual_dump_file,"SFU LOAD_%d,"core_id);
+			fprintf(manual_dump_file,"MEM LOAD_%d,",core_id);
+			//fprintf(manual_dump_file,"Avg. ALU Latency_%d,",core_id);
+			//fprintf(manual_dump_file,"Avg. SP Latency_%d,",core_id);
+			//fprintf(manual_dump_file,"Avg. SFU Latency_%d,",core_id);
+			//fprintf(manual_dump_file,"Avg. Mem Latency_%d,",core_id);
+			//fprintf(manual_dump_file,"ALU Stall_%d,",core_id);
+			//fprintf(manual_dump_file,"MEM Stall_%d,",core_id);
+			//fprintf(manual_dump_file,"ALU Scoreboard_%d,",core_id);
+			//fprintf(manual_dump_file,"MEM Scoreboard_%d,",core_id);
+			fprintf(manual_dump_file,"All warps stalled at alu_%d,",core_id);
+			fprintf(manual_dump_file,"All warps stalled at mem_%d,",core_id);
+			fprintf(manual_dump_file,"All warps waiting for alu_%d,",core_id);
+			fprintf(manual_dump_file,"All warps waiting for mem_%d,",core_id);
+			fprintf(manual_dump_file,"Idle_%d,",core_id);
 
 
-		for(unsigned i=0;i<total_program_phases;i++)
-			fprintf(manual_dump_file,"Warps in phase %d",i);
-		
+			//for(unsigned i=0;i<total_program_phases;i++)
+			//	fprintf(manual_dump_file,"Core %d Warps in phase %d,",core_id,i);
+			
+		}
 		fprintf(manual_dump_file,"dram_request_bandwidth,");
 		fprintf(manual_dump_file,"dram_response_bandwidth,");
 
