@@ -131,6 +131,5 @@ fi
 
 echo "setup_environment succeeded";
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/work/nvidia_libraries/
  
 export GPGPUSIM_SETUP_ENVIRONMENT_WAS_RUN=1

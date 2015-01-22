@@ -550,7 +550,8 @@ void gpgpu_sim::set_kernel_done( kernel_info_t *kernel )
         }
     }
     assert( k != m_running_kernels.end() );
-	dump_manual_stats(true);	 
+	 if(m_config.enable_manual_stat_dump)
+		dump_manual_stats(true);	 
 }
 
 void set_ptx_warp_size(const struct core_config * warp_size);

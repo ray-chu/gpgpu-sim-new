@@ -605,7 +605,7 @@ void shader_core_stats::event_warp_issued( unsigned s_id, unsigned warp_id, unsi
 void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 
 	for (unsigned core_id = 0; core_id < m_config->num_shader(); core_id ++){	
-	
+	//unsigned core_id = 0;
 		// Writeback stats
 		/*fprintf(manual_dump_file,"%u,",sp_inst_completed_per_sm[core_id] - sp_inst_completed_last_cycle_per_sm[core_id]);
 		fprintf(manual_dump_file,"%u,",sfu_inst_completed_per_sm[core_id] - sfu_inst_completed_last_cycle_per_sm[core_id]);
@@ -617,10 +617,10 @@ void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 		*/
 	
 		// Stats from scheduler - Pipeline stats
-		fprintf(manual_dump_file,"%llu,",m_num_core_issued_alu[core_id] - m_num_core_committed_alu[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_issued_alu[core_id] - m_num_core_committed_alu[core_id]);
 		//fprintf(manual_dump_file,"%llu,",m_num_core_issued_sp[core_id] - m_num_core_committed_sp[core_id]);
 		//fprintf(manual_dump_file,"%llu,",m_num_core_issued_sfu[core_id] - m_num_core_committed_sfu[core_id]);
-		fprintf(manual_dump_file,"%llu,",m_num_core_issued_mem[core_id] - m_num_core_committed_mem[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_issued_mem[core_id] - m_num_core_committed_mem[core_id]);
 		//fprintf(manual_dump_file,"%lf,",(m_num_core_alu_latency[core_id] && m_num_core_committed_alu[core_id])?(m_num_core_alu_latency[core_id] / m_num_core_committed_alu[core_id]):-1);
 		//fprintf(manual_dump_file,"%lf,",(m_num_core_sp_latency[core_id] && m_num_core_committed_sp[core_id])?(m_num_core_sp_latency[core_id] / m_num_core_committed_sp[core_id]):-1);
 		//fprintf(manual_dump_file,"%lf,",(m_num_core_sfu_latency[core_id] && m_num_core_committed_sfu[core_id])?(m_num_core_sfu_latency[core_id] / m_num_core_committed_sfu[core_id]):-1);
@@ -631,14 +631,14 @@ void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 		//fprintf(manual_dump_file,"%llu,",m_num_core_stall_mem[core_id] - m_num_core_stall_mem_last_cycle[core_id]);
 		//fprintf(manual_dump_file,"%llu,",m_num_core_score_insn[core_id] - m_num_core_score_insn_last_cycle[core_id]);
 		//fprintf(manual_dump_file,"%llu,",m_num_core_score_mem[core_id] - m_num_core_score_mem_last_cycle[core_id]);
-		fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_stalled_at_alu[core_id] - m_num_core_all_warps_stalled_at_alu_last_cycle[core_id]);
-		fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_stalled_at_mem[core_id] - m_num_core_all_warps_stalled_at_mem_last_cycle[core_id]);
-		fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_waiting_for_insn[core_id] - m_num_core_all_warps_waiting_for_insn_last_cycle[core_id]);
-		fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_waiting_for_mem[core_id] - m_num_core_all_warps_waiting_for_mem_last_cycle[core_id]);
-		fprintf(manual_dump_file,"%llu,",m_num_core_stall_idle[core_id] - m_num_core_stall_idle_last_cycle[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_stalled_at_alu[core_id] - m_num_core_all_warps_stalled_at_alu_last_cycle[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_stalled_at_mem[core_id] - m_num_core_all_warps_stalled_at_mem_last_cycle[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_waiting_for_insn[core_id] - m_num_core_all_warps_waiting_for_insn_last_cycle[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_all_warps_waiting_for_mem[core_id] - m_num_core_all_warps_waiting_for_mem_last_cycle[core_id]);
+		//fprintf(manual_dump_file,"%llu,",m_num_core_stall_idle[core_id] - m_num_core_stall_idle_last_cycle[core_id]);
 
 		//Phase stats
-		/*if(get_phases_created()){
+		if(get_phases_created()){
 		
 			for(unsigned i=0;i<total_program_phases;i++){
 				fprintf(manual_dump_file,"%u,",phases_per_sm[core_id][i]-phases_per_sm_last_cycle[core_id][i]);
@@ -649,7 +649,7 @@ void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 			for(unsigned i=0;i<total_program_phases;i++)
 				fprintf(manual_dump_file,"N/A,");
 
-		}*/
+		}
 
 		// Update previous cycle stats 
 		/*sp_inst_completed_last_cycle_per_sm[core_id] = sp_inst_completed_per_sm[core_id];
@@ -665,11 +665,11 @@ void shader_core_stats::manual_stats_print(FILE *manual_dump_file){
 		//m_num_core_stall_mem_last_cycle[core_id] = m_num_core_stall_mem[core_id];
 		//m_num_core_score_insn_last_cycle[core_id] = m_num_core_score_insn[core_id];
 		//m_num_core_score_mem_last_cycle[core_id] = m_num_core_score_mem[core_id];
-		m_num_core_all_warps_stalled_at_alu_last_cycle[core_id] = m_num_core_all_warps_stalled_at_alu[core_id];
-		m_num_core_all_warps_stalled_at_mem_last_cycle[core_id] = m_num_core_all_warps_stalled_at_mem[core_id];
-		m_num_core_all_warps_waiting_for_insn_last_cycle[core_id] = m_num_core_all_warps_waiting_for_insn[core_id];
-		m_num_core_all_warps_waiting_for_mem_last_cycle[core_id] = m_num_core_all_warps_waiting_for_mem[core_id] ;
-		m_num_core_stall_idle_last_cycle[core_id] = m_num_core_stall_idle[core_id];
+		//m_num_core_all_warps_stalled_at_alu_last_cycle[core_id] = m_num_core_all_warps_stalled_at_alu[core_id];
+		//m_num_core_all_warps_stalled_at_mem_last_cycle[core_id] = m_num_core_all_warps_stalled_at_mem[core_id];
+		//m_num_core_all_warps_waiting_for_insn_last_cycle[core_id] = m_num_core_all_warps_waiting_for_insn[core_id];
+		//m_num_core_all_warps_waiting_for_mem_last_cycle[core_id] = m_num_core_all_warps_waiting_for_mem[core_id] ;
+		//m_num_core_stall_idle_last_cycle[core_id] = m_num_core_stall_idle[core_id];
 	}
 }
 
