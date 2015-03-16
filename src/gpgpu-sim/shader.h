@@ -1938,7 +1938,14 @@ struct shader_core_stats_pod {
     double *m_num_core_mem_latency;
     double *m_num_core_sp_latency;
 	double *m_num_core_sfu_latency;
-
+    unsigned long long total_alu_load;
+    unsigned long long total_sp_load;
+    unsigned long long total_sfu_load;
+    unsigned long long total_mem_load;
+    unsigned long long total_alu_utilization;
+    unsigned long long total_mem_utilization;
+	unsigned long long total_overlap_utilization;
+	unsigned long long total_no_utilization;
 };
 
 class shader_core_stats : public shader_core_stats_pod {
@@ -2156,12 +2163,83 @@ public:
         	m_num_core_all_warps_stalled_at_alu_last_cycle[i] = 0;
 
 		}
+		total_alu_load = 0;
+		total_sp_load = 0;
+		total_sfu_load = 0;
+		total_mem_load = 0;
+		total_alu_utilization = 0;
+		total_mem_utilization = 0;
+		total_overlap_utilization = 0;
+		total_no_utilization = 0;
+	}
+    
+	unsigned long long get_all_warps_stalled_at_alu_total(){
+		unsigned long long total=0;
+		for (unsigned i=0; i<m_config->num_shader();i++)
+			total+= m_num_core_all_warps_stalled_at_alu[i];
+		return total;
+	}
+    
+	unsigned long long get_all_warps_stalled_at_mem_total(){
+		unsigned long long total=0;
+		for (unsigned i=0; i<m_config->num_shader();i++)
+			total+= m_num_core_all_warps_stalled_at_mem[i];
+		return total;
+	}
+	
+	unsigned long long get_all_warps_waiting_for_alu_total(){
+		unsigned long long total=0;
+		for (unsigned i=0; i<m_config->num_shader();i++)
+			total+= m_num_core_all_warps_waiting_for_insn[i];
+		return total;
+	}
+	
+	unsigned long long get_all_warps_waiting_for_mem_total(){
+		unsigned long long total=0;
+		for (unsigned i=0; i<m_config->num_shader();i++)
+			total+= m_num_core_all_warps_waiting_for_mem[i];
+		return total;
+	}
+	
+	unsigned long long get_idle_total(){
+		unsigned long long total=0;
+		for (unsigned i=0; i<m_config->num_shader();i++)
+			total+= m_num_core_stall_idle_last_cycle[i];
+		return total;
 	}
 
-    void event_warp_issued( unsigned s_id, unsigned warp_id, unsigned num_issued, unsigned dynamic_warp_id );
+	unsigned long long get_alu_load_total(){
+		return total_alu_load;
+	}
+	
+	unsigned long long get_mem_load_total(){
+		return total_mem_load;
+	}
+	unsigned long long get_sp_load_total(){
+		return total_sp_load;
+	}
+	unsigned long long get_sfu_load_total(){
+		return total_sfu_load;
+	}
+	unsigned long long get_alu_utilization(){
+		return total_alu_utilization;
+	}
+	unsigned long long get_mem_utilization(){
+		return total_mem_utilization;
+	}
+	unsigned long long get_overlap_utilization(){
+		return total_overlap_utilization;
+	}
+	unsigned long long get_no_utilization(){
+		return total_no_utilization;
+	}
+
+	void event_warp_issued( unsigned s_id, unsigned warp_id, unsigned num_issued, unsigned dynamic_warp_id );
 
     void visualizer_print( gzFile visualizer_file );
-	void manual_stats_print (FILE *manual_dump_file); 
+	
+   	void manual_stats_print();
+	//void manual_stats_print (FILE *manual_dump_file); 
 
     void print( FILE *fout ) const;
 

@@ -49,19 +49,18 @@ static void time_vector_print_interval2gzfile(gzFile outfile);
 void gpgpu_sim::dump_manual_stats(bool end_of_kernel){
 
 
-	FILE *manual_dump_file = NULL;	
+	//FILE *manual_dump_file = NULL;	
 
-	static bool manual_dump_first_print = true;
+	//static bool manual_dump_first_print = true;
 
-	manual_dump_file = fopen(m_config.manual_dump_filename, (manual_dump_first_print)? "w" : "a");
-   	if (manual_dump_file == NULL) {
-    	printf("Error - could not open file for manual stat collection.\n");
-      	exit(1);
-   	}
-	if(manual_dump_first_print){
-		fprintf(manual_dump_file,"Cycle,");
-		for(unsigned core_id = 0; core_id < m_config.num_shader(); core_id++){
-		//unsigned core_id = 0;
+	//manual_dump_file = fopen(m_config.manual_dump_filename, (manual_dump_first_print)? "w" : "a");
+   	//if (manual_dump_file == NULL) {
+    //	printf("Error - could not open file for manual stat collection.\n");
+    //  	exit(1);
+   	//}
+	//if(manual_dump_first_print){
+	//	fprintf(manual_dump_file,"Cycle,");
+	//	for(unsigned core_id = 0; core_id < m_config.num_shader(); core_id++){
 			//fprintf(manual_dump_file,"sp_inst_completed_%d,",core_id);
 			//fprintf(manual_dump_file,"sfu_inst_completed_%d,",core_id);
 			//fprintf(manual_dump_file,"data_cache_inst_completed_%d,",core_id);
@@ -89,32 +88,60 @@ void gpgpu_sim::dump_manual_stats(bool end_of_kernel){
 			//fprintf(manual_dump_file,"Idle_%d,",core_id);
 
 
-			for(unsigned i=0;i<total_program_phases;i++)
-				fprintf(manual_dump_file,"Core %d Warps in phase %d,",core_id,i);
+			//for(unsigned i=0;i<total_program_phases;i++)
+			//	fprintf(manual_dump_file,"Core %d Warps in phase %d,",core_id,i);
 			
-		}
-		fprintf(manual_dump_file,"dram_request_bandwidth,");
-		fprintf(manual_dump_file,"dram_response_bandwidth,");
+	//	}
+		//fprintf(manual_dump_file,"dram_request_bandwidth,");
+		//fprintf(manual_dump_file,"dram_response_bandwidth,");
 
-		fprintf(manual_dump_file,"\n");
+		//fprintf(manual_dump_file,"\n");
 	
-	}
-   	manual_dump_first_print = false;
+	//}
+   	//manual_dump_first_print = false;
 
 	// Put all the chip related stats first
-	fprintf(manual_dump_file,"%llu,",gpu_sim_cycle);
+	//fprintf(manual_dump_file,"%llu,",gpu_sim_cycle);
 
 	// Put all the SM related extra stats in here
-	m_shader_stats->manual_stats_print(manual_dump_file);
-	m_memory_stats->manual_stats_print(manual_dump_file);
+	//m_shader_stats->manual_stats_print(manual_dump_file);
+	m_shader_stats->manual_stats_print();
+	//m_memory_stats->manual_stats_print(manual_dump_file);
 
 	// CR before the next time we print stats
-	fprintf(manual_dump_file,"\n");
+	//fprintf(manual_dump_file,"\n");
 	
-	if(end_of_kernel)
-		fprintf(manual_dump_file,"DETECTED END OF KERNEL\n");
+	if(end_of_kernel){ // Using this temporarily for summary stats. Change to declare this in a separate function
+		/*fprintf(manual_dump_file,"DETECTED END OF KERNEL\n");
+		fprintf(manual_dump_file,"Execution_time,%llu\n",gpu_sim_cycle);
+		fprintf(manual_dump_file,"All_warps_stalled_at_alu,%llu,%f\n",m_shader_stats->get_all_warps_stalled_at_alu_total(),(double)(m_shader_stats->get_all_warps_stalled_at_alu_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		fprintf(manual_dump_file,"All_warps_stalled_at_mem,%llu,%f\n",m_shader_stats->get_all_warps_stalled_at_mem_total(),(double)(m_shader_stats->get_all_warps_stalled_at_mem_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		fprintf(manual_dump_file,"All_warps_waiting_for_alu,%llu,%f\n",m_shader_stats->get_all_warps_waiting_for_alu_total(),(double)(m_shader_stats->get_all_warps_waiting_for_alu_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		fprintf(manual_dump_file,"All_warps_waiting_for_mem,%llu,%f\n",m_shader_stats->get_all_warps_waiting_for_mem_total(),(double)(m_shader_stats->get_all_warps_waiting_for_mem_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		fprintf(manual_dump_file,"Idle,%llu,%f\n",m_shader_stats->get_idle_total(),(double)(m_shader_stats->get_idle_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		fprintf(manual_dump_file,"Average_ALU_load,%llu,%f\n",m_shader_stats->get_alu_load_total(),(double)(m_shader_stats->get_alu_load_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		fprintf(manual_dump_file,"Average_MEM_load,%llu,%f\n",m_shader_stats->get_mem_load_total(),(double)(m_shader_stats->get_mem_load_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		fprintf(manual_dump_file,"Average_ALU_utilization,%f\n",(double)(m_shader_stats->get_alu_utilization()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		fprintf(manual_dump_file,"Average_MEM_utilization,%f\n",(double)(m_shader_stats->get_mem_utilization()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		fprintf(manual_dump_file,"Average_overlap_utilization,%f\n",(double)(m_shader_stats->get_overlap_utilization()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		fprintf(manual_dump_file,"Average_no_utilization,%f\n",(double)(m_shader_stats->get_no_utilization()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+	    */
+		printf("DETECTED END OF KERNEL\n");
+		printf("Execution_time,%llu\n",gpu_sim_cycle);
+		printf("All_warps_stalled_at_alu,%llu,%f\n",m_shader_stats->get_all_warps_stalled_at_alu_total(),(double)(m_shader_stats->get_all_warps_stalled_at_alu_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		printf("All_warps_stalled_at_mem,%llu,%f\n",m_shader_stats->get_all_warps_stalled_at_mem_total(),(double)(m_shader_stats->get_all_warps_stalled_at_mem_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		printf("All_warps_waiting_for_alu,%llu,%f\n",m_shader_stats->get_all_warps_waiting_for_alu_total(),(double)(m_shader_stats->get_all_warps_waiting_for_alu_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		printf("All_warps_waiting_for_mem,%llu,%f\n",m_shader_stats->get_all_warps_waiting_for_mem_total(),(double)(m_shader_stats->get_all_warps_waiting_for_mem_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		printf("Idle,%llu,%f\n",m_shader_stats->get_idle_total(),(double)(m_shader_stats->get_idle_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		printf("Average_ALU_load,%llu,%f\n",m_shader_stats->get_alu_load_total(),(double)(m_shader_stats->get_alu_load_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		printf("Average_MEM_load,%llu,%f\n",m_shader_stats->get_mem_load_total(),(double)(m_shader_stats->get_mem_load_total()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		printf("Average_ALU_utilization,%f\n",(double)(m_shader_stats->get_alu_utilization()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		printf("Average_MEM_utilization,%f\n",(double)(m_shader_stats->get_mem_utilization()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		printf("Average_overlap_utilization,%f\n",(double)(m_shader_stats->get_overlap_utilization()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+		printf("Average_no_utilization,%f\n",(double)(m_shader_stats->get_no_utilization()/(double)(m_config.num_shader()*gpu_sim_cycle)));
+	}
 
-	fclose(manual_dump_file);
+	//fclose(manual_dump_file);
 }
 
 void gpgpu_sim::visualizer_printstat()

@@ -46,8 +46,8 @@ public:
    void memlatstat_print(unsigned n_mem, unsigned gpu_mem_n_bk);
 
    void visualizer_print( gzFile visualizer_file );
+ 
    void manual_stats_print(FILE* manual_dump_file);
-
    unsigned m_n_shader;
 
    const struct shader_core_config *m_shader_config;
